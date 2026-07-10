@@ -1,49 +1,208 @@
+/* ============================================================
+   DESIGN SYSTEM — EcoCycle CI (Inspiré par EcoLoop)
+   Fonts self-hostés via next/font (variables --font-*)
+   ============================================================ */
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+  /* Fonts (définies par next/font dans layout.tsx) */
+  --font-fraunces: "Fraunces", Georgia, serif;
+  --font-manrope: "Manrope", -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: "IBM Plex Mono", "SFMono-Regular", monospace;
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
+  /* Couleurs — palette "matière première" (kraft, forêt, ambre) */
+  --ec-forest: #0d1f16;
+  --ec-forest-2: #16281f;
+  --ec-forest-3: #1e332a;
+  --ec-paper: #f3eee1;
+  --ec-paper-2: #e9e0cb;
+  --ec-ink: #14251b;
+  --ec-ink-soft: #2c3b31;
+  --ec-amber: #d9a441;
+  --ec-amber-dark: #b6862f;
+  --ec-signal: #3fa34d;
+  --ec-rust: #b4522f;
+  --ec-line: rgba(243, 238, 225, 0.14);
+  --ec-line-dark: rgba(20, 37, 27, 0.12);
+  --ec-white: #ffffff;
 
-html {
-  height: 100%;
-}
+  /* Rayons */
+  --radius-sm: 4px;
+  --radius-card: 6px;
+  --radius-pill: 20px;
+  --radius-full: 9999px;
 
-html,
-body {
-  max-width: 100vw;
-  overflow-x: hidden;
-}
+  /* Échelle d'espacement (base 4px) */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-7: 2rem;
+  --space-8: 2.75rem;
 
-body {
-  min-height: 100%;
-  display: flex;
-  flex-direction: column;
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  /* Typographie fluide */
+  --fs-display: clamp(1.35rem, 1.1rem + 1vw, 1.75rem);
+  --fs-title: clamp(0.95rem, 0.88rem + 0.3vw, 1.05rem);
+  --fs-body: clamp(0.8rem, 0.78rem + 0.15vw, 0.875rem);
+  --fs-label: 0.65rem;
+
+  --content-max: 1200px;
+  --sidebar-w: 240px;
 }
 
 * {
   box-sizing: border-box;
-  padding: 0;
   margin: 0;
+  padding: 0;
+}
+html {
+  font-size: 100%;
+  -webkit-text-size-adjust: 100%;
+}
+body {
+  font-family: var(--font-manrope);
+  background: var(--ec-paper-2);
+  color: var(--ec-ink);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
 
-a {
-  color: inherit;
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}
+
+/* ---------- TYPOGRAPHY ---------- */
+h1,
+h2,
+h3,
+h4,
+.font-fraunces {
+  font-family: var(--font-fraunces);
+  font-weight: 700;
+}
+
+.font-mono {
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-size: var(--fs-label);
+}
+
+h1 {
+  font-size: var(--fs-display);
+  line-height: 1.15;
+}
+h2 {
+  font-size: 1.3rem;
+  line-height: 1.2;
+}
+h3 {
+  font-size: 1.05rem;
+}
+p {
+  line-height: 1.6;
+  color: var(--ec-ink-soft);
+}
+
+/* ---------- LAYOUT HELPERS ---------- */
+.pageHead {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+.pageHead h1 {
+  font-size: var(--fs-display);
+}
+.muted {
+  color: var(--ec-ink-soft);
+}
+.stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+.row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+}
+.grid-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: var(--space-4);
+}
+.grid-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: var(--space-4);
+}
+.spacer {
+  flex: 1;
+}
+.kbd {
+  font-family: var(--font-mono);
+  background: var(--ec-paper);
+  border: 1px solid var(--ec-line-dark);
+  border-radius: var(--radius-sm);
+  padding: 0.1rem 0.4rem;
+  font-size: var(--fs-label);
+}
+
+/* ---------- BUTTONS (global fallback) ---------- */
+.btn-primary {
+  background: var(--ec-ink);
+  color: var(--ec-paper);
+  border: none;
+  padding: 0.6rem 1.2rem;
+  border-radius: var(--radius-sm);
+  font-size: var(--fs-body);
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
   text-decoration: none;
 }
+.btn-primary:hover {
+  background: var(--ec-forest-3);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(20, 37, 27, 0.15);
+}
+.btn-accent {
+  background: var(--ec-signal);
+  color: var(--ec-forest);
+  border: none;
+  padding: 0.6rem 1.2rem;
+  border-radius: var(--radius-sm);
+  font-size: var(--fs-body);
+  font-weight: 700;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-decoration: none;
+}
+.btn-accent:hover {
+  filter: brightness(1.1);
+  transform: translateY(-1px);
+}
 
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
-  }
+/* ---------- CARDS (global fallback) ---------- */
+.ec-card {
+  background: var(--ec-paper);
+  border-radius: var(--radius-card);
+  border: 1px solid var(--ec-line-dark);
+  padding: var(--space-5);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.ec-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 24px rgba(20, 37, 27, 0.08);
 }

@@ -1,0 +1,49 @@
+.authLayout {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-6);
+  background: var(--ec-forest);
+  color: var(--ec-paper);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: var(--font-fraunces);
+  font-weight: 700;
+  font-size: 1.2rem;
+  margin-bottom: var(--space-6);
+}
+
+.brandDot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--ec-signal);
+  box-shadow: 0 0 0 3px rgba(63, 163, 77, 0.25);
+}
+
+.card {
+  background: var(--ec-paper);
+  color: var(--ec-ink);
+  border-radius: var(--radius-card);
+  padding: var(--space-7);
+  width: 100%;
+  max-width: 420px;
+  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.25);
+}
+
+.backLink {
+  margin-top: var(--space-5);
+  color: var(--ec-paper-2);
+  text-decoration: none;
+  font-size: var(--fs-body);
+  opacity: 0.8;
+}
+.backLink:hover {
+  opacity: 1;
+}

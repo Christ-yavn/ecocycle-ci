@@ -1,0 +1,142 @@
+.wrap {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 400px;
+}
+
+.map {
+  width: 100%;
+  height: 100%;
+  min-height: 400px;
+  border-radius: var(--radius-card);
+  border: 1px solid var(--ec-line-dark);
+  z-index: 1;
+}
+
+.markerWrap {
+  background: transparent;
+  border: none;
+}
+
+.userMarker {
+  background: transparent;
+  border: none;
+}
+
+.controls {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.ctrlBtn {
+  width: 38px;
+  height: 38px;
+  background: var(--ec-paper);
+  border: 1px solid var(--ec-line-dark);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
+  transition: background 0.15s;
+}
+
+.ctrlBtn:hover {
+  background: var(--ec-paper-2);
+}
+
+.selectionBar {
+  position: absolute;
+  bottom: 12px;
+  left: 12px;
+  right: 12px;
+  z-index: 1000;
+  background: var(--ec-forest);
+  color: var(--ec-paper);
+  border-radius: var(--radius-card);
+  padding: var(--space-3) var(--space-4);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+  flex-wrap: wrap;
+}
+
+.selInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.routeMeta {
+  font-family: var(--font-mono);
+  font-size: var(--fs-body);
+  color: var(--ec-signal);
+}
+
+.selActions {
+  display: flex;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+}
+
+.routeBtn,
+.clearBtn {
+  background: var(--ec-signal);
+  color: var(--ec-forest);
+  border: none;
+  border-radius: var(--radius-sm);
+  padding: 0.4rem 0.8rem;
+  font-size: var(--fs-body);
+  font-weight: 700;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.clearBtn {
+  background: rgba(243, 238, 225, 0.15);
+  color: var(--ec-paper);
+  font-weight: 500;
+}
+
+.routeBtn:hover {
+  filter: brightness(1.1);
+}
+
+.clearBtn:hover {
+  background: rgba(243, 238, 225, 0.25);
+}
+
+.emptyMap {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: var(--ec-paper);
+  color: var(--ec-ink-soft);
+  padding: var(--space-4) var(--space-5);
+  border-radius: var(--radius-card);
+  border: 1px solid var(--ec-line-dark);
+  z-index: 500;
+  text-align: center;
+}
+
+@media (max-width: 600px) {
+  .selectionBar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .selActions {
+    justify-content: space-between;
+  }
+}

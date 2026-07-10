@@ -1,0 +1,34 @@
+.container {
+  background: var(--ec-paper);
+  border-radius: var(--radius-card);
+  border: 1px solid var(--ec-line-dark);
+  padding: var(--space-5);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.elevated:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 24px rgba(20, 37, 27, 0.08);
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-3);
+}
+
+.title {
+  font-family: var(--font-fraunces), serif;
+  font-weight: 700;
+  font-size: 1.05rem;
+}
+
+.action {
+  font-family: var(--font-mono), monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-size: var(--fs-label);
+  color: var(--ec-amber-dark);
+  text-decoration: none;
+}

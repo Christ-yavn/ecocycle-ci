@@ -1,0 +1,47 @@
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: var(--space-4);
+}
+
+.head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-3);
+}
+
+.date {
+  font-family: var(--font-mono);
+  font-size: var(--fs-label);
+  color: var(--ec-ink-soft);
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.typeRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.type {
+  font-family: var(--font-fraunces);
+  font-weight: 700;
+  font-size: 1.1rem;
+}
+
+.score {
+  color: var(--ec-amber);
+  font-size: 0.9rem;
+  letter-spacing: 2px;
+}
+
+.meta {
+  font-size: var(--fs-body);
+  color: var(--ec-ink-soft);
+}

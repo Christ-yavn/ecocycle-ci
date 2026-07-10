@@ -1,66 +1,85 @@
-import Image from "next/image";
+import Link from "next/link";
+import { redirect } from "next/navigation";
+import { createSupabaseServerClient } from "@/lib/supabase/server";
+import { ROLES, ROLE_LABELS, ROLE_DESCRIPTIONS } from "@/types/role";
+import { Card } from "@/components/ui/Card";
+import { Button } from "@/components/ui/Button";
+import { RoleIcon } from "@/components/ui/Icon";
 import styles from "./page.module.css";
 
-export default function Home() {
+export default async function Home() {
+  // Si déjà connecté, rediriger vers le dashboard du rôle
+  const supabase = await createSupabaseServerClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (user) {
+    const { data: profile } = await supabase
+      .from("users")
+      .select("role")
+      .eq("id", user.id)
+      .single();
+    if (profile?.role) {
+      redirect(`/${profile.role}`);
+    }
+  }
+
   return (
-    <div className={styles.page}>
-      <main className={styles.main}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className={styles.intro}>
-          <h1>To get started, edit the page.tsx file.</h1>
-          <p>
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+    <div className={styles.landing}>
+      <header className={styles.hero}>
+        <div className={styles.brand}>
+          <span className={styles.brandDot} />
+          EcoCycle CI
         </div>
-        <div className={styles.ctas}>
-          <a
-            className={styles.primary}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className={styles.logo}
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className={styles.secondary}
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+        <h1 className={styles.title}>
+          La plateforme de gestion circulaire
+          <br />
+          des déchets à Abidjan
+        </h1>
+        <p className={styles.lead}>
+          EcoCycle CI orchestre toute la chaîne de valeur du déchet — du tri à
+          la source par les producteurs jusqu&apos;à la matière première
+          recyclée — grâce à un système de double confirmation qui garantit la
+          traçabilité sans aucun flux financier sur la plateforme.
+        </p>
+        <div className={styles.ctaRow}>
+          <Button href="/login" variant="primary">
+            Se connecter
+          </Button>
+          <Button href="/register" variant="ghost">
+            Créer un compte
+          </Button>
         </div>
-      </main>
+      </header>
+
+      <section className={styles.roles}>
+        <div className={styles.sectionLabel}>
+          Choisissez votre espace acteur
+        </div>
+        <div className={styles.grid}>
+          {ROLES.map((role) => (
+            <Link key={role} href={`/${role}`} className={styles.roleLink}>
+              <Card elevated>
+                <div className={styles.roleHead}>
+                  <span className={styles.roleIcon}>
+                    <RoleIcon role={role} size={22} />
+                  </span>
+                  <span className={styles.roleName}>{ROLE_LABELS[role]}</span>
+                </div>
+                <p className={styles.roleDesc}>{ROLE_DESCRIPTIONS[role]}</p>
+                <span className={styles.roleCta}>
+                  Accéder à l&apos;espace →
+                </span>
+              </Card>
+            </Link>
+          ))}
+        </div>
+      </section>
+
+      <footer className={styles.footer}>
+        <span className="font-mono">EcoCycle CI · MVP Abidjan · v0.1</span>
+      </footer>
     </div>
   );
 }

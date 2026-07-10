@@ -1,0 +1,41 @@
+.typeList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.typeRow {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-2) 0;
+}
+
+.typeLabel {
+  font-weight: 500;
+  font-size: var(--fs-body);
+  min-width: 120px;
+}
+
+.barWrap {
+  flex: 1;
+  height: 8px;
+  background: var(--ec-paper-2);
+  border-radius: var(--radius-pill);
+  overflow: hidden;
+}
+
+.bar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--ec-signal), var(--ec-amber));
+  border-radius: var(--radius-pill);
+  transition: width 0.5s ease;
+}
+
+.typeKg {
+  font-family: var(--font-mono);
+  font-weight: 600;
+  color: var(--ec-amber-dark);
+  min-width: 60px;
+  text-align: right;
+}

@@ -1,0 +1,37 @@
+.stat {
+  background: var(--ec-paper);
+  border-radius: var(--radius-card);
+  border: 1px solid var(--ec-line-dark);
+  padding: var(--space-4);
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.label {
+  font-family: var(--font-mono), monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-size: var(--fs-label);
+  color: var(--ec-ink-soft);
+}
+
+.value {
+  font-family: var(--font-fraunces), serif;
+  font-weight: 700;
+  font-size: 1.6rem;
+  line-height: 1.1;
+  color: var(--ec-ink);
+}
+
+.unit {
+  font-size: 0.7rem;
+  color: var(--ec-ink-soft);
+  margin-left: 0.25rem;
+  font-family: var(--font-mono), monospace;
+}
+
+.hint {
+  font-size: 0.75rem;
+  color: var(--ec-ink-soft);
+}

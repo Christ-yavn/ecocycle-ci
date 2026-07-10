@@ -1,0 +1,64 @@
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: var(--space-4);
+}
+
+.head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-3);
+}
+
+.date {
+  font-family: var(--font-mono);
+  font-size: var(--fs-label);
+  color: var(--ec-ink-soft);
+}
+
+.body {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.type {
+  font-family: var(--font-fraunces);
+  font-weight: 700;
+  font-size: 1.1rem;
+}
+
+.weight {
+  font-weight: 600;
+  color: var(--ec-signal);
+}
+
+.typeList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.typeRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-2) 0;
+  border-bottom: 1px solid var(--ec-line-dark);
+}
+
+.typeRow:last-child {
+  border-bottom: none;
+}
+
+.typeLabel {
+  font-weight: 500;
+  font-size: var(--fs-body);
+}
+
+.typeKg {
+  font-family: var(--font-mono);
+  font-weight: 600;
+  color: var(--ec-amber-dark);
+}
