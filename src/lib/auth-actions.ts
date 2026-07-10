@@ -20,10 +20,10 @@ function getSupabase() {
 
 // --- AUTH ---
 
-export async function signIn(phone: string, password: string) {
-  // Supabase Auth utilise l'email OU le téléphone.
-  // Pour le MVP, on mappe phone → email formaté (à adapter avec OTP SMS V2).
-  const email = phoneToEmail(phone);
+export async function signIn(identifier: string, password: string) {
+  const email = identifier.includes("@")
+    ? identifier
+    : phoneToEmail(identifier);
   const { data, error } = await getSupabase().auth.signInWithPassword({
     email,
     password,

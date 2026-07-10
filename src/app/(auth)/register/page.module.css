@@ -1,5 +1,5 @@
 .header {
-  margin-bottom: 2rem;
+  margin-bottom: 1.5rem;
 }
 
 .eyebrow {
@@ -32,13 +32,19 @@
 .form {
   display: flex;
   flex-direction: column;
-  gap: 1.1rem;
+  gap: 1rem;
 }
 
 .field {
   display: flex;
   flex-direction: column;
   gap: 0.4rem;
+}
+
+.fieldRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.8rem;
 }
 
 .label {
@@ -86,6 +92,25 @@
   box-shadow: 0 0 0 3px rgba(63, 163, 77, 0.12);
 }
 
+.select {
+  width: 100%;
+  border: 1.5px solid var(--ec-line-dark);
+  border-radius: 8px;
+  padding: 0.7rem 0.8rem;
+  font-size: 0.875rem;
+  font-family: var(--font-manrope);
+  background: var(--ec-white);
+  color: var(--ec-ink);
+  transition: border-color 0.15s, box-shadow 0.15s;
+  outline: none;
+  cursor: pointer;
+}
+
+.select:focus {
+  border-color: var(--ec-signal);
+  box-shadow: 0 0 0 3px rgba(63, 163, 77, 0.12);
+}
+
 .togglePass {
   position: absolute;
   right: 0.6rem;
@@ -102,40 +127,71 @@
   opacity: 1;
 }
 
-.formRow {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-  margin-top: 0.2rem;
+/* ===== ROLE GRID ===== */
+.roleGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.6rem;
 }
 
-.checkRow {
-  display: flex;
-  align-items: center;
-  gap: 0.45rem;
+.roleCard {
+  border: 1.5px solid var(--ec-line-dark);
+  border-radius: 10px;
+  padding: 0.8rem 0.7rem;
+  background: var(--ec-white);
   cursor: pointer;
-  font-size: 0.8rem;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  position: relative;
+  transition: all 0.15s ease;
+  min-height: 76px;
+}
+
+.roleCard:hover {
+  border-color: var(--ec-amber);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(20, 37, 27, 0.06);
+}
+
+.roleCardActive {
+  border-color: var(--ec-signal);
+  background: rgba(63, 163, 77, 0.06);
+  box-shadow: 0 0 0 3px rgba(63, 163, 77, 0.12);
+}
+
+.roleIcon {
+  font-size: 1.3rem;
+  line-height: 1;
+}
+
+.roleCardLabel {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--ec-ink);
+}
+
+.roleBadge {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.55rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  background: var(--ec-amber);
+  color: var(--ec-forest);
+  padding: 0.12rem 0.35rem;
+  border-radius: 3px;
+  font-weight: 700;
+}
+
+.roleDesc {
+  font-size: 0.75rem;
   color: var(--ec-ink-soft);
-  user-select: none;
-}
-
-.checkbox {
-  width: 16px;
-  height: 16px;
-  accent-color: var(--ec-signal);
-  cursor: pointer;
-}
-
-.forgot {
-  font-size: 0.8rem;
-  color: var(--ec-amber-dark);
-  font-weight: 500;
-  cursor: pointer;
-}
-
-.forgot:hover {
-  text-decoration: underline;
+  margin-top: 0.2rem;
+  line-height: 1.4;
 }
 
 /* ===== ERROR ===== */
@@ -199,39 +255,16 @@
   }
 }
 
-/* ===== DEMO NOTICE ===== */
-.demoNotice {
-  margin-top: 1.5rem;
-  background: rgba(63, 163, 77, 0.06);
-  border: 1px solid rgba(63, 163, 77, 0.15);
+/* ===== NOTICE ===== */
+.notice {
+  font-size: 0.72rem;
+  color: var(--ec-ink-soft);
+  background: rgba(217, 164, 65, 0.06);
+  border: 1px solid rgba(217, 164, 65, 0.15);
   border-radius: 8px;
-  padding: 0.7rem 0.8rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.2rem;
-  font-size: 0.72rem;
+  padding: 0.6rem 0.8rem;
   line-height: 1.5;
-  color: var(--ec-ink-soft);
-}
-
-.demoNotice strong {
-  font-size: 0.72rem;
-  font-weight: 600;
-  color: var(--ec-ink);
-}
-
-.demoNotice span {
-  font-size: 0.68rem;
-  color: var(--ec-ink-soft);
-}
-
-.demoNotice code {
-  font-family: var(--font-mono);
-  background: rgba(20, 37, 27, 0.06);
-  padding: 0.1rem 0.3rem;
-  border-radius: 3px;
-  font-size: 0.65rem;
-  color: var(--ec-ink);
+  margin-top: 0.2rem;
 }
 
 /* ===== DIVIDER ===== */
@@ -239,7 +272,7 @@
   display: flex;
   align-items: center;
   gap: 0.8rem;
-  margin: 1.5rem 0 0.8rem 0;
+  margin: 1.3rem 0 0.8rem 0;
 }
 
 .divider::before,
@@ -274,4 +307,53 @@
 .switchLink:hover {
   opacity: 0.8;
   text-decoration: underline;
+}
+
+/* ===== SUCCESS ===== */
+.successWrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 2rem 0;
+  gap: 0.8rem;
+}
+
+.successIcon {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: var(--ec-signal);
+  color: var(--ec-paper);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.successTitle {
+  font-family: var(--font-fraunces);
+  font-weight: 700;
+  font-size: 1.2rem;
+  color: var(--ec-ink);
+}
+
+.successText {
+  font-size: 0.85rem;
+  color: var(--ec-ink-soft);
+  line-height: 1.5;
+  max-width: 300px;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 500px) {
+  .fieldRow {
+    grid-template-columns: 1fr;
+  }
+
+  .roleGrid {
+    grid-template-columns: 1fr;
+  }
 }
