@@ -29,6 +29,7 @@ function LoginForm() {
       );
 
       if (authError) {
+        console.error("[login] authError:", authError);
         setError(authError.message || "Erreur de connexion.");
         setLoading(false);
         return;
@@ -44,11 +45,14 @@ function LoginForm() {
           "@/lib/supabase/browser"
         );
         const supabase = createSupabaseBrowserClient();
-        const { data: profile } = await supabase
+        const { data: profile, error: profileErr } = await supabase
           .from("users")
           .select("role")
           .eq("id", data.user.id)
           .single();
+        if (profileErr) {
+          console.error("[login] profil indisponible (RLS ?):", profileErr);
+        }
 
         const dest = profile?.role ? `/${profile.role}` : "/";
         window.location.href = dest;
@@ -58,6 +62,7 @@ function LoginForm() {
       setError("Réponse inattendue du serveur d'authentification.");
       setLoading(false);
     } catch (err) {
+      console.error("[login] Échec signIn :", err);
       setError(
         err instanceof Error
           ? err.message
