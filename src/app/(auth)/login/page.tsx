@@ -22,35 +22,49 @@ function LoginForm() {
     setError(null);
     setLoading(true);
 
-    const { data, error: authError } = await signIn(
-      identifier.trim(),
-      password,
-    );
+    try {
+      const { data, error: authError } = await signIn(
+        identifier.trim(),
+        password,
+      );
 
-    if (authError) {
-      setError(authError.message || "Erreur de connexion. Vérifiez vos identifiants.");
-      setLoading(false);
-      return;
-    }
-
-    if (data.user) {
-      if (redirectTo) {
-        window.location.href = redirectTo;
+      if (authError) {
+        setError(authError.message || "Erreur de connexion.");
+        setLoading(false);
         return;
       }
 
-      const supabase = (await import("@/lib/supabase/browser")).createSupabaseBrowserClient();
-      const { data: profile } = await supabase
-        .from("users")
-        .select("role")
-        .eq("id", data.user.id)
-        .single();
+      if (data.user) {
+        if (redirectTo) {
+          window.location.href = redirectTo;
+          return;
+        }
 
-      const dest = profile?.role ? `/${profile.role}` : "/";
-      window.location.href = dest;
-      return;
+        const { createSupabaseBrowserClient } = await import(
+          "@/lib/supabase/browser"
+        );
+        const supabase = createSupabaseBrowserClient();
+        const { data: profile } = await supabase
+          .from("users")
+          .select("role")
+          .eq("id", data.user.id)
+          .single();
+
+        const dest = profile?.role ? `/${profile.role}` : "/";
+        window.location.href = dest;
+        return;
+      }
+
+      setError("Réponse inattendue du serveur d'authentification.");
+      setLoading(false);
+    } catch (err) {
+      setError(
+        err instanceof Error
+          ? err.message
+          : "Erreur inconnue lors de la connexion.",
+      );
+      setLoading(false);
     }
-    setLoading(false);
   }
 
   return (
