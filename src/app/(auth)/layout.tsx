@@ -2,6 +2,9 @@ import type { ReactNode } from "react";
 import Link from "next/link";
 import styles from "./layout.module.css";
 
+export const fetchCache = "force-no-store";
+export const dynamic = "force-dynamic";
+
 export default function AuthLayout({
   children,
 }: {

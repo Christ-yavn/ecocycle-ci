@@ -1,13 +1,12 @@
 "use client";
 
 import { useState, Suspense, type FormEvent } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { signIn } from "@/lib/auth-actions";
 import styles from "./page.module.css";
 
 function LoginForm() {
-  const router = useRouter();
   const params = useSearchParams();
   const redirectTo = params.get("redirect") ?? null;
 
@@ -37,9 +36,19 @@ function LoginForm() {
     if (data.user) {
       if (redirectTo) {
         window.location.href = redirectTo;
-      } else {
-        window.location.href = "/";
+        return;
       }
+
+      const supabase = (await import("@/lib/supabase/browser")).createSupabaseBrowserClient();
+      const { data: profile } = await supabase
+        .from("users")
+        .select("role")
+        .eq("id", data.user.id)
+        .single();
+
+      const dest = profile?.role ? `/${profile.role}` : "/";
+      window.location.href = dest;
+      return;
     }
     setLoading(false);
   }

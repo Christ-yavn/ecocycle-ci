@@ -7,8 +7,9 @@ import { Button } from "@/components/ui/Button";
 import { RoleIcon } from "@/components/ui/Icon";
 import styles from "./page.module.css";
 
+export const dynamic = "force-dynamic";
+
 export default async function Home() {
-  // Si déjà connecté, rediriger vers le dashboard du rôle
   const supabase = await createSupabaseServerClient();
   const {
     data: { user },
@@ -20,9 +21,12 @@ export default async function Home() {
       .select("role")
       .eq("id", user.id)
       .single();
+
     if (profile?.role) {
       redirect(`/${profile.role}`);
     }
+
+    redirect("/login?error=no_profile");
   }
 
   return (
@@ -40,8 +44,8 @@ export default async function Home() {
         <p className={styles.lead}>
           EcoCycle CI orchestre toute la chaîne de valeur du déchet — du tri à
           la source par les producteurs jusqu&apos;à la matière première
-          recyclée — grâce à un système de double confirmation qui garantit la
-          traçabilité sans aucun flux financier sur la plateforme.
+          recyclée — grâce à un système de double confirmation qui garantit
+          la traçabilité sans aucun flux financier sur la plateforme.
         </p>
         <div className={styles.ctaRow}>
           <Button href="/login" variant="primary">
