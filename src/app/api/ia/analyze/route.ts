@@ -10,7 +10,12 @@ import { scoreQualiteToTri } from "@/types/ia";
 // - Persiste l'analyse en base (service role) si l'utilisateur est connecté.
 
 const IA_API_URL = process.env.IA_API_URL ?? "http://localhost:8000";
-const IA_TIMEOUT_MS = 30_000;
+const IA_TIMEOUT_MS = 60_000;
+const COLD_START_HINT = "IA en cours de démarrage, réessayez dans ~30 secondes.";
+
+export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
+export const maxDuration = 60;
 
 // Type brut de la réponse FastAPI (AnalyzeResult)
 type FastApiAnalyzeResult = {
@@ -97,7 +102,18 @@ export async function POST(request: NextRequest) {
   const controller = new AbortController();
   const timeout = setTimeout(() => controller.abort(), IA_TIMEOUT_MS);
 
+  if (!IA_API_URL) {
+    return NextResponse.json(
+      { error: "Configuration IA manquante (IA_API_URL)", fallback: true },
+      { status: 503 },
+    );
+  }
+
   let iaResponse: Response;
+  const isTimeout = { current: false };
+  controller.signal.addEventListener("abort", () => {
+    isTimeout.current = true;
+  });
   try {
     iaResponse = await fetch(`${IA_API_URL}/api/classify/analyze`, {
       method: "POST",
@@ -106,17 +122,33 @@ export async function POST(request: NextRequest) {
     });
   } catch (e) {
     clearTimeout(timeout);
+    const aborted = isTimeout.current;
     const msg = e instanceof Error ? e.message : "Erreur réseau";
     return NextResponse.json(
       {
-        error: "API IA indisponible",
-        detail: msg,
+        error: aborted ? "IA en cours de démarrage (cold start)" : "API IA indisponible",
+        detail: aborted ? COLD_START_HINT : msg,
+        retryAfter: 30,
         fallback: true,
       },
       { status: 503 },
     );
   }
   clearTimeout(timeout);
+
+  if (iaResponse.status === 503 || iaResponse.status === 502) {
+    const errText = await iaResponse.text().catch(() => "");
+    return NextResponse.json(
+      {
+        error: "IA en cours de démarrage (cold start)",
+        detail: COLD_START_HINT,
+        upstream: errText,
+        retryAfter: 30,
+        fallback: true,
+      },
+      { status: 503 },
+    );
+  }
 
   if (!iaResponse.ok) {
     const errText = await iaResponse.text().catch(() => "Erreur inconnue");
