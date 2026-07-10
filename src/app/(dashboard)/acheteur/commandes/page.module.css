@@ -1,0 +1,86 @@
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: var(--space-4);
+}
+
+.head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-3);
+}
+
+.date {
+  font-family: var(--font-mono);
+  font-size: var(--fs-label);
+  color: var(--ec-ink-soft);
+}
+
+.body {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-2);
+}
+
+.type {
+  font-family: var(--font-fraunces);
+  font-weight: 700;
+  font-size: 1.1rem;
+}
+
+.weight {
+  font-weight: 600;
+  color: var(--ec-signal);
+}
+
+.meta {
+  font-size: var(--fs-label);
+  color: var(--ec-ink-soft);
+  margin-bottom: var(--space-1);
+}
+
+.recycleur {
+  font-size: var(--fs-label);
+  color: var(--ec-ink);
+  padding-top: var(--space-2);
+  border-top: 1px solid var(--ec-line-dark);
+  margin-top: var(--space-2);
+}
+
+.confirmStatus {
+  margin-top: var(--space-2);
+  font-size: var(--fs-label);
+}
+
+.confirmed {
+  color: var(--ec-signal);
+}
+
+.pending {
+  color: var(--ec-amber-dark);
+}
+
+.action {
+  margin-top: var(--space-3);
+}
+
+.historyList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.historyRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding: var(--space-2) 0;
+  border-bottom: 1px solid var(--ec-line-dark);
+}
+
+.historyRow:last-child {
+  border-bottom: none;
+}

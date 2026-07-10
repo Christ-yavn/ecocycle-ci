@@ -30,6 +30,8 @@ export type ConfirmationStatus = "en_attente" | "valide" | "litige";
 
 export type StockStatus = "disponible" | "reserve" | "livre";
 
+export type MatierePremiereStatus = "disponible" | "reservee" | "vendue";
+
 export type SignalementStatus =
   | "nouveau"
   | "pris_en_charge"
@@ -80,7 +82,7 @@ export type LotRow = {
 // --- Ligne public.confirmations ---
 export type ConfirmationRow = {
   id: string;
-  lot_id: string;
+  lot_id: string | null;
   step: ConfirmationStep;
   actor_a_id: string | null;
   actor_a_confirmed: boolean;
@@ -156,4 +158,20 @@ export type AbonnementRow = {
   date_fin: string | null;
   statut: AbonnementStatut;
   montant_fcfa: number | null;
+};
+
+// --- Ligne public.matiere_premiere (couche 3) ---
+export type MatierePremiereRow = {
+  id: string;
+  recycleur_id: string;
+  type_matiere: string;
+  volume_disponible_kg: number;
+  specifications: string | null;
+  grade: string | null;
+  conditionnement: string | null;
+  photo_url: string | null;
+  status: MatierePremiereStatus;
+  acheteur_id: string | null;
+  date_publication: string;
+  date_vente: string | null;
 };

@@ -1,0 +1,68 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  padding: var(--space-5);
+  background: var(--ec-paper);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--ec-line);
+  margin-bottom: var(--space-5);
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.field label {
+  font-size: var(--fs-label);
+  font-weight: 600;
+  color: var(--ec-ink);
+}
+
+.field input,
+.field select,
+.field textarea {
+  padding: 0.6rem 0.8rem;
+  border: 1px solid var(--ec-line);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-body);
+  font-size: var(--fs-body);
+  background: var(--ec-paper);
+  color: var(--ec-ink);
+  outline: none;
+  transition: border-color 0.15s;
+}
+
+.field input:focus,
+.field select:focus,
+.field textarea:focus {
+  border-color: var(--ec-signal);
+}
+
+.field textarea {
+  resize: vertical;
+}
+
+.actions {
+  display: flex;
+  gap: var(--space-3);
+  align-items: center;
+}
+
+.error {
+  background: rgba(180, 82, 47, 0.1);
+  color: var(--ec-rust);
+  padding: 0.5rem 0.8rem;
+  border-radius: var(--radius-sm);
+  font-size: var(--fs-body);
+}
+
+.success {
+  background: rgba(63, 163, 77, 0.1);
+  color: var(--ec-signal);
+  padding: 0.5rem 0.8rem;
+  border-radius: var(--radius-sm);
+  font-size: var(--fs-body);
+}

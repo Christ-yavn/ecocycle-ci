@@ -1,0 +1,157 @@
+.progressTrack {
+  position: relative;
+  height: 2.2rem;
+  background: var(--ec-line);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.progressFill {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  background: linear-gradient(90deg, var(--ec-signal), var(--ec-forest));
+  border-radius: var(--radius-full);
+  transition: width 0.5s ease;
+}
+
+.progressLabel {
+  position: relative;
+  z-index: 1;
+  font-family: var(--font-mono);
+  font-size: var(--fs-label);
+  font-weight: 600;
+  color: var(--ec-paper);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.paliersGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: var(--space-4);
+}
+
+.palierAtteint {
+  border-color: var(--ec-signal);
+  background: rgba(63, 163, 77, 0.05);
+}
+
+.palierHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-2);
+}
+
+.palierIcon {
+  font-size: 1.5rem;
+  color: var(--ec-amber-dark);
+}
+
+.palierSeuil {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: var(--ec-ink);
+}
+
+.palierRecompense {
+  font-family: var(--font-fraunces);
+  font-weight: 700;
+  font-size: 1rem;
+  margin: 0 0 var(--space-1) 0;
+}
+
+.palierDesc {
+  font-size: var(--fs-label);
+  color: var(--ec-ink-soft);
+  margin: 0 0 var(--space-3) 0;
+  line-height: 1.4;
+}
+
+.palierBar {
+  height: 0.5rem;
+  background: var(--ec-line);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+  margin-bottom: var(--space-2);
+}
+
+.palierBarFill {
+  height: 100%;
+  background: var(--ec-amber);
+  border-radius: var(--radius-full);
+  transition: width 0.4s ease;
+}
+
+.palierBarFillDone {
+  height: 100%;
+  background: var(--ec-signal);
+  border-radius: var(--radius-full);
+}
+
+.palierStatus {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.palierRestant {
+  font-size: var(--fs-label);
+  font-family: var(--font-mono);
+  color: var(--ec-amber-dark);
+  font-weight: 600;
+}
+
+.txList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.txRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-2) 0;
+  border-bottom: 1px solid var(--ec-line-dark);
+}
+
+.txRow:last-child {
+  border-bottom: none;
+}
+
+.txLeft {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.txPoints {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: var(--ec-signal);
+  min-width: 3rem;
+}
+
+.txMotif {
+  font-size: var(--fs-body);
+  color: var(--ec-ink);
+}
+
+.txDate {
+  font-family: var(--font-mono);
+  font-size: var(--fs-label);
+  color: var(--ec-ink-soft);
+}
+
+.ctaRow {
+  margin-top: var(--space-5);
+  display: flex;
+  justify-content: center;
+}
