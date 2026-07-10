@@ -9,7 +9,14 @@ import type { AnalyseIa } from "@/types/ia";
 // + helpers métier (upload photo, créer lot, etc.)
 // ============================================================
 
-const supabase = createSupabaseBrowserClient();
+let _supabase: ReturnType<typeof createSupabaseBrowserClient> | null = null;
+
+function getSupabase() {
+  if (!_supabase) {
+    _supabase = createSupabaseBrowserClient();
+  }
+  return _supabase;
+}
 
 // --- AUTH ---
 
@@ -17,7 +24,7 @@ export async function signIn(phone: string, password: string) {
   // Supabase Auth utilise l'email OU le téléphone.
   // Pour le MVP, on mappe phone → email formaté (à adapter avec OTP SMS V2).
   const email = phoneToEmail(phone);
-  const { data, error } = await supabase.auth.signInWithPassword({
+  const { data, error } = await getSupabase().auth.signInWithPassword({
     email,
     password,
   });
@@ -33,7 +40,7 @@ export async function signUp(
   quartier?: string,
 ) {
   const email = phoneToEmail(phone);
-  const { data, error } = await supabase.auth.signUp({
+  const { data, error } = await getSupabase().auth.signUp({
     email,
     password,
     options: {
@@ -50,7 +57,7 @@ export async function signUp(
 }
 
 export async function signOut() {
-  await supabase.auth.signOut();
+  await getSupabase().auth.signOut();
 }
 
 // --- UPLOAD PHOTO ---
@@ -63,14 +70,14 @@ export async function compressAndUploadPhoto(
     const compressed = await compressImage(file, 1024, 0.7);
     const fileName = `${userId}/${crypto.randomUUID()}.webp`;
 
-    const { error: upErr } = await supabase.storage
+    const { error: upErr } = await getSupabase().storage
       .from("lots-photos")
       .upload(fileName, compressed, { contentType: "image/webp" });
 
     if (upErr) return { url: null, error: upErr.message };
 
-    const { data } = supabase.storage
-      .from("lots-photos")
+    const { data } = getSupabase()
+      .storage.from("lots-photos")
       .getPublicUrl(fileName);
 
     return { url: data.publicUrl, error: null };
