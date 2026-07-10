@@ -36,11 +36,10 @@ function LoginForm() {
 
     if (data.user) {
       if (redirectTo) {
-        router.push(redirectTo);
+        window.location.href = redirectTo;
       } else {
-        router.push("/");
+        window.location.href = "/";
       }
-      router.refresh();
     }
     setLoading(false);
   }
