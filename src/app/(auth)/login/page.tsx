@@ -28,7 +28,7 @@ function LoginForm() {
     );
 
     if (authError) {
-      setError("Identifiants incorrects. Vérifiez votre email/téléphone et mot de passe.");
+      setError(authError.message || "Erreur de connexion. Vérifiez vos identifiants.");
       setLoading(false);
       return;
     }
