@@ -135,7 +135,7 @@ export async function POST(request: NextRequest) {
   });
   try {
     // Générer un JWT signé pour l'authentification machine-to-machine
-    const iaSecret = process.env.IA_API_SECRET;
+    const iaSecret = process.env.IA_JWT_SECRET || process.env.IA_API_SECRET;
     const headers: Record<string, string> = {};
     if (iaSecret) {
       const secret = new TextEncoder().encode(iaSecret);
