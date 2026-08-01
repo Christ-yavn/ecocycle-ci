@@ -9,12 +9,22 @@ import styles from "./page.module.css";
 function LoginForm() {
   const params = useSearchParams();
   const redirectTo = params.get("redirect") ?? null;
+  const urlError = params.get("error");
+  const mode = params.get("mode");
 
   const [identifier, setIdentifier] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [remember, setRemember] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(
+    urlError === "config"
+      ? "Le service est momentanément mal configuré (variables Supabase absentes). Contactez l'administrateur — diagnostic sur /debug."
+      : urlError === "no_profile"
+        ? "Votre compte est connecté mais aucun profil n'a été trouvé en base. Exécutez le schéma SQL ou recréez le compte."
+        : mode === "complete"
+          ? "Votre profil n'est pas encore créé en base de données. Contactez l'administrateur."
+          : null,
+  );
   const [loading, setLoading] = useState(false);
 
   async function handleSubmit(e: FormEvent) {
@@ -54,8 +64,17 @@ function LoginForm() {
           console.error("[login] profil indisponible (RLS ?):", profileErr);
         }
 
-        const dest = profile?.role ? `/${profile.role}` : "/";
-        window.location.href = dest;
+        if (profile?.role) {
+          window.location.href = `/${profile.role}`;
+          return;
+        }
+
+        // Profil introuvable : ne PAS rediriger vers "/" (boucle silencieuse
+        // avec la landing qui renvoie ici). Afficher la cause réelle.
+        setError(
+          "Connexion réussie mais aucun profil trouvé en base. Le schéma SQL (schema.sql) et le trigger handle_new_user doivent être exécutés sur Supabase.",
+        );
+        setLoading(false);
         return;
       }
 

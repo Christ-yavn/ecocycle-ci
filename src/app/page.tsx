@@ -10,12 +10,21 @@ import styles from "./page.module.css";
 export const dynamic = "force-dynamic";
 
 export default async function Home() {
-  const supabase = await createSupabaseServerClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  // Si la configuration Supabase est absente (variables d'environnement non
+  // définies sur l'hébergeur), on affiche la landing en mode déconnecté
+  // plutôt qu'une erreur 500 — le diagnostic est visible sur /debug.
+  let user = null;
+  let supabase: Awaited<ReturnType<typeof createSupabaseServerClient>> | null =
+    null;
+  try {
+    supabase = await createSupabaseServerClient();
+    const { data } = await supabase.auth.getUser();
+    user = data.user;
+  } catch (err) {
+    console.error("[home] Client Supabase indisponible :", err);
+  }
 
-  if (user) {
+  if (user && supabase) {
     const { data: profile } = await supabase
       .from("users")
       .select("role")

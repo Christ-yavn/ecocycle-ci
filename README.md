@@ -331,7 +331,7 @@ git push -u origin main
 | `NEXT_PUBLIC_SUPABASE_URL` | `https://<votre-projet>.supabase.co` | 👁️ Public |
 | `NEXT_PUBLIC_SUPABASE_ANON_KEY` | `sb_publishable_...` | 👁️ Public |
 | `SUPABASE_SERVICE_ROLE_KEY` | `sb_secret_...` | 🔒 Server only |
-| `SUPABASE_DB_PASSWORD` | `TQW6XorjxumsXrSq` | 🔒 Server only |
+| `SUPABASE_DB_PASSWORD` | `<votre_mot_de_passe_db>` | 🔒 Server only — ⚠️ un ancien mot de passe a fuité dans ce dépôt : changez-le dans Supabase → Settings → Database |
 | `IA_API_URL` | `https://<votre-api-ia>.onrender.com` | URL de l'API IA déployée |
 | `IA_JWT_SECRET` | `<votre_jwt_secret>` | 🔒 Identique au JWT_SECRET de l'IA |
 | `CRON_SECRET` | `<votre_cron_secret>` | 🔒 Pour les cron jobs |
