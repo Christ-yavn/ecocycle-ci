@@ -1,4 +1,5 @@
 import { NextResponse, type NextRequest } from "next/server";
+import { SignJWT } from "jose";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 import type { AnalyseIa, ItemTrouve } from "@/types/ia";
 import { scoreQualiteToTri } from "@/types/ia";
@@ -95,6 +96,24 @@ export async function POST(request: NextRequest) {
     );
   }
 
+  // --- Validation stricte du fichier (prévention SSRF/DoS) ---
+  const ALLOWED_TYPES = ["image/jpeg", "image/png", "image/jpg", "image/webp", "image/bmp"];
+  const MAX_SIZE = 10 * 1024 * 1024; // 10 Mo
+
+  if (!ALLOWED_TYPES.includes(file.type)) {
+    return NextResponse.json(
+      { error: "Type de fichier non autorisé. Envoyez une image (JPEG, PNG, WebP ou BMP)." },
+      { status: 400 },
+    );
+  }
+
+  if (file.size > MAX_SIZE) {
+    return NextResponse.json(
+      { error: `Fichier trop volumineux (${(file.size / 1024 / 1024).toFixed(1)} Mo). Maximum : 10 Mo.` },
+      { status: 413 },
+    );
+  }
+
   // 3. Forward vers l'API IA FastAPI
   const iaFormData = new FormData();
   iaFormData.append("file", file, file.name);
@@ -115,9 +134,23 @@ export async function POST(request: NextRequest) {
     isTimeout.current = true;
   });
   try {
+    // Générer un JWT signé pour l'authentification machine-to-machine
+    const iaSecret = process.env.IA_API_SECRET;
+    const headers: Record<string, string> = {};
+    if (iaSecret) {
+      const secret = new TextEncoder().encode(iaSecret);
+      const token = await new SignJWT({ sub: user.id, role: "nextjs-proxy" })
+        .setProtectedHeader({ alg: "HS256" })
+        .setIssuedAt()
+        .setExpirationTime("5m")
+        .sign(secret);
+      headers["Authorization"] = `Bearer ${token}`;
+    }
+
     iaResponse = await fetch(`${IA_API_URL}/api/classify/analyze`, {
       method: "POST",
       body: iaFormData,
+      headers,
       signal: controller.signal,
     });
   } catch (e) {
