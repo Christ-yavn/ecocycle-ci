@@ -20,7 +20,7 @@ const ROLE_PREFIXES: Record<string, Role> = {
   "/citoyen": "citoyen",
 };
 
-export async function middleware(request: NextRequest) {
+export async function proxy(request: NextRequest) {
   const { supabase, user, response } = await updateSession(request);
   const pathname = request.nextUrl.pathname;
 
