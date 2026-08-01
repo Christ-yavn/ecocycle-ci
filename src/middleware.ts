@@ -20,7 +20,7 @@ const ROLE_PREFIXES: Record<string, Role> = {
   "/citoyen": "citoyen",
 };
 
-export async function proxy(request: NextRequest) {
+export async function middleware(request: NextRequest) {
   const { supabase, user, response } = await updateSession(request);
   const pathname = request.nextUrl.pathname;
 
@@ -34,7 +34,9 @@ export async function proxy(request: NextRequest) {
   if (!user) {
     const loginUrl = new URL("/login", request.url);
     loginUrl.searchParams.set("redirect", pathname);
-    return NextResponse.redirect(loginUrl);
+    const redirectRes = NextResponse.redirect(loginUrl);
+    response.cookies.getAll().forEach((c) => redirectRes.cookies.set(c.name, c.value, c));
+    return redirectRes;
   }
 
   // --- Connecté : vérifier le rôle ---
@@ -43,7 +45,9 @@ export async function proxy(request: NextRequest) {
   // Rôle non trouvé (profil pas encore créé) → page de complétion
   if (!role) {
     const completeUrl = new URL("/login?mode=complete", request.url);
-    return NextResponse.redirect(completeUrl);
+    const redirectRes = NextResponse.redirect(completeUrl);
+    response.cookies.getAll().forEach((c) => redirectRes.cookies.set(c.name, c.value, c));
+    return redirectRes;
   }
 
   // Vérifier que le path correspond au rôle de l'utilisateur
@@ -51,7 +55,9 @@ export async function proxy(request: NextRequest) {
     if (pathname.startsWith(prefix) && role !== expectedRole) {
       // Rediriger vers l'accueil du bon rôle
       const homeUrl = new URL(`/${role}`, request.url);
-      return NextResponse.redirect(homeUrl);
+      const redirectRes = NextResponse.redirect(homeUrl);
+      response.cookies.getAll().forEach((c) => redirectRes.cookies.set(c.name, c.value, c));
+      return redirectRes;
     }
   }
 
