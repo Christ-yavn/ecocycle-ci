@@ -1,41 +1,46 @@
-# PLAN.md — Remise en état ECOCYCLE CI (login production)
+# PLAN.md — EcoCycle CI (v2 Écosystème 6 acteurs + Admin)
 
-> Plan-and-Solve (CONSTITUTION Loi 5). Objectif unique : **le login fonctionne en production sur Vercel, avec l'API IA sur Render.**
+> Plan-and-Solve (CONSTITUTION Loi 5). Validé par l'utilisateur le 2026-08-01.
+> Objectif : porter la plateforme au niveau "MVP incubateur" — 100 % fonctionnel, zéro mock, sans casser la prod.
 
-## Diagnostic (cause racine)
+## Décisions d'architecture validées
 
-| # | Cause | Preuve | Confiance |
-|---|-------|--------|-----------|
-| 1 | Variables `NEXT_PUBLIC_SUPABASE_*` absentes sur Vercel → `/` et le proxy crashent en 500 ; le submit login lève une exception | Aucun `.env*` dans le repo ; page `/debug` créée pour ce problème | 85 % |
-| 2 | Comptes démo jamais créés sur le projet Supabase de prod → "Invalid login credentials" | `scripts/seed_test_users.js` nécessite une exécution manuelle locale | 70 % |
-| 3 | `schema.sql` / migrations 02-03 jamais exécutés → pas de profil → boucle silencieuse `/` ↔ `/login` | Le login redirigeait vers `/` si pas de profil, qui renvoie vers `/login` | 40 % |
-| 4 | Page `/debug` inaccessible en prod si vars manquantes (le proxy crashait aussi sur `/debug`) | `matcher` n'excluait pas `debug` | corrigé |
+| Sujet | Décision | Raison |
+|---|---|---|
+| Cartographie | **Leaflet + OSRM** (conservé) | Gratuit, déjà en prod, endpoint `/trip` = TSP natif |
+| Clustering | **Supercluster** (ajout léger) | Clusters de volumes (kg) sans dépendre de Mapbox |
+| Rôles collecteur/recycleur | **Hybride** : rôles DB inchangés + `sous_activite` (collecte/recyclage/mixte) | Ne casse pas les comptes existants |
+| Signalement citoyen | Compte conservé **+ espace "Signaler" aussi dans le dashboard producteur** | Demande explicite utilisateur |
+| Design | **CSS Modules EcoLoop conservé, refonte pro** : suppression emojis, icônes SVG, finition startup | Demande explicite utilisateur |
+| Admin | Nouveau rôle `admin` (7e) + table `market_prices` | Vision MEGAPROMPT |
+| Validation collecte | **QR Code dynamique + PIN 4 chiffres fallback** | Vision MEGAPROMPT |
+| Gamification | **EcoCoins civiques** : points crédités au citoyen quand la mairie résout un signalement | Amélioration 2 validée |
+| Temps réel | `supabase.channel()` sur `lots` + `signalements` | Vision MEGAPROMPT |
 
-## Correctifs code appliqués (2026-08-01)
+## Phases d'exécution
 
-- `src/proxy.ts` : try/catch global — plus de 500 si config absente (routes publiques OK, protégées → `/login?error=config`) ; `/debug` exclu du matcher ; try/catch sur `getUserRole`.
-- `src/app/page.tsx` : landing affichée même si Supabase est mal configuré (plus de 500 sur le lien officiel).
-- `src/app/(auth)/login/page.tsx` : messages explicites pour `error=config`, `error=no_profile`, `mode=complete` ; plus de boucle silencieuse si profil introuvable.
-- `src/app/debug/page.tsx` : valeurs secrètes hardcodées supprimées (elles étaient publiques).
-- `README.md` : mot de passe DB fuité remplacé par un placeholder (**à rotationner dans Supabase**).
-- Créés : `.env.example`, `DEPLOIEMENT.md`.
-
-## Étapes restantes (action utilisateur — dashboards)
-
-1. **Supabase** : exécuter `supabase/schema.sql` → `migration_02_couche3.sql` → `migration_03_rls_demo.sql` (SQL Editor).
-2. **Vercel** : ajouter les 7 variables de `.env.example` → Redeploy.
-3. **Seed** : en local, remplir `.env.local` puis `node --env-file=.env.local scripts/seed_test_users.js`.
-4. **Render** : vérifier le service `ecocycle-ia` (healthcheck `/api/health`), mettre `IA_API_URL` sur Vercel.
-5. **Recette prod** : `/debug` → 2 ✓ ; login `producteur@ecocycle.ci` / mot de passe démo → dashboard ; refresh ; logout.
-
-## Critères de succès
-
-- [ ] `https://<app>.vercel.app` affiche la landing (pas de 500)
-- [ ] `https://<app>.vercel.app/debug` → 2 variables ✓
-- [ ] Login démo → redirection `/<role>` ; session persiste au refresh ; logout OK
-- [ ] Analyse photo IA OK (Render en ligne)
+- [x] **P1 — BDD** : `supabase/migration_04_ecosysteme.sql` (admin, sous_activite, capacité véhicule, PIN/QR hash, market_prices, realtime, trigger EcoCoins citoyen, RLS)
+- [x] **P2 — Fondations** : types `admin`, proxy `/admin`, register (cases sous-activité, sans emojis), signUp metadata, trigger `handle_new_user` maj
+- [x] **P3 — Collecteur** : clustering volumes + toggle gros/détaillé + itinéraire TSP (OSRM `/trip`) + realtime lots
+- [x] **P4 — Double validation QR/PIN** : page validation producteur (QR + PIN), scan collecteur (BarcodeDetector + fallback PIN), API dédiée
+- [x] **P5 — Producteur "Signaler"** : réutilisation SignalementForm dans l'espace producteur + nav
+- [x] **P6 — Mairie** : heatmap dépotoirs (leaflet.heat) + graphiques KPIs (recharts)
+- [x] **P7 — Admin** : dashboard prix du marché (CRUD market_prices) + stats utilisateurs
+- [x] **P8 — Acheteur B2B** : filtres catalogue + contact recycleur (lien WhatsApp pré-rempli)
+- [x] **P9 — Refonte design pro** : purge emojis → Icon SVG partout (login, register, dashboards), polish spacing/typo
+- [x] **P10 — Vérification** : lint + build 0 erreur, DEPLOIEMENT.md maj (migration 04), rapport final
 
 ## Risques
 
-- Free tier Render : cold start ~30 s sur l'IA (déjà géré par le code avec message dédié).
-- Mot de passe DB ayant fuité dans l'historique git : **rotation obligatoire**.
+- Migration 04 non appliquée sur Supabase → nouvelles colonnes absentes (documenté dans DEPLOIEMENT.md, étape à ajouter).
+- BarcodeDetector non supporté sur certains navigateurs → fallback PIN obligatoire (prévu).
+- Realtime nécessite d'activer la publication sur Supabase (inclus dans le SQL).
+
+## Critères de succès
+
+- [x] `npm run lint` 0 erreur · `npm run build` 0 erreur
+- [x] Register avec cases sous-activité fonctionne, rôle admin redirige vers `/admin`
+- [x] Carte collecteur : clusters de volumes + TSP tracé depuis GPS réel
+- [x] Validation collecte par PIN (fallback) de bout en bout
+- [x] Zéro emoji dans l'UI, icônes SVG partout
+- [x] Aucune régression sur les flux existants (login, IA, confirmations)

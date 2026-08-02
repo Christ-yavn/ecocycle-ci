@@ -1,0 +1,139 @@
+.filterBar {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+  background: var(--ec-paper);
+  border: 1px solid var(--ec-line-dark);
+  border-radius: var(--radius-card);
+  padding: 0.6rem 0.75rem;
+  margin-bottom: var(--space-4);
+}
+
+.filterField {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: var(--ec-ink-soft);
+}
+
+.select {
+  border: 1.5px solid var(--ec-line-dark);
+  border-radius: var(--radius-sm);
+  padding: 0.4rem 0.6rem;
+  font-family: inherit;
+  font-size: var(--fs-body);
+  background: var(--ec-white);
+  color: var(--ec-ink);
+  cursor: pointer;
+}
+
+.select:focus {
+  outline: none;
+  border-color: var(--ec-signal);
+}
+
+.resetBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  border: none;
+  background: transparent;
+  color: var(--ec-rust);
+  font-family: inherit;
+  font-size: var(--fs-body);
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0.3rem 0.5rem;
+}
+
+.resultCount {
+  margin-left: auto;
+  font-family: var(--font-mono);
+  font-size: var(--fs-label);
+  color: var(--ec-ink-soft);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: var(--space-3);
+}
+
+.head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.date {
+  font-family: var(--font-mono);
+  font-size: var(--fs-label);
+  color: var(--ec-ink-soft);
+}
+
+.body {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 0.35rem;
+}
+
+.type {
+  font-family: var(--font-fraunces);
+  font-weight: 700;
+  font-size: 1.05rem;
+  color: var(--ec-ink);
+}
+
+.weight {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  color: var(--ec-forest);
+}
+
+.meta {
+  font-size: var(--fs-body);
+  color: var(--ec-ink-soft);
+}
+
+.specs {
+  font-size: var(--fs-body);
+  color: var(--ec-ink-soft);
+  margin-top: 0.25rem;
+  border-left: 2px solid var(--ec-line-dark);
+  padding-left: 0.5rem;
+}
+
+.recycleur {
+  margin-top: 0.5rem;
+  font-size: var(--fs-body);
+  color: var(--ec-ink);
+}
+
+.actions {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.6rem;
+  align-items: center;
+}
+
+.waBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  background: rgba(63, 163, 77, 0.12);
+  color: var(--ec-forest);
+  border: 1px solid rgba(63, 163, 77, 0.35);
+  padding: 0.4rem 0.7rem;
+  border-radius: var(--radius-sm);
+  font-size: var(--fs-body);
+  font-weight: 600;
+  text-decoration: none;
+  transition: background 0.15s;
+}
+
+.waBtn:hover {
+  background: rgba(63, 163, 77, 0.2);
+}

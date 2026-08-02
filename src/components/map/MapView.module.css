@@ -24,6 +24,53 @@
   border: none;
 }
 
+/* ===== Toggle Zones / Détaillé ===== */
+.viewToggle {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  z-index: 1000;
+  display: flex;
+  gap: 4px;
+  background: var(--ec-paper);
+  border: 1px solid var(--ec-line-dark);
+  border-radius: var(--radius-sm);
+  padding: 3px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
+}
+
+.toggleBtn {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  border: none;
+  background: transparent;
+  color: var(--ec-ink-soft);
+  font-family: inherit;
+  font-size: 0.72rem;
+  font-weight: 600;
+  padding: 0.35rem 0.6rem;
+  border-radius: calc(var(--radius-sm) - 2px);
+  cursor: pointer;
+  transition: all 0.15s ease;
+  white-space: nowrap;
+}
+
+.toggleBtn:hover {
+  color: var(--ec-ink);
+}
+
+.toggleBtnActive {
+  background: var(--ec-forest);
+  color: var(--ec-paper);
+}
+
+.routeError {
+  font-family: var(--font-mono);
+  font-size: var(--fs-body);
+  color: var(--ec-amber);
+}
+
 .controls {
   position: absolute;
   top: 12px;

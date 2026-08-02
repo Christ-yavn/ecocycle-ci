@@ -11,6 +11,7 @@ export const NAV: Record<Role, NavItem[]> = {
     { href: "/producteur", label: "Accueil", icon: "home" },
     { href: "/producteur/lots", label: "Mes lots", icon: "lot" },
     { href: "/producteur/lots/nouveau", label: "Publier un lot", icon: "plus" },
+    { href: "/producteur/signaler", label: "Signaler un dépôt", icon: "alert" },
     { href: "/producteur/recompenses", label: "Récompenses", icon: "star" },
   ],
   collecteur: [
@@ -36,5 +37,10 @@ export const NAV: Record<Role, NavItem[]> = {
   citoyen: [
     { href: "/citoyen", label: "Signaler un dépôt", icon: "alert" },
     { href: "/citoyen/suivi", label: "Mes signalements", icon: "follow" },
+  ],
+  admin: [
+    { href: "/admin", label: "Tableau de bord", icon: "dashboard" },
+    { href: "/admin/prix", label: "Prix du marché", icon: "coins" },
+    { href: "/admin/utilisateurs", label: "Utilisateurs", icon: "shield" },
   ],
 };

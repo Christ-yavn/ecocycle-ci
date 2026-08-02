@@ -9,6 +9,7 @@ const PROTECTED_PREFIXES = [
   "/acheteur",
   "/mairie",
   "/citoyen",
+  "/admin",
 ];
 
 const ROLE_PREFIXES: Record<string, Role> = {
@@ -18,6 +19,7 @@ const ROLE_PREFIXES: Record<string, Role> = {
   "/acheteur": "acheteur",
   "/mairie": "mairie",
   "/citoyen": "citoyen",
+  "/admin": "admin",
 };
 
 export async function proxy(request: NextRequest) {

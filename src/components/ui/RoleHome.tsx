@@ -51,6 +51,12 @@ const PLACEHOLDER_STATS: Record<Role, StatItem[]> = {
     { label: "Pris en charge", value: 0 },
     { label: "Résolus", value: 0 },
   ],
+  admin: [
+    { label: "Utilisateurs", value: 0 },
+    { label: "Lots publiés", value: 0 },
+    { label: "Signalements", value: 0 },
+    { label: "Prix du marché", value: 0, hint: "Matières suivies" },
+  ],
 };
 
 const CTA_CONFIG: Record<
@@ -98,6 +104,13 @@ const CTA_CONFIG: Record<
     emptyTitle: "Aucun signalement",
     emptyText:
       "Photographiez un dépôt sauvage dans votre quartier et signalez-le à votre mairie.",
+  },
+  admin: {
+    cta: "Gérer les prix du marché",
+    ctaHref: "/admin/prix",
+    emptyTitle: "Supervision globale",
+    emptyText:
+      "Consultez les statistiques de la plateforme et ajustez les prix du marché au kilo.",
   },
 };
 

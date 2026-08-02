@@ -4,7 +4,16 @@ import { useState, type FormEvent } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { signUp } from "@/lib/auth-actions";
-import { ROLES, ROLE_LABELS, ROLE_ACCES_PAYANT, type Role } from "@/types/role";
+import { RoleIcon, Icon } from "@/components/ui/Icon";
+import {
+  ROLES,
+  ROLE_LABELS,
+  ROLE_ACCES_PAYANT,
+  ROLES_AVEC_SOUS_ACTIVITE,
+  SOUS_ACTIVITE_LABELS,
+  type Role,
+  type SousActivite,
+} from "@/types/role";
 import styles from "./page.module.css";
 
 const COMMUNES_ABIDJAN = [
@@ -27,21 +36,14 @@ const ROLE_DESCRIPTIONS: Record<Role, string> = {
   acheteur: "Achetez des matières premières recyclées",
   mairie: "Supervisez la filière de votre commune",
   citoyen: "Signalez les dépôts sauvages",
-};
-
-const ROLE_ICONS: Record<Role, string> = {
-  producteur: "🏠",
-  collecteur: "🚚",
-  recycleur: "♻️",
-  acheteur: "🛒",
-  mairie: "🏛️",
-  citoyen: "👁️",
+  admin: "Supervisez la plateforme EcoCycle",
 };
 
 export default function RegisterPage() {
   const router = useRouter();
 
   const [role, setRole] = useState<Role>("producteur");
+  const [sousActivite, setSousActivite] = useState<SousActivite>("collecte");
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
@@ -51,6 +53,8 @@ export default function RegisterPage() {
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
+
+  const avecSousActivite = ROLES_AVEC_SOUS_ACTIVITE.includes(role);
 
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
@@ -64,6 +68,7 @@ export default function RegisterPage() {
       role,
       commune || undefined,
       quartier || undefined,
+      avecSousActivite ? sousActivite : undefined,
     );
 
     if (authError) {
@@ -112,7 +117,9 @@ export default function RegisterPage() {
                 className={`${styles.roleCard} ${role === r ? styles.roleCardActive : ""}`}
                 onClick={() => setRole(r)}
               >
-                <span className={styles.roleIcon}>{ROLE_ICONS[r]}</span>
+                <span className={styles.roleIcon}>
+                  <RoleIcon role={r} size={22} />
+                </span>
                 <span className={styles.roleCardLabel}>{ROLE_LABELS[r]}</span>
                 {ROLE_ACCES_PAYANT[r] && (
                   <span className={styles.roleBadge}>Pro</span>
@@ -122,6 +129,34 @@ export default function RegisterPage() {
           </div>
           <p className={styles.roleDesc}>{ROLE_DESCRIPTIONS[role]}</p>
         </div>
+
+        {avecSousActivite && (
+          <div className={styles.field}>
+            <label className={styles.label}>Votre activité</label>
+            <div className={styles.activiteRow}>
+              {(Object.keys(SOUS_ACTIVITE_LABELS) as SousActivite[]).map(
+                (sa) => (
+                  <label
+                    key={sa}
+                    className={`${styles.activiteCard} ${
+                      sousActivite === sa ? styles.activiteCardActive : ""
+                    }`}
+                  >
+                    <input
+                      type="radio"
+                      name="sous_activite"
+                      value={sa}
+                      checked={sousActivite === sa}
+                      onChange={() => setSousActivite(sa)}
+                      className={styles.activiteInput}
+                    />
+                    <span>{SOUS_ACTIVITE_LABELS[sa]}</span>
+                  </label>
+                ),
+              )}
+            </div>
+          </div>
+        )}
 
         <div className={styles.field}>
           <label className={styles.label} htmlFor="name">
@@ -196,7 +231,7 @@ export default function RegisterPage() {
               tabIndex={-1}
               aria-label="Afficher/masquer le mot de passe"
             >
-              {showPassword ? "🙈" : "👁"}
+              <Icon name={showPassword ? "eyeOff" : "eye"} size={18} />
             </button>
           </div>
         </div>

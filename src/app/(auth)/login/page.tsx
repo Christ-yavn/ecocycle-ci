@@ -4,6 +4,7 @@ import { useState, Suspense, type FormEvent } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { signIn } from "@/lib/auth-actions";
+import { Icon } from "@/components/ui/Icon";
 import styles from "./page.module.css";
 
 function LoginForm() {
@@ -151,7 +152,7 @@ function LoginForm() {
               tabIndex={-1}
               aria-label="Afficher/masquer le mot de passe"
             >
-              {showPassword ? "🙈" : "👁"}
+              <Icon name={showPassword ? "eyeOff" : "eye"} size={18} />
             </button>
           </div>
         </div>

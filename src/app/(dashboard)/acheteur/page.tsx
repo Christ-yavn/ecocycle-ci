@@ -1,11 +1,9 @@
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
-import { Card } from "@/components/ui/Card";
 import { Badge } from "@/components/ui/Badge";
 import { Stat } from "@/components/ui/Stat";
 import { EmptyState } from "@/components/ui/EmptyState";
-import { OrderButton } from "@/components/matiere/OrderButton";
-import styles from "./page.module.css";
+import { CatalogueB2B, type MatiereItem } from "@/components/matiere/CatalogueB2B";
 
 export const dynamic = "force-dynamic";
 
@@ -78,40 +76,28 @@ export default async function AcheteurPage() {
           Les recycleurs n{"'"}ont pas encore publié de matières premières. Revenez bientôt pour découvrir le catalogue.
         </EmptyState>
       ) : (
-        <div className={styles.grid}>
-          {matiereList.map((m) => {
-            const recycleur = m.recycleur_id ? recycleurMap.get(m.recycleur_id) : null;
-            return (
-              <Card key={m.id} elevated={false}>
-                <div className={styles.head}>
-                  <Badge tone="forest" dot>
-                    Disponible
-                  </Badge>
-                  <span className={styles.date}>
-                    {new Date(m.date_publication).toLocaleDateString("fr-FR")}
-                  </span>
-                </div>
-                <div className={styles.body}>
-                  <span className={styles.type}>{m.type_matiere}</span>
-                  <span className={styles.weight}>{Math.round(m.volume_disponible_kg)} kg</span>
-                </div>
-                {m.grade && <div className={styles.meta}>Grade : {m.grade}</div>}
-                {m.conditionnement && <div className={styles.meta}>Conditionnement : {m.conditionnement}</div>}
-                {m.specifications && <div className={styles.specs}>{m.specifications}</div>}
-
-                <div className={styles.recycleur}>
-                  <strong>{recycleur?.name ?? "Recycleur"}</strong>
-                  {recycleur?.commune && ` · ${recycleur.commune}`}
-                  {recycleur?.phone && ` · ${recycleur.phone}`}
-                </div>
-
-                <div className={styles.action}>
-                  <OrderButton matiereId={m.id} />
-                </div>
-              </Card>
-            );
-          })}
-        </div>
+        <CatalogueB2B
+          items={matiereList.map(
+            (m): MatiereItem => ({
+              id: m.id,
+              typeMatiere: m.type_matiere,
+              volumeKg: m.volume_disponible_kg,
+              specifications: m.specifications,
+              grade: m.grade,
+              conditionnement: m.conditionnement,
+              datePublication: m.date_publication,
+              recycleurName: m.recycleur_id
+                ? (recycleurMap.get(m.recycleur_id)?.name ?? null)
+                : null,
+              recycleurCommune: m.recycleur_id
+                ? (recycleurMap.get(m.recycleur_id)?.commune ?? null)
+                : null,
+              recycleurPhone: m.recycleur_id
+                ? (recycleurMap.get(m.recycleur_id)?.phone ?? null)
+                : null,
+            }),
+          )}
+        />
       )}
     </>
   );

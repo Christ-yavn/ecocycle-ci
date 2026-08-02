@@ -22,7 +22,13 @@ const COMMUNES_ABIDJAN = [
   "Yopougon",
 ];
 
-export function SignalementForm({ userId }: { userId: string }) {
+export function SignalementForm({
+  userId,
+  redirectTo = "/citoyen/suivi",
+}: {
+  userId: string;
+  redirectTo?: string;
+}) {
   const router = useRouter();
   const [photos, setPhotos] = useState<PhotoFile[]>([]);
   const [coords, setCoords] = useState<Coords | null>(null);
@@ -76,7 +82,7 @@ export function SignalementForm({ userId }: { userId: string }) {
 
       if (res.ok) {
         setSuccess(true);
-        setTimeout(() => router.push("/citoyen/suivi"), 2000);
+        setTimeout(() => router.push(redirectTo), 2000);
       } else {
         setError(data.error ?? "Signalement échoué.");
       }

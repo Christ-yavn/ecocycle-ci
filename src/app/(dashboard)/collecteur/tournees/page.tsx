@@ -126,6 +126,21 @@ export default async function TourneesPage() {
                     {"☆".repeat(5 - lot.score_tri)} · Tri niveau {lot.score_tri}
                   </p>
                 )}
+                <a
+                  href={`/collecteur/scan/${lot.id}`}
+                  className="btn-primary"
+                  style={{
+                    marginTop: "0.6rem",
+                    display: "inline-flex",
+                    alignItems: "center",
+                    gap: "0.4rem",
+                    fontSize: "var(--fs-body)",
+                    textDecoration: "none",
+                  }}
+                >
+                  <Icon name="scan" size={16} />
+                  Valider le retrait (QR / PIN)
+                </a>
               </Card>
             ))}
           </div>

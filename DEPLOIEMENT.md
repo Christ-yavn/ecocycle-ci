@@ -11,6 +11,7 @@ Dashboard : https://supabase.com → projet EcoCycle → **SQL Editor**
 1. Coller + exécuter `supabase/schema.sql` (tables + RLS + trigger `handle_new_user`).
 2. Coller + exécuter `supabase/migration_02_couche3.sql`.
 3. Coller + exécuter `supabase/migration_03_rls_demo.sql`.
+4. Coller + exécuter `supabase/migration_04_ecosysteme.sql` (Nouvelles tables 6 acteurs, admin, RLS).
 
 **Vérification** : Table Editor → la table `users` existe.
 

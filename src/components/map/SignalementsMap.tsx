@@ -3,7 +3,9 @@
 import { useEffect, useRef, useState } from "react";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
+import "leaflet.heat";
 import type { SignalementMapItem } from "@/types/map";
+import { Icon } from "@/components/ui/Icon";
 import styles from "./MapView.module.css";
 
 const ABIDJAN_CENTER: [number, number] = [5.3097, -4.0122];
@@ -30,7 +32,9 @@ export function SignalementsMap({
   const containerRef = useRef<HTMLDivElement>(null);
   const mapRef = useRef<L.Map | null>(null);
   const markersRef = useRef<Map<string, L.Marker>>(new Map());
+  const heatLayerRef = useRef<L.HeatLayer | null>(null);
   const [ready, setReady] = useState(false);
+  const [heatMode, setHeatMode] = useState(false);
 
   useEffect(() => {
     if (!containerRef.current || mapRef.current) return;
@@ -65,6 +69,33 @@ export function SignalementsMap({
 
     markersRef.current.forEach((m) => m.remove());
     markersRef.current = new Map();
+
+    // --- Mode heatmap : intensité par densité de dépôts ---
+    if (heatMode) {
+      const points = signalements
+        .filter((s) => s.latitude != null && s.longitude != null)
+        .map(
+          (s): [number, number, number] => [
+            s.latitude!,
+            s.longitude!,
+            s.status === "nouveau" ? 1.0 : s.status === "pris_en_charge" ? 0.6 : 0.25,
+          ],
+        );
+
+      heatLayerRef.current = L.heatLayer(points, {
+        radius: 28,
+        blur: 22,
+        maxZoom: 17,
+        gradient: { 0.3: "#3fa34d", 0.6: "#d9a441", 1: "#b4522f" },
+      }).addTo(map);
+
+      return () => {
+        if (heatLayerRef.current) {
+          map.removeLayer(heatLayerRef.current);
+          heatLayerRef.current = null;
+        }
+      };
+    }
 
     signalements.forEach((s) => {
       if (s.latitude == null || s.longitude == null) return;
@@ -143,11 +174,31 @@ export function SignalementsMap({
         map.fitBounds(bounds, { padding: [60, 60] });
       }
     }
-  }, [signalements, ready, onUpdateStatus]);
+  }, [signalements, ready, onUpdateStatus, heatMode]);
 
   return (
     <div className={styles.wrap}>
       <div ref={containerRef} className={styles.map} />
+
+      <div className={styles.viewToggle}>
+        <button
+          type="button"
+          className={`${styles.toggleBtn} ${!heatMode ? styles.toggleBtnActive : ""}`}
+          onClick={() => setHeatMode(false)}
+        >
+          <Icon name="location" size={14} />
+          Marqueurs
+        </button>
+        <button
+          type="button"
+          className={`${styles.toggleBtn} ${heatMode ? styles.toggleBtnActive : ""}`}
+          onClick={() => setHeatMode(true)}
+        >
+          <Icon name="chart" size={14} />
+          Heatmap
+        </button>
+      </div>
+
       {signalements.length === 0 && (
         <div className={styles.emptyMap}>
           <span className="font-mono">Aucun signalement sur la commune</span>

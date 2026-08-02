@@ -4,6 +4,7 @@ import { Card } from "@/components/ui/Card";
 import { Badge } from "@/components/ui/Badge";
 import { Stat } from "@/components/ui/Stat";
 import { MairieMap } from "@/components/map/MairieMap";
+import { VolumesChart, type MonthlyVolume } from "@/components/mairie/VolumesChart";
 import type { SignalementMapItem } from "@/types/map";
 import styles from "./page.module.css";
 
@@ -150,6 +151,53 @@ export default async function MairiePage() {
     inconnu: "Inconnu",
   };
 
+  // --- Volumes mensuels (6 derniers mois) pour le graphique ---
+  const sixMonthsAgo = new Date(now.getFullYear(), now.getMonth() - 5, 1);
+
+  const { data: lots6m } = await supabase
+    .from("lots")
+    .select("date_collecte, date_livraison, weight_real, volume_ia")
+    .gte("date_collecte", sixMonthsAgo.toISOString());
+
+  const MOIS_FR = [
+    "Jan", "Fév", "Mar", "Avr", "Mai", "Juin",
+    "Juil", "Août", "Sep", "Oct", "Nov", "Déc",
+  ];
+
+  const monthlyMap = new Map<string, { collecte: number; recycle: number }>();
+  for (let i = 5; i >= 0; i--) {
+    const d = new Date(now.getFullYear(), now.getMonth() - i, 1);
+    monthlyMap.set(`${d.getFullYear()}-${d.getMonth()}`, {
+      collecte: 0,
+      recycle: 0,
+    });
+  }
+
+  (lots6m ?? []).forEach((l) => {
+    const kg = l.weight_real ?? l.volume_ia ?? 0;
+    if (l.date_collecte) {
+      const d = new Date(l.date_collecte);
+      const entry = monthlyMap.get(`${d.getFullYear()}-${d.getMonth()}`);
+      if (entry) entry.collecte += kg;
+    }
+    if (l.date_livraison) {
+      const d = new Date(l.date_livraison);
+      const entry = monthlyMap.get(`${d.getFullYear()}-${d.getMonth()}`);
+      if (entry) entry.recycle += l.weight_real ?? 0;
+    }
+  });
+
+  const monthlyData = Array.from(monthlyMap.entries()).map(
+    ([key, v]): MonthlyVolume => {
+      const monthIdx = parseInt(key.split("-")[1], 10);
+      return {
+        mois: MOIS_FR[monthIdx],
+        collecte: Math.round(v.collecte),
+        recycle: Math.round(v.recycle),
+      };
+    },
+  );
+
   return (
     <>
       <div className="pageHead">
@@ -233,6 +281,11 @@ export default async function MairiePage() {
           </div>
         </Card>
       )}
+
+      {/* Volumes mensuels */}
+      <Card title="Volumes collectés et recyclés — 6 derniers mois">
+        <VolumesChart data={monthlyData} />
+      </Card>
 
       {/* Carte des dépôts sauvages */}
       <Card title="Carte des dépôts sauvages signalés" action="Voir détails" actionHref="/mairie/alertes">

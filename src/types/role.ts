@@ -4,8 +4,10 @@ export type Role =
   | "recycleur"
   | "acheteur"
   | "mairie"
-  | "citoyen";
+  | "citoyen"
+  | "admin";
 
+// Rôles proposés à l'inscription (l'admin est créé manuellement).
 export const ROLES: Role[] = [
   "producteur",
   "collecteur",
@@ -22,6 +24,7 @@ export const ROLE_LABELS: Record<Role, string> = {
   acheteur: "Acheteur final",
   mairie: "Mairie / Commune",
   citoyen: "Citoyen",
+  admin: "Administrateur",
 };
 
 export const ROLE_DESCRIPTIONS: Record<Role, string> = {
@@ -36,6 +39,7 @@ export const ROLE_DESCRIPTIONS: Record<Role, string> = {
   mairie:
     "Supervisez la filière sur votre commune et suivez les dépôts sauvages.",
   citoyen: "Signalez les dépôts sauvages dans votre quartier.",
+  admin: "Supervisez la plateforme et fixez les prix du marché.",
 };
 
 export const ROLE_ACCES_PAYANT: Record<Role, boolean> = {
@@ -45,4 +49,17 @@ export const ROLE_ACCES_PAYANT: Record<Role, boolean> = {
   acheteur: true,
   mairie: true,
   citoyen: false,
+  admin: false,
 };
+
+// Sous-activité pour les profils collecteur / recycleur (cases à cocher).
+export type SousActivite = "collecte" | "recyclage" | "mixte";
+
+export const SOUS_ACTIVITE_LABELS: Record<SousActivite, string> = {
+  collecte: "Collecte uniquement",
+  recyclage: "Recyclage uniquement",
+  mixte: "Les deux (collecte + recyclage)",
+};
+
+// Rôles concernés par le choix d'une sous-activité à l'inscription.
+export const ROLES_AVEC_SOUS_ACTIVITE: Role[] = ["collecteur", "recycleur"];

@@ -118,6 +118,22 @@ export default async function MesLotsPage() {
                       <span>Estimé : {lot.volume_ia} kg</span>
                     )}
                   </div>
+                  {lot.status === "reserve" && (
+                    <a
+                      href={`/producteur/lots/${lot.id}/retrait`}
+                      className="btn-accent"
+                      style={{
+                        marginTop: "0.5rem",
+                        display: "inline-flex",
+                        alignItems: "center",
+                        gap: "0.4rem",
+                        fontSize: "var(--fs-body)",
+                      }}
+                    >
+                      <Icon name="qr" size={16} />
+                      QR / PIN de retrait
+                    </a>
+                  )}
                   {lot.status === "collecte" && (
                     <a
                       href={`/producteur/lots/${lot.id}/confirmation`}

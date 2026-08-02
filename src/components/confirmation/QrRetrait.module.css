@@ -1,0 +1,111 @@
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-4);
+  align-items: start;
+}
+
+.qrWrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.qrBox {
+  background: var(--ec-paper);
+  padding: var(--space-4);
+  border-radius: var(--radius-card);
+  border: 1px solid var(--ec-line-dark);
+  box-shadow: 0 4px 16px rgba(20, 37, 27, 0.08);
+}
+
+.qrHint {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: var(--fs-body);
+  color: var(--ec-ink-soft);
+  margin: 0;
+  text-align: center;
+}
+
+.pinSection {
+  text-align: center;
+  padding-bottom: var(--space-4);
+  border-bottom: 1px dashed var(--ec-line-dark);
+  margin-bottom: var(--space-4);
+}
+
+.pinLabel {
+  font-family: var(--font-mono);
+  font-size: var(--fs-label);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--ec-ink-soft);
+}
+
+.pinDigits {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin: var(--space-3) 0;
+}
+
+.pinDigit {
+  width: 48px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--ec-forest);
+  color: var(--ec-paper);
+  font-family: var(--font-mono);
+  font-size: 1.8rem;
+  font-weight: 700;
+  border-radius: var(--radius-sm);
+  box-shadow: 0 3px 8px rgba(20, 37, 27, 0.2);
+}
+
+.pinHint {
+  font-size: var(--fs-body);
+  color: var(--ec-ink-soft);
+  margin: 0;
+}
+
+.meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: var(--space-4);
+}
+
+.metaRow {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: var(--fs-body);
+  color: var(--ec-ink);
+}
+
+.securityNote {
+  display: flex;
+  gap: 0.6rem;
+  background: rgba(217, 164, 65, 0.1);
+  border: 1px solid rgba(217, 164, 65, 0.3);
+  border-radius: var(--radius-sm);
+  padding: var(--space-3);
+  color: var(--ec-amber-dark);
+}
+
+.securityNote p {
+  margin: 0;
+  font-size: var(--fs-body);
+  color: var(--ec-ink);
+}
+
+@media (max-width: 720px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}

@@ -187,6 +187,45 @@
   font-weight: 700;
 }
 
+/* ===== SOUS-ACTIVITÉ (collecteur / recycleur) ===== */
+.activiteRow {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.activiteCard {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  border: 1.5px solid var(--ec-line-dark);
+  border-radius: 10px;
+  padding: 0.65rem 0.8rem;
+  background: var(--ec-white);
+  cursor: pointer;
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: var(--ec-ink);
+  transition: all 0.15s ease;
+}
+
+.activiteCard:hover {
+  border-color: var(--ec-amber);
+}
+
+.activiteCardActive {
+  border-color: var(--ec-signal);
+  background: rgba(63, 163, 77, 0.06);
+  box-shadow: 0 0 0 3px rgba(63, 163, 77, 0.12);
+}
+
+.activiteInput {
+  accent-color: var(--ec-signal);
+  width: 15px;
+  height: 15px;
+  margin: 0;
+}
+
 .roleDesc {
   font-size: 0.75rem;
   color: var(--ec-ink-soft);

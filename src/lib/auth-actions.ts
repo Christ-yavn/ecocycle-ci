@@ -38,6 +38,7 @@ export async function signUp(
   role: Role,
   commune?: string,
   quartier?: string,
+  sousActivite?: string,
 ) {
   const email = phoneToEmail(phone);
   const { data, error } = await getSupabase().auth.signUp({
@@ -50,6 +51,7 @@ export async function signUp(
         role,
         commune: commune ?? null,
         quartier: quartier ?? null,
+        sous_activite: sousActivite ?? null,
       },
     },
   });
