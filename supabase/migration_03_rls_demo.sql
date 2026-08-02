@@ -10,13 +10,9 @@
 -- ============================================================
 
 -- ============================================================
--- 1. spatial_ref_sys (PostGIS)
+-- 1. spatial_ref_sys (PostGIS) - [RETIRÉ]
+-- (Impossible de modifier RLS sans être owner, ignoré)
 -- ============================================================
-alter table public.spatial_ref_sys enable row level security;
-
-drop policy if exists "spatial_ref_sys_read" on public.spatial_ref_sys;
-create policy "spatial_ref_sys_read" on public.spatial_ref_sys
-  for select to anon, authenticated using (true);
 
 -- ============================================================
 -- 2. users — SELECT pour tous les authenticated
