@@ -84,11 +84,11 @@ drop policy if exists "market_prices_admin_write" on public.market_prices;
 create policy "market_prices_admin_write" on public.market_prices
   for all to authenticated using (
     exists (
-      select 1 from public.users u where u.id = auth.uid() and u.role = 'admin'
+      select 1 from public.users u where u.id = auth.uid() and u.role::text = 'admin'
     )
   ) with check (
     exists (
-      select 1 from public.users u where u.id = auth.uid() and u.role = 'admin'
+      select 1 from public.users u where u.id = auth.uid() and u.role::text = 'admin'
     )
   );
 
@@ -170,7 +170,7 @@ drop policy if exists "users_select_admin" on public.users;
 create policy "users_select_admin" on public.users
   for select to authenticated using (
     exists (
-      select 1 from public.users u where u.id = auth.uid() and u.role = 'admin'
+      select 1 from public.users u where u.id = auth.uid() and u.role::text = 'admin'
     )
   );
 
@@ -178,7 +178,7 @@ drop policy if exists "lots_select_admin" on public.lots;
 create policy "lots_select_admin" on public.lots
   for select to authenticated using (
     exists (
-      select 1 from public.users u where u.id = auth.uid() and u.role = 'admin'
+      select 1 from public.users u where u.id = auth.uid() and u.role::text = 'admin'
     )
   );
 
@@ -186,7 +186,7 @@ drop policy if exists "signalements_select_admin" on public.signalements;
 create policy "signalements_select_admin" on public.signalements
   for select to authenticated using (
     exists (
-      select 1 from public.users u where u.id = auth.uid() and u.role = 'admin'
+      select 1 from public.users u where u.id = auth.uid() and u.role::text = 'admin'
     )
   );
 
