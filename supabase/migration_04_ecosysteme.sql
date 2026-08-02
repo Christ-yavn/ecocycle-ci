@@ -166,13 +166,8 @@ $$;
 -- ============================================================
 -- 8. RLS : l'admin lit tout (supervision)
 -- ============================================================
-drop policy if exists "users_select_admin" on public.users;
-create policy "users_select_admin" on public.users
-  for select to authenticated using (
-    exists (
-      select 1 from public.users u where u.id = auth.uid() and u.role::text = 'admin'
-    )
-  );
+-- La table users est déjà lisible par tout le monde grâce à migration_03.
+-- Ajouter une policy admin sur users créait une boucle infinie (recursion).
 
 drop policy if exists "lots_select_admin" on public.lots;
 create policy "lots_select_admin" on public.lots
