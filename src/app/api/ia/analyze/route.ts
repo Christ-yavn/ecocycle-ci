@@ -75,10 +75,10 @@ export async function POST(request: NextRequest) {
     },
   };
 
-  // 5. Initialiser Google Gemini (1.5 Flash Vision)
+  // 5. Initialiser Google Gemini
   const genAI = new GoogleGenerativeAI(GEMINI_API_KEY);
   const model = genAI.getGenerativeModel({
-    model: "gemini-1.5-flash",
+    model: "gemini-3.6-flash",
     generationConfig: {
       responseMimeType: "application/json",
     },
