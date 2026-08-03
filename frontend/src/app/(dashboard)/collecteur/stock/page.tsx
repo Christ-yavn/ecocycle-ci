@@ -11,12 +11,12 @@ export const dynamic = "force-dynamic";
 
 const STATUS_CONFIG: Record<
   string,
-  { label: string; tone: "signal" | "amber" | "forest" | "rust" | "paper" }
+  { label: string; tone: "primary" | "warning" | "success" | "danger" | "outline" }
 > = {
-  reserve: { label: "Réservé", tone: "amber" },
-  collecte: { label: "Collecté", tone: "forest" },
-  livre_recycleur: { label: "Livré", tone: "paper" },
-  traite: { label: "Traité", tone: "paper" },
+  reserve: { label: "Réservé", tone: "warning" },
+  collecte: { label: "Collecté", tone: "success" },
+  livre_recycleur: { label: "Livré", tone: "outline" },
+  traite: { label: "Traité", tone: "outline" },
 };
 
 const TYPE_LABELS: Record<string, string> = {

@@ -4,6 +4,7 @@ import { useState, Suspense, type FormEvent } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { signIn } from "@/lib/auth-actions";
+import { Icon } from "@/components/ui/Icon";
 import styles from "./page.module.css";
 
 function formatPhone(value: string): string {
@@ -116,7 +117,7 @@ function LoginForm() {
             Numéro de téléphone
           </label>
           <div className={styles.phoneWrap}>
-            <span className={styles.phonePrefix}>🇨🇮 +225</span>
+            <span className={styles.phonePrefix}>+225</span>
             <input
               id="phone"
               name="phone"
@@ -155,7 +156,7 @@ function LoginForm() {
               tabIndex={-1}
               aria-label="Afficher/masquer le mot de passe"
             >
-              {showPassword ? "🙈" : "👁️"}
+              <Icon name={showPassword ? "eyeOff" : "eye"} size={18} />
             </button>
           </div>
         </div>
@@ -169,7 +170,7 @@ function LoginForm() {
               Connexion en cours…
             </>
           ) : (
-            "🔒 Se connecter"
+            "Se connecter"
           )}
         </button>
       </form>

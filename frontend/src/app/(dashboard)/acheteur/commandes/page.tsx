@@ -73,7 +73,7 @@ export default async function AcheteurCommandesPage() {
     <>
       <div className="pageHead">
         <div className="row">
-          <Badge tone="signal" dot>
+          <Badge tone="success" dot>
             Acheteur · {profile.name}
           </Badge>
         </div>
@@ -104,7 +104,7 @@ export default async function AcheteurCommandesPage() {
             return (
               <Card key={m.id} elevated={false}>
                 <div className={styles.head}>
-                  <Badge tone="amber" dot>
+                  <Badge tone="warning" dot>
                     En cours
                   </Badge>
                   <span className={styles.date}>
@@ -162,7 +162,7 @@ export default async function AcheteurCommandesPage() {
                   <span className={styles.date}>
                     {m.date_vente ? new Date(m.date_vente).toLocaleDateString("fr-FR") : "—"}
                   </span>
-                  <Badge tone="signal">Reçu</Badge>
+                  <Badge tone="success">Reçu</Badge>
                 </div>
               ))}
             </div>

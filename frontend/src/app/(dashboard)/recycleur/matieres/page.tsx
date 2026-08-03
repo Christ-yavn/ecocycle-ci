@@ -8,10 +8,10 @@ import styles from "./page.module.css";
 
 export const dynamic = "force-dynamic";
 
-const STATUS_LABELS: Record<string, { label: string; tone: "forest" | "amber" | "signal" | "rust" }> = {
-  disponible: { label: "Disponible", tone: "forest" },
-  reservee: { label: "Réservée", tone: "amber" },
-  vendue: { label: "Vendue", tone: "signal" },
+const STATUS_LABELS: Record<string, { label: string; tone: "success" | "warning" | "primary" | "danger" }> = {
+  disponible: { label: "Disponible", tone: "success" },
+  reservee: { label: "Réservée", tone: "warning" },
+  vendue: { label: "Vendue", tone: "primary" },
 };
 
 export default async function RecycleurMatieresPage() {
@@ -42,7 +42,7 @@ export default async function RecycleurMatieresPage() {
     <>
       <div className="pageHead">
         <div className="row">
-          <Badge tone="signal" dot>
+          <Badge tone="success" dot>
             Recycleur · {profile.name}
           </Badge>
         </div>
@@ -61,7 +61,7 @@ export default async function RecycleurMatieresPage() {
       ) : (
         <div className={styles.grid}>
           {matiereList.map((m) => {
-            const statusInfo = STATUS_LABELS[m.status] ?? { label: m.status, tone: "forest" as const };
+            const statusInfo = STATUS_LABELS[m.status] ?? { label: m.status, tone: "success" as const };
             return (
               <Card key={m.id} elevated={false}>
                 <div className={styles.head}>

@@ -48,7 +48,7 @@ export function ConfirmAction({
 
   if (done) {
     return (
-      <span style={{ color: "var(--ec-signal)", fontSize: "var(--fs-label)" }}>
+      <span style={{ color: "var(--ec-success)", fontSize: "var(--fs-label)" }}>
         ✓ {message}
       </span>
     );
@@ -57,7 +57,7 @@ export function ConfirmAction({
   return (
     <>
       {error && (
-        <span style={{ color: "var(--ec-rust)", fontSize: "var(--fs-label)", display: "block", marginBottom: "0.4rem" }}>
+        <span style={{ color: "var(--ec-danger)", fontSize: "var(--fs-label)", display: "block", marginBottom: "0.4rem" }}>
           {error}
         </span>
       )}

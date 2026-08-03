@@ -4,18 +4,14 @@ import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { ROLES, ROLE_LABELS, ROLE_DESCRIPTIONS } from "@/types/role";
 import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
-import { RoleIcon } from "@/components/ui/Icon";
+import { RoleIcon, Icon } from "@/components/ui/Icon";
 import styles from "./page.module.css";
 
 export const dynamic = "force-dynamic";
 
 export default async function Home() {
-  // Si la configuration Supabase est absente (variables d'environnement non
-  // définies sur l'hébergeur), on affiche la landing en mode déconnecté
-  // plutôt qu'une erreur 500 — le diagnostic est visible sur /debug.
   let user = null;
-  let supabase: Awaited<ReturnType<typeof createSupabaseServerClient>> | null =
-    null;
+  let supabase = null;
   try {
     supabase = await createSupabaseServerClient();
     const { data } = await supabase.auth.getUser();
@@ -34,7 +30,6 @@ export default async function Home() {
     if (profile?.role) {
       redirect(`/${profile.role}`);
     }
-
     redirect("/login?error=no_profile");
   }
 
@@ -43,33 +38,47 @@ export default async function Home() {
       <header className={styles.hero}>
         <div className={styles.brand}>
           <span className={styles.brandDot} />
-          EcoLoop CI
+          EcoLoop
         </div>
-        <h1 className={styles.title}>
-          La plateforme de gestion circulaire
-          <br />
-          des déchets à Abidjan
-        </h1>
+        <h1 className={styles.title}>L&apos;infrastructure de recyclage pour l&apos;Afrique.</h1>
         <p className={styles.lead}>
-          EcoLoop CI orchestre toute la chaîne de valeur du déchet — du tri à
-          la source par les producteurs jusqu&apos;à la matière première
-          recyclée — grâce à un système de double confirmation qui garantit
-          la traçabilité sans aucun flux financier sur la plateforme.
+          Transformez vos déchets en actifs. EcoLoop orchestre la traçabilité de bout en bout, 
+          du tri à la source jusqu&apos;à la matière première recyclée. Zéro friction, 100% auditable.
         </p>
         <div className={styles.ctaRow}>
-          <Button href="/login" variant="primary">
-            Se connecter
-          </Button>
-          <Button href="/register" variant="ghost">
+          <Button href="/register" variant="primary">
             Créer un compte
+          </Button>
+          <Button href="#technology" variant="outline">
+            Découvrir la technologie
+          </Button>
+          <Button href="/login" variant="ghost">
+            Se connecter
           </Button>
         </div>
       </header>
 
-      <section className={styles.roles}>
-        <div className={styles.sectionLabel}>
-          Choisissez votre espace acteur
+      <section className={styles.socialProof}>
+        <div className={styles.socialProofInner}>
+          <div className={styles.statBox}>
+            <span className={styles.statValue}>1,240</span>
+            <span className={styles.statLabel}>Tonnes traitées</span>
+          </div>
+          <div className={styles.statDivider} />
+          <div className={styles.statBox}>
+            <span className={styles.statValue}>45+</span>
+            <span className={styles.statLabel}>Partenaires industriels</span>
+          </div>
+          <div className={styles.statDivider} />
+          <div className={styles.statBox}>
+            <span className={styles.statValue}>100%</span>
+            <span className={styles.statLabel}>Traçabilité cryptographique</span>
+          </div>
         </div>
+      </section>
+
+      <section className={styles.roles} id="technology">
+        <div className={styles.sectionLabel}>SÉLECTIONNEZ VOTRE PORTAIL D&apos;ACCÈS</div>
         <div className={styles.grid}>
           {ROLES.map((role) => (
             <Link key={role} href={`/${role}`} className={styles.roleLink}>
@@ -81,9 +90,10 @@ export default async function Home() {
                   <span className={styles.roleName}>{ROLE_LABELS[role]}</span>
                 </div>
                 <p className={styles.roleDesc}>{ROLE_DESCRIPTIONS[role]}</p>
-                <span className={styles.roleCta}>
-                  Accéder à l&apos;espace →
-                </span>
+                <div className={styles.roleFooter}>
+                  <span className={styles.roleCta}>Accéder au portail</span>
+                  <Icon name="follow" size={16} />
+                </div>
               </Card>
             </Link>
           ))}
@@ -91,7 +101,15 @@ export default async function Home() {
       </section>
 
       <footer className={styles.footer}>
-        <span className="font-mono">EcoLoop CI · MVP Abidjan · v0.1</span>
+        <div className={styles.footerContent}>
+          <span className={styles.brandDot} />
+          <span className="font-mono">EcoLoop v2.0.0-beta</span>
+        </div>
+        <div className={styles.footerLinks}>
+          <Link href="/privacy">Confidentialité</Link>
+          <Link href="/terms">CGU</Link>
+          <Link href="/contact">Support</Link>
+        </div>
       </footer>
     </div>
   );

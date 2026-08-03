@@ -202,10 +202,10 @@ export default async function MairiePage() {
     <>
       <div className="pageHead">
         <div className="row">
-          <Badge tone="signal" dot>
+          <Badge tone="success" dot>
             Mairie de {profile.commune ?? "Abidjan"}
           </Badge>
-          <Badge tone="paper">{profile.name}</Badge>
+          <Badge tone="outline">{profile.name}</Badge>
         </div>
         <h1>Tableau de bord communal</h1>
         <p className="muted">

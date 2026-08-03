@@ -54,7 +54,7 @@ export default async function AcheteurPage() {
     <>
       <div className="pageHead">
         <div className="row">
-          <Badge tone="signal" dot>
+          <Badge tone="success" dot>
             Acheteur · {profile.name}
           </Badge>
         </div>

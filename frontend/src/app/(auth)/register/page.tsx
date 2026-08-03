@@ -4,6 +4,7 @@ import { useState, type FormEvent } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { signUp } from "@/lib/auth-actions";
+import { Icon } from "@/components/ui/Icon";
 import styles from "./page.module.css";
 
 type RoleInscription = "producteur" | "collecteur";
@@ -84,7 +85,7 @@ export default function RegisterPage() {
   if (success) {
     return (
       <div className={styles.successWrap}>
-        <div className={styles.successIcon}>🎉</div>
+        <div className={styles.successIcon}><Icon name="check" size={32} /></div>
         <h2 className={styles.successTitle}>Compte créé</h2>
         <p className={styles.successText}>Bienvenue, {name}</p>
         <button
@@ -148,7 +149,7 @@ export default function RegisterPage() {
                 className={`${styles.roleCard} ${role === "producteur" ? styles.roleCardActive : ""}`}
                 onClick={() => setRole("producteur")}
               >
-                <span className={styles.roleIcon}>🏠</span>
+                <span className={styles.roleIcon}><Icon name="home" size={24} /></span>
                 <span className={styles.roleCardLabel}>Ménage / Producteur</span>
                 <span className={styles.roleDesc}>
                   Je publie mes déchets triés et je gagne des points
@@ -159,7 +160,7 @@ export default function RegisterPage() {
                 className={`${styles.roleCard} ${role === "collecteur" ? styles.roleCardActive : ""}`}
                 onClick={() => setRole("collecteur")}
               >
-                <span className={styles.roleIcon}>🚛</span>
+                <span className={styles.roleIcon}><Icon name="truck" size={24} /></span>
                 <span className={styles.roleCardLabel}>Collecteur informel</span>
                 <span className={styles.roleDesc}>
                   Je collecte les lots près de chez moi
@@ -191,7 +192,7 @@ export default function RegisterPage() {
               Numéro de téléphone
             </label>
             <div className={styles.phoneWrap}>
-              <span className={styles.phonePrefix}>🇨🇮 +225</span>
+              <span className={styles.phonePrefix}>+225</span>
               <input
                 id="phone"
                 name="phone"
@@ -205,7 +206,9 @@ export default function RegisterPage() {
                 required
               />
             </div>
-            <p className={styles.secureNote}>🔒 Votre numéro est sécurisé</p>
+            <p className={styles.secureNote}>
+              <Icon name="shield" size={12} /> Votre numéro est sécurisé
+            </p>
           </div>
 
           {error && <div className={styles.error}>{error}</div>}
@@ -257,10 +260,12 @@ export default function RegisterPage() {
                 tabIndex={-1}
                 aria-label="Afficher/masquer le mot de passe"
               >
-                {showPassword ? "🙈" : "👁️"}
+                <Icon name={showPassword ? "eyeOff" : "eye"} size={18} />
               </button>
             </div>
-            <p className={styles.secureNote}>🛡️ Au moins 8 caractères</p>
+            <p className={styles.secureNote}>
+              <Icon name="check" size={12} /> Au moins 8 caractères
+            </p>
           </div>
 
           <div className={styles.field}>

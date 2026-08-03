@@ -8,14 +8,14 @@ export const dynamic = "force-dynamic";
 
 const ROLE_TONE: Record<
   Role,
-  "signal" | "amber" | "forest" | "rust" | "paper"
+  "primary" | "warning" | "success" | "danger" | "outline"
 > = {
-  producteur: "signal",
-  collecteur: "amber",
-  recycleur: "forest",
-  acheteur: "paper",
-  mairie: "rust",
-  admin: "forest",
+  producteur: "primary",
+  collecteur: "warning",
+  recycleur: "success",
+  acheteur: "outline",
+  mairie: "danger",
+  admin: "success",
 };
 
 export default async function AdminUtilisateursPage() {
@@ -40,7 +40,7 @@ export default async function AdminUtilisateursPage() {
     <>
       <div className="pageHead">
         <div className="row">
-          <Badge tone="signal" dot>
+          <Badge tone="success" dot>
             {users?.length ?? 0} comptes
           </Badge>
         </div>
@@ -89,7 +89,7 @@ export default async function AdminUtilisateursPage() {
                     {u.name || "—"}
                   </td>
                   <td style={{ padding: "0.5rem" }}>
-                    <Badge tone={ROLE_TONE[u.role as Role] ?? "paper"}>
+                    <Badge tone={ROLE_TONE[u.role as Role] ?? "outline"}>
                       {ROLE_LABELS[u.role as Role] ?? u.role}
                       {u.sous_activite ? ` · ${u.sous_activite}` : ""}
                     </Badge>

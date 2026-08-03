@@ -84,7 +84,7 @@ export default async function RecycleurPage() {
     <>
       <div className="pageHead">
         <div className="row">
-          <Badge tone="signal" dot>
+          <Badge tone="success" dot>
             Recycleur · {profile.name}
           </Badge>
         </div>
@@ -139,7 +139,7 @@ export default async function RecycleurPage() {
             return (
               <Card key={lot.id} elevated={false}>
                 <div className={styles.head}>
-                  <Badge tone="forest" dot>
+                  <Badge tone="primary" dot>
                     Disponible
                   </Badge>
                   <span className={styles.date}>
@@ -162,8 +162,7 @@ export default async function RecycleurPage() {
                 </div>
                 {lot.score_tri && (
                   <div className={styles.score}>
-                    {"★".repeat(lot.score_tri)}
-                    {"☆".repeat(5 - lot.score_tri)} · Tri niveau {lot.score_tri}
+                    Niveau de tri : {lot.score_tri} / 5
                   </div>
                 )}
                 <div className={styles.collecteur}>

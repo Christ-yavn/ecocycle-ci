@@ -84,7 +84,7 @@ export default async function CollecteurCartePage() {
     <>
       <div className="pageHead">
         <div className="row">
-          <Badge tone="signal" dot>
+          <Badge tone="success" dot>
             {profile.commune ?? "Abidjan"}
           </Badge>
         </div>

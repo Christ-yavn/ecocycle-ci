@@ -63,7 +63,7 @@ export function ConfirmationCollecte({
             background: result.success
               ? "rgba(63,163,77,0.15)"
               : "rgba(180,82,47,0.12)",
-            color: result.success ? "var(--ec-signal)" : "var(--ec-rust)",
+            color: result.success ? "var(--ec-success)" : "var(--ec-danger)",
           }}
         >
           <Icon name={result.success ? "star" : "alert"} size={32} />
@@ -77,7 +77,7 @@ export function ConfirmationCollecte({
   return (
     <div className={styles.wrap}>
       <div className={styles.head}>
-        <Badge tone="amber" dot>
+        <Badge tone="warning" dot>
           Action requise
         </Badge>
         <h1 className="font-fraunces">Confirmer la collecte</h1>

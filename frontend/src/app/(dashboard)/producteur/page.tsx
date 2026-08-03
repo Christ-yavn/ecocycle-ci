@@ -31,13 +31,13 @@ function niveauInfo(points: number, niveau: number) {
 
 const STATUS_BADGE: Record<
   string,
-  { label: string; tone: "signal" | "amber" | "forest" | "rust" | "paper" }
+  { label: string; tone: "primary" | "warning" | "success" | "danger" | "outline" }
 > = {
-  publie: { label: "En attente", tone: "amber" },
-  reserve: { label: "Réservé", tone: "amber" },
-  collecte: { label: "Collecté", tone: "forest" },
-  livre_recycleur: { label: "Livré", tone: "forest" },
-  traite: { label: "Traité", tone: "paper" },
+  publie: { label: "En attente", tone: "warning" },
+  reserve: { label: "Réservé", tone: "warning" },
+  collecte: { label: "Collecté", tone: "success" },
+  livre_recycleur: { label: "Livré", tone: "success" },
+  traite: { label: "Traité", tone: "outline" },
 };
 
 const TYPE_LABELS: Record<string, string> = {
@@ -97,7 +97,7 @@ export default async function ProducteurDashboardPage() {
     <>
       {/* Header */}
       <div className="pageHead">
-        <h1>Bienvenue, {profile.name} 🍃</h1>
+        <h1>Bienvenue, {profile.name}</h1>
         <p className="muted">
           Le bon déchet, au bon endroit, au bon moment.
         </p>
@@ -115,7 +115,9 @@ export default async function ProducteurDashboardPage() {
           </span>
         </Link>
         <Link href="/producteur/signaler" className={styles.actionAmber}>
-          <span className={styles.actionIcon}>⚠️</span>
+          <span className={styles.actionIcon}>
+            <Icon name="alertTriangle" size={26} />
+          </span>
           <span className={styles.actionTitle}>Signaler un dépôt</span>
           <span className={styles.actionText}>
             Alertez votre mairie en temps réel

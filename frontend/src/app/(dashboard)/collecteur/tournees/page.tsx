@@ -104,7 +104,7 @@ export default async function TourneesPage() {
                   >
                     {i + 1}
                   </span>
-                  <Badge tone="amber" dot>
+                  <Badge tone="warning" dot>
                     Réservé
                   </Badge>
                 </div>
@@ -123,8 +123,7 @@ export default async function TourneesPage() {
                       marginTop: "0.25rem",
                     }}
                   >
-                    {"★".repeat(lot.score_tri)}
-                    {"☆".repeat(5 - lot.score_tri)} · Tri niveau {lot.score_tri}
+                    Niveau de tri : {lot.score_tri} / 5
                   </p>
                 )}
                 <a

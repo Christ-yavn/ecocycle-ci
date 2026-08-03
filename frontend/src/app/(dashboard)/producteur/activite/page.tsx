@@ -12,13 +12,13 @@ export const dynamic = "force-dynamic";
 
 const STATUS_BADGE: Record<
   string,
-  { label: string; tone: "signal" | "amber" | "forest" | "rust" | "paper" }
+  { label: string; tone: "primary" | "warning" | "success" | "danger" | "outline" }
 > = {
-  publie: { label: "En attente", tone: "amber" },
-  reserve: { label: "Réservé", tone: "amber" },
-  collecte: { label: "Collecté", tone: "forest" },
-  livre_recycleur: { label: "Livré", tone: "forest" },
-  traite: { label: "Traité", tone: "paper" },
+  publie: { label: "En attente", tone: "warning" },
+  reserve: { label: "Réservé", tone: "warning" },
+  collecte: { label: "Collecté", tone: "success" },
+  livre_recycleur: { label: "Livré", tone: "success" },
+  traite: { label: "Traité", tone: "outline" },
 };
 
 const TYPE_LABELS: Record<string, string> = {

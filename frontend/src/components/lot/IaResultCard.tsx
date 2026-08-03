@@ -20,18 +20,18 @@ const TYPE_LABELS: Record<string, string> = {
   papier: "Papier",
 };
 
-const ETAT_LABELS: Record<string, { label: string; tone: "signal" | "amber" | "rust" | "paper" }> = {
-  propre: { label: "Propre", tone: "signal" },
-  trie: { label: "Trié", tone: "signal" },
-  melange: { label: "Mélangé", tone: "amber" },
-  sale: { label: "Sale", tone: "rust" },
-  inconnu: { label: "Indéterminé", tone: "paper" },
+const ETAT_LABELS: Record<string, { label: string; tone: "primary" | "warning" | "danger" | "outline" }> = {
+  propre: { label: "Propre", tone: "primary" },
+  trie: { label: "Trié", tone: "primary" },
+  melange: { label: "Mélangé", tone: "warning" },
+  sale: { label: "Sale", tone: "danger" },
+  inconnu: { label: "Indéterminé", tone: "outline" },
 };
 
 export function IaResultCard({ result }: { result: AnalyseIa }) {
   const typeLabel = TYPE_LABELS[result.typeDechet] ?? result.typeDechet;
   const etat = ETAT_LABELS[result.etat] ?? ETAT_LABELS.inconnu;
-  const collectableTone = result.collectable ? "signal" : "rust";
+  const collectableTone = result.collectable ? "primary" : "danger";
   const collectableLabel = result.collectable
     ? "Acceptable pour la collecte"
     : "Refusé — tri insuffisant";
@@ -43,7 +43,7 @@ export function IaResultCard({ result }: { result: AnalyseIa }) {
           Analyse IA — Résultats
         </span>
         {result.fallbackUsed && (
-          <Badge tone="amber" dot>
+          <Badge tone="warning" dot>
             Mode secours
           </Badge>
         )}
@@ -66,7 +66,7 @@ export function IaResultCard({ result }: { result: AnalyseIa }) {
 
         <div className={styles.row}>
           <span className={styles.label}>Type détecté</span>
-          <Badge tone="forest">{typeLabel}</Badge>
+          <Badge tone="primary">{typeLabel}</Badge>
         </div>
 
         <div className={styles.row}>

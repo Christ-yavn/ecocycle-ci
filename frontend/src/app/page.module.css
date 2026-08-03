@@ -11,76 +11,121 @@
   margin: 0 auto;
   width: 100%;
   text-align: center;
+  padding: var(--space-7) var(--space-4) var(--space-6);
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: var(--space-4);
 }
 
 .brand {
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  gap: 0.6rem;
-  font-family: var(--font-inter);
-  font-weight: 700;
-  font-size: 1.1rem;
-  color: var(--ec-forest);
+  gap: 8px;
+  background: var(--ec-paper);
+  border: 1px solid var(--ec-line);
+  padding: 6px 12px;
+  border-radius: var(--radius-pill);
+  font-size: var(--fs-label);
+  font-weight: 600;
+  margin-bottom: var(--space-4);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--ec-ink);
 }
 
 .brandDot {
-  width: 9px;
-  height: 9px;
+  width: 8px;
+  height: 8px;
+  background: var(--ec-accent);
   border-radius: 50%;
-  background: var(--ec-signal);
-  box-shadow: 0 0 0 3px rgba(63, 163, 77, 0.25);
+  box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.2);
 }
 
 .title {
-  font-family: var(--font-inter);
-  font-weight: 700;
-  font-size: clamp(1.6rem, 1.2rem + 2.4vw, 2.6rem);
-  line-height: 1.12;
-  color: var(--ec-ink);
-  max-width: 16ch;
+  margin-bottom: var(--space-4);
 }
 
 .lead {
-  font-size: var(--fs-body);
+  font-size: var(--fs-title);
   color: var(--ec-ink-soft);
-  max-width: 60ch;
-  line-height: 1.65;
+  max-width: 600px;
+  margin: 0 auto var(--space-5);
 }
 
 .ctaRow {
   display: flex;
   gap: var(--space-3);
-  flex-wrap: wrap;
   justify-content: center;
-  margin-top: var(--space-2);
+  flex-wrap: wrap;
+}
+
+.socialProof {
+  padding: var(--space-5) var(--space-4);
+  background: var(--ec-paper);
+  border-top: 1px solid var(--ec-line);
+  border-bottom: 1px solid var(--ec-line);
+}
+
+.socialProofInner {
+  max-width: var(--content-max);
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: var(--space-6);
+  flex-wrap: wrap;
+}
+
+.statBox {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.statValue {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--ec-primary);
+  letter-spacing: -0.02em;
+}
+
+.statLabel {
+  font-size: var(--fs-label);
+  color: var(--ec-ink-soft);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.statDivider {
+  width: 1px;
+  height: 40px;
+  background: var(--ec-line);
 }
 
 .roles {
-  padding: 0 var(--space-6) var(--space-8);
+  padding: var(--space-7) var(--space-4);
   max-width: var(--content-max);
   margin: 0 auto;
+  flex: 1;
   width: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-5);
 }
 
 .sectionLabel {
-  font-family: var(--font-mono);
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  font-size: var(--fs-label);
-  color: var(--ec-ink-soft);
   text-align: center;
+  font-family: var(--font-mono);
+  font-size: var(--fs-label);
+  color: var(--ec-ink-faint);
+  letter-spacing: 0.1em;
+  margin-bottom: var(--space-5);
 }
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: var(--space-4);
 }
 
@@ -98,43 +143,93 @@
 }
 
 .roleIcon {
-  width: 40px;
-  height: 40px;
-  border-radius: var(--radius-sm);
-  background: var(--ec-forest);
-  color: var(--ec-paper);
   display: flex;
   align-items: center;
   justify-content: center;
-  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  background: var(--ec-surface);
+  color: var(--ec-primary);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--ec-line);
 }
 
 .roleName {
-  font-family: var(--font-inter);
-  font-weight: 700;
+  font-weight: 600;
   font-size: 1.1rem;
 }
 
 .roleDesc {
   font-size: var(--fs-body);
-  color: var(--ec-ink-soft);
-  line-height: 1.55;
   margin-bottom: var(--space-4);
-  min-height: 3.2em;
+  min-height: 48px;
+}
+
+.roleFooter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 1px solid var(--ec-line);
+  padding-top: var(--space-3);
+  color: var(--ec-primary);
 }
 
 .roleCta {
-  font-family: var(--font-mono);
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  font-size: var(--fs-label);
-  color: var(--ec-amber-dark);
+  font-size: var(--fs-body);
+  font-weight: 500;
 }
 
 .footer {
-  padding: var(--space-6);
-  text-align: center;
-  border-top: 1px solid var(--ec-line-dark);
+  padding: var(--space-5) var(--space-4);
+  background: var(--ec-paper);
+  border-top: 1px solid var(--ec-line);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+}
+
+.footerContent {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  color: var(--ec-ink-faint);
+}
+
+.footerLinks {
+  display: flex;
+  gap: var(--space-4);
+}
+
+.footerLinks a {
   color: var(--ec-ink-soft);
-  margin-top: auto;
+  text-decoration: none;
+  font-size: var(--fs-body);
+  transition: color 0.2s;
+}
+
+.footerLinks a:hover {
+  color: var(--ec-primary);
+}
+
+@media (max-width: 768px) {
+  .hero {
+    padding-top: var(--space-5);
+  }
+  .title {
+    font-size: 2rem;
+  }
+  .socialProofInner {
+    gap: var(--space-4);
+    flex-direction: column;
+  }
+  .statDivider {
+    width: 40px;
+    height: 1px;
+  }
+  .footer {
+    flex-direction: column;
+    text-align: center;
+  }
 }

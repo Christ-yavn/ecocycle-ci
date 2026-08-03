@@ -1,53 +1,55 @@
 /* ============================================================
-   DESIGN SYSTEM — EcoLoop CI
-   Fonts self-hostés via next/font (variables --font-*)
+   DESIGN SYSTEM — EcoLoop CI Vision 2.0 (B2B SaaS)
    ============================================================ */
 
 :root {
-  /* Fonts (définies par next/font dans layout.tsx) */
+  /* Typographie - Inter Only */
   --font-inter: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
-  --font-mono: "IBM Plex Mono", "SFMono-Regular", monospace;
+  --font-mono: "SFMono-Regular", Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 
-  /* Couleurs — palette EcoLoop (forêt, blanc, ambre) */
-  --ec-forest: #0A3D1F;
-  --ec-forest-2: #145A2E;
-  --ec-forest-3: #1B7D3A;
+  /* Palette de couleurs (SaaS B2B Minimaliste) */
+  --ec-surface: #F9FAFB; /* Gris très clair, pas de blanc pur */
   --ec-paper: #FFFFFF;
-  --ec-paper-2: #F5F7F5;
-  --ec-ink: #1A1A2E;
-  --ec-ink-soft: #6B7280;
-  --ec-amber: #F59E0B;
-  --ec-amber-dark: #D97706;
-  --ec-signal: #1B7D3A;
-  --ec-rust: #EF4444;
-  --ec-line: rgba(0, 0, 0, 0.06);
-  --ec-line-dark: rgba(0, 0, 0, 0.1);
+  --ec-primary: #0F172A; /* Slate 900 - Primaire */
+  --ec-primary-hover: #1E293B; /* Slate 800 */
+  --ec-accent: #10B981; /* Emerald 500 - Uniquement pour les succès/impacts */
+  --ec-accent-dark: #059669; /* Emerald 600 */
+  --ec-danger: #EF4444; /* Red 500 */
+  --ec-danger-dark: #DC2626; /* Red 600 */
+  --ec-warning: #F59E0B; /* Amber 500 */
+  
+  /* Encres & Textes */
+  --ec-ink: #0F172A; /* Slate 900 */
+  --ec-ink-soft: #64748B; /* Slate 500 */
+  --ec-ink-faint: #94A3B8; /* Slate 400 */
+  
+  /* Lignes et Bordures */
+  --ec-line: #E2E8F0; /* Slate 200 */
+  --ec-line-dark: #CBD5E1; /* Slate 300 */
   --ec-white: #FFFFFF;
 
-  /* Rayons */
-  --radius-sm: 8px;
-  --radius-card: 12px;
-  --radius-pill: 24px;
-  --radius-full: 9999px;
+  /* Rayons (Border Radius Uniformisé) */
+  --radius-sm: 4px;
+  --radius-card: 8px; /* Uniformisé à 8px pour un aspect rigoureux */
+  --radius-pill: 9999px;
 
   /* Échelle d'espacement (base 4px) */
   --space-1: 0.25rem;
   --space-2: 0.5rem;
   --space-3: 0.75rem;
   --space-4: 1rem;
-  --space-5: 1.25rem;
-  --space-6: 1.5rem;
-  --space-7: 2rem;
-  --space-8: 2.75rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 3rem;
 
-  /* Typographie fluide */
-  --fs-display: clamp(1.35rem, 1.1rem + 1vw, 1.75rem);
-  --fs-title: clamp(0.95rem, 0.88rem + 0.3vw, 1.05rem);
-  --fs-body: clamp(0.8rem, 0.78rem + 0.15vw, 0.875rem);
-  --fs-label: 0.65rem;
+  /* Typographie (stricte) */
+  --fs-display: 2.25rem;
+  --fs-title: 1.25rem;
+  --fs-body: 0.875rem; /* 14px pour le standard SaaS */
+  --fs-label: 0.75rem; /* 12px pour les badges/meta */
 
-  --content-max: 1200px;
-  --sidebar-w: 240px;
+  --content-max: 1280px;
+  --sidebar-w: 260px;
 }
 
 * {
@@ -55,16 +57,20 @@
   margin: 0;
   padding: 0;
 }
+
 html {
   font-size: 100%;
   -webkit-text-size-adjust: 100%;
 }
+
 body {
   font-family: var(--font-inter);
-  background: var(--ec-paper-2);
+  background: var(--ec-surface);
   color: var(--ec-ink);
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
+  line-height: 1.5;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -74,134 +80,158 @@ body {
   }
 }
 
-/* ---------- TYPOGRAPHY ---------- */
-h1,
-h2,
-h3,
-h4,
-.font-fraunces {
-  font-family: var(--font-inter);
-  font-weight: 700;
+/* ---------- TYPOGRAPHIE ---------- */
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 600;
+  color: var(--ec-ink);
+  letter-spacing: -0.02em;
 }
 
 .font-mono {
   font-family: var(--font-mono);
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
   font-size: var(--fs-label);
 }
 
 h1 {
   font-size: var(--fs-display);
-  line-height: 1.15;
-}
-h2 {
-  font-size: 1.3rem;
   line-height: 1.2;
 }
-h3 {
-  font-size: 1.05rem;
+
+h2 {
+  font-size: var(--fs-title);
+  line-height: 1.3;
 }
+
+h3 {
+  font-size: 1rem;
+  font-weight: 600;
+}
+
 p {
-  line-height: 1.6;
   color: var(--ec-ink-soft);
 }
 
-/* ---------- LAYOUT HELPERS ---------- */
+/* ---------- UTILITAIRES DE LAYOUT ---------- */
 .pageHead {
   display: flex;
   flex-direction: column;
   gap: var(--space-2);
+  margin-bottom: var(--space-5);
 }
-.pageHead h1 {
-  font-size: var(--fs-display);
-}
+
 .muted {
   color: var(--ec-ink-soft);
+  font-size: var(--fs-body);
 }
+
 .stack {
   display: flex;
   flex-direction: column;
   gap: var(--space-4);
 }
+
 .row {
   display: flex;
   align-items: center;
   gap: var(--space-3);
   flex-wrap: wrap;
 }
+
 .grid-cards {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: var(--space-4);
 }
-.grid-stats {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  gap: var(--space-4);
-}
+
 .spacer {
   flex: 1;
 }
+
 .kbd {
   font-family: var(--font-mono);
-  background: var(--ec-paper);
-  border: 1px solid var(--ec-line-dark);
+  background: var(--ec-surface);
+  border: 1px solid var(--ec-line);
   border-radius: var(--radius-sm);
-  padding: 0.1rem 0.4rem;
+  padding: 0.2rem 0.4rem;
   font-size: var(--fs-label);
+  color: var(--ec-ink-soft);
 }
 
-/* ---------- BUTTONS (global fallback) ---------- */
+/* ---------- BOUTONS ---------- */
 .btn-primary {
-  background: var(--ec-forest-3);
+  background: var(--ec-primary);
   color: var(--ec-white);
-  border: none;
-  padding: 0.6rem 1.2rem;
+  border: 1px solid var(--ec-primary);
+  padding: 0.5rem 1rem;
   border-radius: var(--radius-sm);
   font-size: var(--fs-body);
-  font-weight: 600;
+  font-weight: 500;
   font-family: inherit;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 0.5rem;
   text-decoration: none;
 }
+
 .btn-primary:hover {
-  background: var(--ec-forest-2);
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(10, 61, 31, 0.18);
+  background: var(--ec-primary-hover);
+  border-color: var(--ec-primary-hover);
 }
+
 .btn-accent {
-  background: var(--ec-signal);
+  background: var(--ec-accent);
   color: var(--ec-white);
-  border: none;
-  padding: 0.6rem 1.2rem;
+  border: 1px solid var(--ec-accent);
+  padding: 0.5rem 1rem;
   border-radius: var(--radius-sm);
   font-size: var(--fs-body);
-  font-weight: 700;
+  font-weight: 500;
   cursor: pointer;
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 0.5rem;
-  text-decoration: none;
-}
-.btn-accent:hover {
-  filter: brightness(1.1);
-  transform: translateY(-1px);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* ---------- CARDS (global fallback) ---------- */
+.btn-accent:hover {
+  background: var(--ec-accent-dark);
+}
+
+.btn-outline {
+  background: transparent;
+  color: var(--ec-primary);
+  border: 1px solid var(--ec-line-dark);
+  padding: 0.5rem 1rem;
+  border-radius: var(--radius-sm);
+  font-size: var(--fs-body);
+  font-weight: 500;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.btn-outline:hover {
+  background: var(--ec-surface);
+  border-color: var(--ec-ink-soft);
+}
+
+/* ---------- CARTES ---------- */
 .ec-card {
   background: var(--ec-paper);
   border-radius: var(--radius-card);
-  border: 1px solid var(--ec-line-dark);
+  border: 1px solid var(--ec-line);
   padding: var(--space-5);
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05); /* Ombre stricte et fine */
+  transition: box-shadow 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
+
 .ec-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 12px 24px rgba(26, 26, 46, 0.08);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
 }

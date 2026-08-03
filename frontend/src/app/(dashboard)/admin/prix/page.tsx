@@ -44,7 +44,7 @@ export default async function AdminPrixPage() {
     <>
       <div className="pageHead">
         <div className="row">
-          <Badge tone="signal" dot>
+          <Badge tone="success" dot>
             Market Pricing
           </Badge>
         </div>

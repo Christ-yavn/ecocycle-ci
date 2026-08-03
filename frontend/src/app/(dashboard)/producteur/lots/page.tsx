@@ -9,13 +9,13 @@ import styles from "./page.module.css";
 
 const STATUS_CONFIG: Record<
   LotRow["status"],
-  { label: string; tone: "signal" | "amber" | "forest" | "rust" | "paper" }
+  { label: string; tone: "primary" | "warning" | "success" | "danger" | "outline" }
 > = {
-  publie: { label: "Publié", tone: "signal" },
-  reserve: { label: "Réservé", tone: "amber" },
-  collecte: { label: "Collecté", tone: "forest" },
-  livre_recycleur: { label: "Livré recycleur", tone: "paper" },
-  traite: { label: "Traité", tone: "paper" },
+  publie: { label: "Publié", tone: "primary" },
+  reserve: { label: "Réservé", tone: "warning" },
+  collecte: { label: "Collecté", tone: "success" },
+  livre_recycleur: { label: "Livré recycleur", tone: "outline" },
+  traite: { label: "Traité", tone: "outline" },
 };
 
 const TYPE_LABELS: Record<string, string> = {
@@ -105,8 +105,7 @@ export default async function MesLotsPage() {
                     </span>
                     {lot.score_tri && (
                       <span className={styles.score}>
-                        {"★".repeat(lot.score_tri)}
-                        {"☆".repeat(5 - lot.score_tri)}
+                        Niveau : {lot.score_tri}/5
                       </span>
                     )}
                   </div>

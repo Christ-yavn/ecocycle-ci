@@ -179,10 +179,10 @@ export function ScanRetrait({
     <>
       <div className="pageHead">
         <div className="row">
-          <Badge tone="amber" dot>
+          <Badge tone="warning" dot>
             Validation retrait
           </Badge>
-          <Badge tone="paper">{typeDechet}</Badge>
+          <Badge tone="outline">{typeDechet}</Badge>
         </div>
         <h1>Scanner le QR Code du producteur</h1>
         <p className="muted">

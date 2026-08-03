@@ -173,7 +173,7 @@ export function CatalogueB2B({ items }: { items: MatiereItem[] }) {
             return (
               <Card key={m.id} elevated={false}>
                 <div className={styles.head}>
-                  <Badge tone="forest" dot>
+                  <Badge tone="primary" dot>
                     Disponible
                   </Badge>
                   <span className={styles.date}>

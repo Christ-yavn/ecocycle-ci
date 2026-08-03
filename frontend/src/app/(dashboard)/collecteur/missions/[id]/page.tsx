@@ -7,6 +7,7 @@ import { AcceptMissionButton } from "@/components/collecteur/AcceptMissionButton
 import { DistanceBadge } from "@/components/collecteur/DistanceBadge";
 import { TYPE_BADGE, formatAnciennete } from "@/components/collecteur/MissionCard";
 import type { LotRow } from "@/types/database.types";
+import { Icon } from "@/components/ui/Icon";
 import styles from "./page.module.css";
 
 export const dynamic = "force-dynamic";
@@ -52,7 +53,7 @@ export default async function MissionDetailPage({
         </Link>
         <div className="row">
           <Badge tone={type.tone}>{type.label}</Badge>
-          <Badge tone="amber" dot>
+          <Badge tone="warning" dot>
             {formatAnciennete(lot.date_publication)}
           </Badge>
         </div>
@@ -65,7 +66,9 @@ export default async function MissionDetailPage({
             /* eslint-disable-next-line @next/next/no-img-element -- URL Supabase Storage dynamique */
             <img src={lot.photo_url} alt={type.label} className={styles.photo} />
           ) : (
-            <div className={styles.photoPlaceholder}>📦</div>
+            <div className={styles.photoPlaceholder}>
+              <Icon name="package" size={32} />
+            </div>
           )}
 
           <div className={styles.info}>
@@ -83,8 +86,7 @@ export default async function MissionDetailPage({
               <div className={styles.infoRow}>
                 <span className={styles.infoLabel}>Niveau de tri</span>
                 <span className={styles.infoValue}>
-                  {"★".repeat(lot.score_tri)}
-                  {"☆".repeat(5 - lot.score_tri)}
+                  {lot.score_tri} / 5
                 </span>
               </div>
             )}

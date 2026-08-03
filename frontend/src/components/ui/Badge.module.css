@@ -2,13 +2,12 @@
   display: inline-flex;
   align-items: center;
   gap: 0.35rem;
-  font-family: var(--font-mono), monospace;
   text-transform: uppercase;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.05em;
   font-size: var(--fs-label);
-  padding: 0.2rem 0.55rem;
-  border-radius: var(--radius-pill);
-  font-weight: 500;
+  padding: 0.15rem 0.5rem;
+  border-radius: var(--radius-sm);
+  font-weight: 600;
   white-space: nowrap;
 }
 
@@ -19,28 +18,29 @@
   background: currentColor;
 }
 
-.forest {
-  background: rgba(13, 31, 22, 0.1);
-  color: var(--ec-forest);
+.primary {
+  background: var(--ec-surface);
+  color: var(--ec-primary);
+  border: 1px solid var(--ec-line);
 }
 
-.amber {
-  background: rgba(217, 164, 65, 0.16);
-  color: var(--ec-amber-dark);
+.warning {
+  background: rgba(245, 158, 11, 0.1);
+  color: var(--ec-warning);
 }
 
-.signal {
-  background: rgba(63, 163, 77, 0.16);
-  color: var(--ec-signal);
+.success {
+  background: rgba(16, 185, 129, 0.1);
+  color: var(--ec-accent-dark);
 }
 
-.rust {
-  background: rgba(180, 82, 47, 0.16);
-  color: var(--ec-rust);
+.danger {
+  background: rgba(239, 68, 68, 0.1);
+  color: var(--ec-danger-dark);
 }
 
-.paper {
-  background: var(--ec-paper);
+.outline {
+  background: transparent;
   color: var(--ec-ink-soft);
-  border: 1px solid var(--ec-line-dark);
+  border: 1px solid var(--ec-line);
 }

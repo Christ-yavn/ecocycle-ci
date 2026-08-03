@@ -43,7 +43,7 @@ export default async function AdminPage() {
     <>
       <div className="pageHead">
         <div className="row">
-          <Badge tone="signal" dot>
+          <Badge tone="success" dot>
             Administration EcoLoop
           </Badge>
         </div>

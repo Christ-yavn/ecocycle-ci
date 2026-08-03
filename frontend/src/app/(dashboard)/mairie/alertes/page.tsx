@@ -5,17 +5,18 @@ import { Badge } from "@/components/ui/Badge";
 import { Stat } from "@/components/ui/Stat";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { Icon } from "@/components/ui/Icon";
+import { redis } from "@/lib/redis";
 import styles from "./page.module.css";
 
 export const dynamic = "force-dynamic";
 
 const STATUS_CONFIG: Record<
   string,
-  { label: string; tone: "rust" | "amber" | "signal" | "paper" }
+  { label: string; tone: "primary" | "warning" | "success" | "danger" | "outline" }
 > = {
-  nouveau: { label: "Nouveau", tone: "rust" },
-  pris_en_charge: { label: "Pris en charge", tone: "amber" },
-  resolu: { label: "Résolu", tone: "signal" },
+  nouveau: { label: "Nouveau", tone: "danger" },
+  pris_en_charge: { label: "Pris en charge", tone: "warning" },
+  resolu: { label: "Résolu", tone: "success" },
 };
 
 export default async function AlertesPage() {
@@ -28,12 +29,20 @@ export default async function AlertesPage() {
     redirect("/login?redirect=/mairie/alertes");
   }
 
-  const { data: signalements } = await supabase
-    .from("signalements")
-    .select(
-      "id, latitude, longitude, commune, quartier, description, photo_url, status, date_signalement, date_prise_en_charge, date_resolution",
-    )
-    .order("date_signalement", { ascending: false });
+  const cacheKey = `mairie-alertes-stats-${user.id}`;
+  let signalements = await redis.get<any[]>(cacheKey);
+
+  if (!signalements) {
+    const { data } = await supabase
+      .from("signalements")
+      .select(
+        "id, latitude, longitude, commune, quartier, description, photo_url, status, date_signalement, date_prise_en_charge, date_resolution",
+      )
+      .order("date_signalement", { ascending: false });
+      
+    signalements = data ?? [];
+    await redis.set(cacheKey, signalements, { ex: 300 }); // Cache 5 min
+  }
 
   const list = signalements ?? [];
   const nouveau = list.filter((s) => s.status === "nouveau").length;

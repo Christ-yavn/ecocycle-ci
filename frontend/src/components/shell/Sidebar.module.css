@@ -1,6 +1,6 @@
 .sidebar {
-  background: var(--ec-forest);
-  color: var(--ec-paper);
+  background: var(--ec-primary);
+  color: var(--ec-white);
   padding: var(--space-6) var(--space-4);
   display: flex;
   flex-direction: column;
@@ -9,35 +9,37 @@
   top: 0;
   height: 100vh;
   overflow-y: auto;
+  border-right: 1px solid var(--ec-primary-hover);
 }
 
 .brand {
   display: flex;
   align-items: center;
-  gap: 0.6rem;
-  font-family: var(--font-inter), serif;
+  gap: 0.5rem;
   font-weight: 700;
   font-size: 1.15rem;
   letter-spacing: 0.01em;
+  color: var(--ec-white);
+  text-decoration: none;
 }
 
 .brandDot {
-  width: 9px;
-  height: 9px;
+  width: 8px;
+  height: 8px;
   border-radius: 50%;
-  background: var(--ec-signal);
-  box-shadow: 0 0 0 3px rgba(63, 163, 77, 0.25);
+  background: var(--ec-accent);
+  box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.2);
   flex-shrink: 0;
 }
 
 .roleTag {
-  font-family: var(--font-mono), monospace;
+  font-family: var(--font-mono);
   text-transform: uppercase;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.1em;
   font-size: var(--fs-label);
-  color: var(--ec-amber);
-  margin-top: 0.15rem;
-  margin-left: 1.05rem;
+  color: var(--ec-accent);
+  margin-top: 0.25rem;
+  margin-left: 1.15rem;
 }
 
 .nav {
@@ -48,20 +50,21 @@
 }
 
 .navLabel {
-  font-family: var(--font-mono), monospace;
+  font-family: var(--font-mono);
   text-transform: uppercase;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.1em;
   font-size: var(--fs-label);
   opacity: 0.5;
   margin: var(--space-3) 0 var(--space-2);
+  color: var(--ec-white);
 }
 
 .link {
   display: flex;
   align-items: center;
   gap: 0.7rem;
-  padding: 0.55rem 0.6rem;
-  color: var(--ec-paper-2);
+  padding: 0.5rem 0.6rem;
+  color: var(--ec-ink-faint);
   text-decoration: none;
   font-size: var(--fs-body);
   font-weight: 500;
@@ -71,14 +74,14 @@
 }
 
 .link:hover {
-  background: rgba(243, 238, 225, 0.07);
-  color: var(--ec-paper);
+  background: var(--ec-primary-hover);
+  color: var(--ec-white);
 }
 
 .active {
-  background: rgba(243, 238, 225, 0.1);
-  color: var(--ec-paper);
-  border-left-color: var(--ec-signal);
+  background: var(--ec-primary-hover);
+  color: var(--ec-white);
+  border-left-color: var(--ec-accent);
   font-weight: 600;
 }
 
@@ -90,7 +93,7 @@
 }
 
 .footer {
-  border-top: 1px solid var(--ec-line);
+  border-top: 1px solid var(--ec-primary-hover);
   padding-top: var(--space-4);
   display: flex;
   flex-direction: column;
@@ -101,17 +104,16 @@
   display: flex;
   align-items: center;
   gap: 0.6rem;
-  color: var(--ec-paper-2);
+  color: var(--ec-ink-faint);
   text-decoration: none;
   font-size: var(--fs-body);
   padding: 0.4rem 0.6rem;
   border-radius: var(--radius-sm);
-  opacity: 0.8;
 }
 
 .footerLink:hover {
-  opacity: 1;
-  background: rgba(243, 238, 225, 0.06);
+  background: var(--ec-primary-hover);
+  color: var(--ec-white);
 }
 
 .mobileToggle {
@@ -135,7 +137,7 @@
     display: block;
     position: fixed;
     inset: 0;
-    background: rgba(13, 31, 22, 0.5);
+    background: rgba(15, 23, 42, 0.5);
     z-index: 40;
   }
 }

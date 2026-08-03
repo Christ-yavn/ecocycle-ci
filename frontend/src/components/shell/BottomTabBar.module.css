@@ -20,11 +20,10 @@
   gap: 2px;
   padding: var(--space-2) var(--space-1);
   border-radius: var(--radius-sm);
-  color: var(--ec-ink-soft);
+  color: var(--ec-ink-faint);
   text-decoration: none;
-  font-family: var(--font-inter);
   font-size: 0.62rem;
-  font-weight: 600;
+  font-weight: 500;
   border: none;
   background: none;
   cursor: pointer;
@@ -33,11 +32,13 @@
 }
 
 .tab:hover {
-  background: var(--ec-paper-2);
+  background: var(--ec-surface);
+  color: var(--ec-primary);
 }
 
 .tabActive {
-  color: var(--ec-forest-3);
+  color: var(--ec-primary);
+  font-weight: 600;
 }
 
 .tabLabel {

@@ -67,7 +67,7 @@ export default async function CollecteurMissionsPage({
     <>
       <div className="pageHead">
         <div className="row">
-          <Badge tone="signal" dot>
+          <Badge tone="success" dot>
             {total} mission{total > 1 ? "s" : ""}
           </Badge>
         </div>

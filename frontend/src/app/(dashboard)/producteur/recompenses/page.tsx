@@ -5,6 +5,7 @@ import { Badge } from "@/components/ui/Badge";
 import { Stat } from "@/components/ui/Stat";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { Button } from "@/components/ui/Button";
+import { Icon } from "@/components/ui/Icon";
 import styles from "./page.module.css";
 
 export const dynamic = "force-dynamic";
@@ -71,7 +72,7 @@ export default async function RecompensesPage() {
     <>
       <div className="pageHead">
         <div className="row">
-          <Badge tone="signal" dot>
+          <Badge tone="success" dot>
             Producteur · {profile.name}
           </Badge>
         </div>
@@ -118,7 +119,7 @@ export default async function RecompensesPage() {
             <Card key={palier.seuil} elevated={false} className={atteint ? styles.palierAtteint : ""}>
               <div className={styles.palierHead}>
                 <div className={styles.palierIcon}>
-                  {atteint ? "★" : "☆"}
+                  <Icon name={atteint ? "checkCircle" : "circle"} size={24} />
                 </div>
                 <div className={styles.palierSeuil}>
                   {palier.seuil} pts
@@ -136,7 +137,7 @@ export default async function RecompensesPage() {
 
               <div className={styles.palierStatus}>
                 {atteint ? (
-                  <Badge tone="signal" dot>Débloqué</Badge>
+                  <Badge tone="success" dot>Débloqué</Badge>
                 ) : (
                   <span className={styles.palierRestant}>
                     {palier.seuil - total} pts restants

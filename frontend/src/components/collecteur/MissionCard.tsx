@@ -1,21 +1,22 @@
 import Link from "next/link";
 import { Badge } from "@/components/ui/Badge";
+import { Icon } from "@/components/ui/Icon";
 import type { LotRow } from "@/types/database.types";
 import styles from "./MissionCard.module.css";
 
 export const TYPE_BADGE: Record<
   string,
-  { label: string; tone: "signal" | "amber" | "forest" | "rust" | "paper" }
+  { label: string; tone: "primary" | "warning" | "success" | "danger" | "outline" }
 > = {
-  plastique: { label: "Plastique", tone: "signal" },
-  papier_carton: { label: "Carton", tone: "amber" },
-  metal: { label: "Métal", tone: "paper" },
-  verre: { label: "Verre", tone: "paper" },
-  organique: { label: "Organique", tone: "forest" },
-  electronique: { label: "Électronique", tone: "forest" },
-  textile: { label: "Textile", tone: "forest" },
-  mixte: { label: "Mixte", tone: "amber" },
-  inconnu: { label: "Inconnu", tone: "paper" },
+  plastique: { label: "Plastique", tone: "primary" },
+  papier_carton: { label: "Carton", tone: "warning" },
+  metal: { label: "Métal", tone: "outline" },
+  verre: { label: "Verre", tone: "outline" },
+  organique: { label: "Organique", tone: "success" },
+  electronique: { label: "Électronique", tone: "success" },
+  textile: { label: "Textile", tone: "success" },
+  mixte: { label: "Mixte", tone: "warning" },
+  inconnu: { label: "Inconnu", tone: "outline" },
 };
 
 export function formatAnciennete(datePublication: string): string {
@@ -52,7 +53,9 @@ export function MissionCard({
           /* eslint-disable-next-line @next/next/no-img-element -- URL Supabase Storage dynamique */
           <img src={lot.photo_url} alt={type.label} className={styles.photo} />
         ) : (
-          <div className={styles.photoPlaceholder}>📦</div>
+          <div className={styles.photoPlaceholder}>
+            <Icon name="package" size={24} />
+          </div>
         )}
       </div>
 
@@ -64,10 +67,10 @@ export function MissionCard({
           </span>
         </div>
         <div className={styles.meta}>
-          📍 {[lot.quartier, lot.commune].filter(Boolean).join(", ") || "Abidjan"}
+          <Icon name="mapPin" size={14} /> {[lot.quartier, lot.commune].filter(Boolean).join(", ") || "Abidjan"}
         </div>
         <div className={styles.meta}>
-          🕐 {formatAnciennete(lot.date_publication)}
+          <Icon name="clock" size={14} /> {formatAnciennete(lot.date_publication)}
         </div>
         <Link href={`/collecteur/missions/${lot.id}`} className={styles.cta}>
           Voir la mission →

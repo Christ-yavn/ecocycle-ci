@@ -72,7 +72,7 @@ export default async function RecycleurCommandesPage() {
     <>
       <div className="pageHead">
         <div className="row">
-          <Badge tone="signal" dot>
+          <Badge tone="success" dot>
             Recycleur · {profile.name}
           </Badge>
         </div>
@@ -102,7 +102,7 @@ export default async function RecycleurCommandesPage() {
             return (
               <Card key={m.id} elevated={false}>
                 <div className={styles.head}>
-                  <Badge tone="amber" dot>
+                  <Badge tone="warning" dot>
                     Réservée
                   </Badge>
                   <span className={styles.date}>
@@ -160,7 +160,7 @@ export default async function RecycleurCommandesPage() {
                   <span className={styles.date}>
                     {m.date_vente ? new Date(m.date_vente).toLocaleDateString("fr-FR") : "—"}
                   </span>
-                  <Badge tone="signal">Vendue</Badge>
+                  <Badge tone="success">Vendue</Badge>
                 </div>
               ))}
             </div>

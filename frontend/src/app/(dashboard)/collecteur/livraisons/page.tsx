@@ -72,7 +72,7 @@ export default async function LivraisonsPage() {
                 {collectedList.map((lot) => (
                   <Card key={lot.id} elevated={false}>
                     <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "0.5rem" }}>
-                      <Badge tone="forest" dot>
+                      <Badge tone="primary" dot>
                         En stock
                       </Badge>
                       <span style={{ fontFamily: "var(--font-mono)", fontSize: "var(--fs-label)", color: "var(--ec-ink-soft)" }}>
@@ -106,7 +106,7 @@ export default async function LivraisonsPage() {
                 {deliveredList.map((lot) => (
                   <Card key={lot.id} elevated={false}>
                     <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "0.5rem" }}>
-                      <Badge tone="paper">Livré</Badge>
+                      <Badge tone="outline">Livré</Badge>
                       <span style={{ fontFamily: "var(--font-mono)", fontSize: "var(--fs-label)", color: "var(--ec-ink-soft)" }}>
                         {lot.date_livraison
                           ? new Date(lot.date_livraison).toLocaleDateString("fr-FR")

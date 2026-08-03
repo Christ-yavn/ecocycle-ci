@@ -30,10 +30,10 @@ export function QrRetrait({
     <>
       <div className="pageHead">
         <div className="row">
-          <Badge tone="amber" dot>
+          <Badge tone="warning" dot>
             Retrait en cours
           </Badge>
-          <Badge tone="paper">{typeDechet}</Badge>
+          <Badge tone="outline">{typeDechet}</Badge>
         </div>
         <h1>Validation du retrait</h1>
         <p className="muted">

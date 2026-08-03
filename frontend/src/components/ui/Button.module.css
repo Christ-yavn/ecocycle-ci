@@ -1,66 +1,80 @@
 .button {
-  border: none;
   font-family: inherit;
-  font-weight: 600;
+  font-weight: 500;
   font-size: var(--fs-body);
   border-radius: var(--radius-sm);
-  padding: 0.6rem 1.2rem;
+  padding: 0.5rem 1rem;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
   text-decoration: none;
+  border: 1px solid transparent;
+  justify-content: center;
 }
 
 .primary {
-  background: var(--ec-ink);
-  color: var(--ec-paper);
+  background: var(--ec-primary);
+  color: var(--ec-white);
+  border-color: var(--ec-primary);
 }
 
 .primary:hover {
-  background: var(--ec-forest-3);
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(20, 37, 27, 0.15);
+  background: var(--ec-primary-hover);
+  border-color: var(--ec-primary-hover);
 }
 
 .accent {
-  background: var(--ec-signal);
-  color: var(--ec-forest);
-  font-weight: 700;
+  background: var(--ec-accent);
+  color: var(--ec-white);
+  border-color: var(--ec-accent);
 }
 
 .accent:hover {
-  filter: brightness(1.1);
-  transform: translateY(-1px);
+  background: var(--ec-accent-dark);
+  border-color: var(--ec-accent-dark);
+}
+
+.outline {
+  background: transparent;
+  color: var(--ec-primary);
+  border-color: var(--ec-line-dark);
+}
+
+.outline:hover {
+  background: var(--ec-surface);
+  border-color: var(--ec-ink-soft);
 }
 
 .ghost {
   background: transparent;
-  color: var(--ec-ink);
-  border: 1px solid var(--ec-line-dark);
+  color: var(--ec-ink-soft);
+  border-color: transparent;
 }
 
 .ghost:hover {
-  background: var(--ec-paper);
+  background: var(--ec-surface);
+  color: var(--ec-primary);
 }
 
 .danger {
-  background: var(--ec-rust);
-  color: var(--ec-paper);
+  background: var(--ec-danger);
+  color: var(--ec-white);
+  border-color: var(--ec-danger);
 }
 
 .danger:hover {
-  filter: brightness(1.08);
+  background: var(--ec-danger-dark);
+  border-color: var(--ec-danger-dark);
 }
 
 .full {
   width: 100%;
-  justify-content: center;
 }
 
 .button:disabled {
   opacity: 0.5;
   cursor: not-allowed;
-  transform: none;
+  pointer-events: none;
 }

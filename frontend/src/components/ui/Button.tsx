@@ -2,13 +2,14 @@ import type { ButtonHTMLAttributes, ReactNode } from "react";
 import Link from "next/link";
 import styles from "./Button.module.css";
 
-type Variant = "primary" | "accent" | "ghost" | "danger";
+type Variant = "primary" | "accent" | "ghost" | "danger" | "outline";
 
 const variantClass: Record<Variant, string> = {
   primary: styles.primary,
   accent: styles.accent,
   ghost: styles.ghost,
   danger: styles.danger,
+  outline: styles.outline,
 };
 
 type BaseProps = {

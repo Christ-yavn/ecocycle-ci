@@ -1,19 +1,19 @@
 import type { ReactNode } from "react";
 import styles from "./Badge.module.css";
 
-type Tone = "forest" | "amber" | "signal" | "rust" | "paper";
+type Tone = "primary" | "warning" | "success" | "danger" | "outline";
 
 const toneClass: Record<Tone, string> = {
-  forest: styles.forest,
-  amber: styles.amber,
-  signal: styles.signal,
-  rust: styles.rust,
-  paper: styles.paper,
+  primary: styles.primary,
+  warning: styles.warning,
+  success: styles.success,
+  danger: styles.danger,
+  outline: styles.outline,
 };
 
 export function Badge({
   children,
-  tone = "forest",
+  tone = "primary",
   dot = false,
 }: {
   children: ReactNode;

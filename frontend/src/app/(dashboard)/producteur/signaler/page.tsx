@@ -30,7 +30,7 @@ export default async function ProducteurSignalerPage() {
     <>
       <div className="pageHead">
         <div className="row">
-          <Badge tone="signal" dot>
+          <Badge tone="success" dot>
             Producteur · {profile.name}
           </Badge>
         </div>

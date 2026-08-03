@@ -1,7 +1,7 @@
 .topbar {
   height: 62px;
   background: var(--ec-paper);
-  border-bottom: 1px solid var(--ec-line-dark);
+  border-bottom: 1px solid var(--ec-line);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -29,12 +29,12 @@
 }
 
 .title {
-  font-family: var(--font-inter), serif;
-  font-weight: 700;
+  font-weight: 600;
   font-size: 1.05rem;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  color: var(--ec-primary);
 }
 
 .right {
@@ -54,7 +54,8 @@
 }
 
 .bellBtn:hover {
-  background: var(--ec-paper-2);
+  background: var(--ec-surface);
+  color: var(--ec-primary);
 }
 
 .dot {
@@ -64,30 +65,31 @@
   width: 7px;
   height: 7px;
   border-radius: 50%;
-  background: var(--ec-rust);
+  background: var(--ec-danger);
 }
 
 .avatar {
   width: 34px;
   height: 34px;
   border-radius: 50%;
-  background: var(--ec-forest);
-  color: var(--ec-paper);
+  background: var(--ec-primary);
+  color: var(--ec-white);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: var(--font-mono), monospace;
+  font-family: var(--font-mono);
   font-size: 0.7rem;
   font-weight: 600;
 }
 
 .userName {
   font-size: var(--fs-body);
-  font-weight: 600;
+  font-weight: 500;
   max-width: 140px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  color: var(--ec-primary);
 }
 
 @media (max-width: 900px) {
