@@ -106,7 +106,7 @@ export async function analyzePhoto(file: File): Promise<AnalyseIa> {
 function phoneToEmail(phone: string): string {
   // Format CI : +225 07 00 00 00 00 → 0700000000@ecoloop.ci
   const cleaned = phone.replace(/[\s+\-]/g, "");
-  return `${cleaned}@ecoloop.ci`;
+  return `${cleaned}.ecoloop@gmail.com`;
 }
 
 function compressImage(

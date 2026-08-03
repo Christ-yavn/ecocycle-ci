@@ -91,7 +91,7 @@ async function purgeAuthUsers() {
 }
 
 async function createAccount(account) {
-  const email = `${account.phone}@ecoloop.ci`;
+  const email = `${account.phone}.ecoloop@gmail.com`;
   console.log(`→ Création: ${email} (${account.role})...`);
 
   const { data, error } = await supabase.auth.admin.createUser({
@@ -160,7 +160,7 @@ async function main() {
   const { data: profiles, error: profErr } = await supabase
     .from("users")
     .select("id, email, role, name, commune, niveau, statut_abonnement")
-    .in("email", DEMO_ACCOUNTS.map((a) => `${a.phone}@ecoloop.ci`));
+    .in("email", DEMO_ACCOUNTS.map((a) => `${a.phone}.ecoloop@gmail.com`));
 
   if (profErr) {
     console.log(`❌ Erreur vérification: ${profErr.message}`);
