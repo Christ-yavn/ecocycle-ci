@@ -1,0 +1,12 @@
+{
+  "name": "ecocycle-ci-backend",
+  "version": "1.0.0",
+  "description": "Backend infrastructure and scripts",
+  "scripts": {
+    "seed": "node scripts/seed_ecoloop.js"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.39.0",
+    "dotenv": "^16.4.5"
+  }
+}
