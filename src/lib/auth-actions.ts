@@ -85,8 +85,12 @@ export async function compressAndUploadPhoto(
 
 // --- ANALYSE IA (proxy via route handler) ---
 export async function analyzePhoto(file: File): Promise<AnalyseIa> {
+  // Compression côté client pour éviter la limite 4.5MB de Vercel
+  const compressedBlob = await compressImage(file, 800, 0.6); // Compression un peu plus agressive pour l'IA
+  const compressedFile = new File([compressedBlob], "photo.webp", { type: "image/webp" });
+
   const formData = new FormData();
-  formData.append("file", file);
+  formData.append("file", compressedFile);
 
   const res = await fetch("/api/ia/analyze", {
     method: "POST",
