@@ -1,0 +1,115 @@
+/* ===== DASHBOARD COLLECTEUR — EcoLoop ===== */
+
+.banner {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  background: var(--ec-amber);
+  color: var(--ec-ink);
+  border-radius: var(--radius-card);
+  padding: var(--space-4);
+  text-decoration: none;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.banner:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 20px rgba(217, 119, 6, 0.25);
+}
+
+.bannerIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.35);
+  flex-shrink: 0;
+}
+
+.bannerText {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  font-size: 0.8rem;
+}
+
+.bannerText strong {
+  font-size: 0.92rem;
+}
+
+.bannerArrow {
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.sectionHead {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.sectionTitle {
+  font-size: 1.05rem;
+  margin: 0;
+}
+
+.sectionLink {
+  font-size: 0.78rem;
+  color: var(--ec-forest-3);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.sectionLink:hover {
+  text-decoration: underline;
+}
+
+.missionsList {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: var(--space-3);
+}
+
+.statsRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-4);
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  text-align: center;
+  padding: var(--space-2) 0;
+}
+
+.statValue {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--ec-forest);
+  line-height: 1.1;
+}
+
+.statLabel {
+  font-size: 0.68rem;
+  color: var(--ec-ink-soft);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+@media (max-width: 560px) {
+  .statsRow {
+    gap: var(--space-2);
+  }
+}

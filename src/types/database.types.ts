@@ -1,5 +1,5 @@
 // ============================================================
-// Types Supabase — EcoCycle CI
+// Types Supabase — EcoLoop CI
 // Schéma de la base de données (généré manuellement, couche 2).
 // Pour régénérer automatiquement : npx supabase gen types typescript
 //   --project-id zuaohociddfdwaygdrpl > src/types/database.types.ts
@@ -52,6 +52,7 @@ export type UserRow = {
   type_producteur: string | null;
   points_balance: number;
   points_total: number;
+  niveau: number;
   statut_abonnement: AbonnementStatut;
   date_inscription: string;
 };
@@ -174,4 +175,39 @@ export type MatierePremiereRow = {
   acheteur_id: string | null;
   date_publication: string;
   date_vente: string | null;
+};
+
+// --- Ligne public.notifications (EcoLoop) ---
+export type NotificationRow = {
+  id: string;
+  user_id: string;
+  type: string;
+  title: string;
+  body: string | null;
+  data: Record<string, unknown>;
+  read: boolean;
+  created_at: string;
+};
+
+// --- Ligne public.appels_offres (EcoLoop) ---
+export type AppelOffreRow = {
+  id: string;
+  acheteur_id: string;
+  type_matiere: string;
+  volume_demande_kg: number;
+  description: string | null;
+  date_limite: string | null;
+  status: "ouvert" | "ferme" | "attribue";
+  created_at: string;
+};
+
+// --- Ligne public.propositions_offres (EcoLoop) ---
+export type PropositionOffreRow = {
+  id: string;
+  appel_id: string;
+  recycleur_id: string;
+  volume_propose_kg: number;
+  message: string | null;
+  status: "en_attente" | "acceptee" | "refusee";
+  created_at: string;
 };

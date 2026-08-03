@@ -34,6 +34,9 @@ const PATHS: Record<string, string> = {
   filter: "M4 5h16l-6 8v6l-4-2v-4z",
   chart: "M4 20V10M10 20V4M16 20v-8M22 20H2",
   key: "M14 10a4 4 0 10-4 4c.5 0 1-.1 1.4-.3L13 15h2v2h2v2h3v-3.6l-4.3-4.3c.1-.4.3-.9.3-1.1zM8 10h.01",
+  activity: "M3 12h4l3 8 4-16 3 8h4",
+  user: "M12 12a4 4 0 100-8 4 4 0 000 8zM4 20c0-4 4-6 8-6s8 2 8 6",
+  scale: "M12 3v3M8 21h8M5 21l2-9h10l2 9M9 9a3 3 0 006 0",
 };
 
 export function Icon({
@@ -71,7 +74,6 @@ export function RoleIcon({ role, size = 18 }: { role: Role; size?: number }) {
     recycleur: "recycle",
     acheteur: "catalog",
     mairie: "dashboard",
-    citoyen: "alert",
     admin: "shield",
   };
   return <Icon name={map[role]} size={size} />;

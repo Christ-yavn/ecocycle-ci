@@ -6,7 +6,7 @@ export default function DebugPage() {
 
   return (
     <div style={{ padding: "2rem", fontFamily: "monospace", fontSize: "0.85rem" }}>
-      <h1>Diagnostic EcoCycle CI</h1>
+      <h1>Diagnostic EcoLoop CI</h1>
 
       <h2>Variables d&apos;environnement (client)</h2>
       <table style={{ width: "100%", borderCollapse: "collapse", marginTop: "1rem" }}>

@@ -81,7 +81,7 @@
 }
 
 .type {
-  font-family: var(--font-fraunces);
+  font-family: var(--font-inter);
   font-weight: 700;
   font-size: 1.05rem;
   color: var(--ec-ink);

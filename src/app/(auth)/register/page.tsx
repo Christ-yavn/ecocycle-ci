@@ -4,294 +4,304 @@ import { useState, type FormEvent } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { signUp } from "@/lib/auth-actions";
-import { RoleIcon, Icon } from "@/components/ui/Icon";
-import {
-  ROLES,
-  ROLE_LABELS,
-  ROLE_ACCES_PAYANT,
-  ROLES_AVEC_SOUS_ACTIVITE,
-  SOUS_ACTIVITE_LABELS,
-  type Role,
-  type SousActivite,
-} from "@/types/role";
 import styles from "./page.module.css";
 
-const COMMUNES_ABIDJAN = [
-  "Abobo",
-  "Adjamé",
-  "Attécoubé",
-  "Cocody",
-  "Koumassi",
-  "Marcory",
-  "Plateau",
-  "Port-Bouët",
-  "Treichville",
-  "Yopougon",
-];
+type RoleInscription = "producteur" | "collecteur";
 
-const ROLE_DESCRIPTIONS: Record<Role, string> = {
-  producteur: "Restaurants, hôtels, écoles — publiez vos lots",
-  collecteur: "Collectez et livrez aux recycleurs",
-  recycleur: "Transformez et vendez vos matières premières",
-  acheteur: "Achetez des matières premières recyclées",
-  mairie: "Supervisez la filière de votre commune",
-  citoyen: "Signalez les dépôts sauvages",
-  admin: "Supervisez la plateforme EcoCycle",
-};
+function formatPhone(value: string): string {
+  // Tolère le collage au format international (+225 07...) → garde le national
+  const digits = value.replace(/\D/g, "").replace(/^225/, "").slice(0, 10);
+  return digits.replace(/(\d{2})(?=\d)/g, "$1 ").trim();
+}
 
 export default function RegisterPage() {
   const router = useRouter();
 
-  const [role, setRole] = useState<Role>("producteur");
-  const [sousActivite, setSousActivite] = useState<SousActivite>("collecte");
+  const [step, setStep] = useState<1 | 2 | 3>(1);
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
-  const [commune, setCommune] = useState("");
-  const [quartier, setQuartier] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [role, setRole] = useState<RoleInscription>("producteur");
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
 
-  const avecSousActivite = ROLES_AVEC_SOUS_ACTIVITE.includes(role);
+  function goToStep2(e: FormEvent) {
+    e.preventDefault();
+    setError(null);
+    if (!name.trim()) {
+      setError("Veuillez renseigner votre nom.");
+      return;
+    }
+    setStep(2);
+  }
+
+  function goToStep3(e: FormEvent) {
+    e.preventDefault();
+    setError(null);
+    const digits = phone.replace(/\D/g, "");
+    if (digits.length !== 10) {
+      setError("Veuillez saisir un numéro à 10 chiffres (ex : 07 00 00 00 00).");
+      return;
+    }
+    setStep(3);
+  }
 
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
     setError(null);
-    setLoading(true);
 
+    if (password.length < 8) {
+      setError("Le mot de passe doit contenir au moins 8 caractères.");
+      return;
+    }
+    if (password !== confirmPassword) {
+      setError("Les deux mots de passe ne correspondent pas.");
+      return;
+    }
+
+    setLoading(true);
     const { data, error: authError } = await signUp(
-      name,
-      phone,
+      name.trim(),
+      phone.replace(/\D/g, ""),
       password,
       role,
-      commune || undefined,
-      quartier || undefined,
-      avecSousActivite ? sousActivite : undefined,
     );
+    setLoading(false);
 
     if (authError) {
       setError(authError.message);
-      setLoading(false);
       return;
     }
 
     if (data.user) {
       setSuccess(true);
-      setTimeout(() => router.push("/login"), 2000);
     }
-    setLoading(false);
   }
 
   if (success) {
     return (
       <div className={styles.successWrap}>
-        <div className={styles.successIcon}>✓</div>
-        <h2 className={styles.successTitle}>Compte créé avec succès !</h2>
-        <p className={styles.successText}>
-          Votre profil a été créé. Vous allez être redirigé vers la page de connexion.
-        </p>
+        <div className={styles.successIcon}>🎉</div>
+        <h2 className={styles.successTitle}>Compte créé</h2>
+        <p className={styles.successText}>Bienvenue, {name}</p>
+        <button
+          type="button"
+          className={styles.submitBtn}
+          onClick={() => router.push("/login")}
+        >
+          Accéder à mon espace →
+        </button>
       </div>
     );
   }
 
   return (
     <>
-      <div className={styles.header}>
-        <div className={styles.eyebrow}>Nouveau compte</div>
-        <h1 className={styles.title}>Rejoignez EcoCycle CI</h1>
-        <p className={styles.subtitle}>
-          Choisissez votre profil et renseignez vos informations pour commencer.
-        </p>
+      {/* Stepper */}
+      <div className={styles.stepper} aria-label={`Étape ${step} sur 3`}>
+        <div className={styles.stepperLabel}>Étape {step} sur 3</div>
+        <div className={styles.stepperTrack}>
+          {[1, 2, 3].map((s) => (
+            <span
+              key={s}
+              className={`${styles.stepDot} ${s <= step ? styles.stepDotActive : ""}`}
+            />
+          ))}
+        </div>
       </div>
 
-      <form onSubmit={handleSubmit} className={styles.form}>
-        <div className={styles.field}>
-          <label className={styles.label}>Votre profil</label>
-          <div className={styles.roleGrid}>
-            {ROLES.map((r) => (
-              <button
-                key={r}
-                type="button"
-                className={`${styles.roleCard} ${role === r ? styles.roleCardActive : ""}`}
-                onClick={() => setRole(r)}
-              >
-                <span className={styles.roleIcon}>
-                  <RoleIcon role={r} size={22} />
-                </span>
-                <span className={styles.roleCardLabel}>{ROLE_LABELS[r]}</span>
-                {ROLE_ACCES_PAYANT[r] && (
-                  <span className={styles.roleBadge}>Pro</span>
-                )}
-              </button>
-            ))}
+      {/* ===== ÉTAPE 1 : Identité + rôle ===== */}
+      {step === 1 && (
+        <form onSubmit={goToStep2} className={styles.form}>
+          <div className={styles.header}>
+            <h1 className={styles.title}>Comment vous appelez-vous ?</h1>
+            <p className={styles.subtitle}>
+              Dites-nous qui vous êtes et ce que vous souhaitez faire.
+            </p>
           </div>
-          <p className={styles.roleDesc}>{ROLE_DESCRIPTIONS[role]}</p>
-        </div>
 
-        {avecSousActivite && (
           <div className={styles.field}>
-            <label className={styles.label}>Votre activité</label>
-            <div className={styles.activiteRow}>
-              {(Object.keys(SOUS_ACTIVITE_LABELS) as SousActivite[]).map(
-                (sa) => (
-                  <label
-                    key={sa}
-                    className={`${styles.activiteCard} ${
-                      sousActivite === sa ? styles.activiteCardActive : ""
-                    }`}
-                  >
-                    <input
-                      type="radio"
-                      name="sous_activite"
-                      value={sa}
-                      checked={sousActivite === sa}
-                      onChange={() => setSousActivite(sa)}
-                      className={styles.activiteInput}
-                    />
-                    <span>{SOUS_ACTIVITE_LABELS[sa]}</span>
-                  </label>
-                ),
-              )}
-            </div>
-          </div>
-        )}
-
-        <div className={styles.field}>
-          <label className={styles.label} htmlFor="name">
-            {role === "producteur" || role === "citoyen"
-              ? "Prénom et nom"
-              : "Raison sociale / Nom"}
-          </label>
-          <div className={styles.inputWrap}>
-            <svg className={styles.inputIcon} width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M12 12a4 4 0 100-8 4 4 0 000 8zM4 20c0-4 4-6 8-6s8 2 8 6" />
-            </svg>
+            <label className={styles.label} htmlFor="name">
+              Nom / Prénom
+            </label>
             <input
               id="name"
               name="name"
               type="text"
-              className={styles.input}
-              placeholder="Ex : Awa Koné / EcoCollect SARL"
+              className={styles.inputPlain}
+              placeholder="Ex : Awa Koné"
+              autoComplete="name"
               value={name}
               onChange={(e) => setName(e.target.value)}
               required
             />
           </div>
-        </div>
 
-        <div className={styles.field}>
-          <label className={styles.label} htmlFor="phone">
-            Téléphone
-          </label>
-          <div className={styles.inputWrap}>
-            <svg className={styles.inputIcon} width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z" />
-            </svg>
-            <input
-              id="phone"
-              name="phone"
-              type="tel"
-              className={styles.input}
-              placeholder="+225 07 00 00 00 00"
-              autoComplete="tel"
-              value={phone}
-              onChange={(e) => setPhone(e.target.value)}
-              required
-            />
+          <div className={styles.field}>
+            <span className={styles.label}>Vous êtes</span>
+            <div className={styles.roleGrid}>
+              <button
+                type="button"
+                className={`${styles.roleCard} ${role === "producteur" ? styles.roleCardActive : ""}`}
+                onClick={() => setRole("producteur")}
+              >
+                <span className={styles.roleIcon}>🏠</span>
+                <span className={styles.roleCardLabel}>Ménage / Producteur</span>
+                <span className={styles.roleDesc}>
+                  Je publie mes déchets triés et je gagne des points
+                </span>
+              </button>
+              <button
+                type="button"
+                className={`${styles.roleCard} ${role === "collecteur" ? styles.roleCardActive : ""}`}
+                onClick={() => setRole("collecteur")}
+              >
+                <span className={styles.roleIcon}>🚛</span>
+                <span className={styles.roleCardLabel}>Collecteur informel</span>
+                <span className={styles.roleDesc}>
+                  Je collecte les lots près de chez moi
+                </span>
+              </button>
+            </div>
           </div>
-        </div>
 
-        <div className={styles.field}>
-          <label className={styles.label} htmlFor="password">
-            Mot de passe
-          </label>
-          <div className={styles.inputWrap}>
-            <svg className={styles.inputIcon} width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
-              <rect x="5" y="11" width="14" height="10" rx="2" />
-              <path d="M8 11V7a4 4 0 018 0v4" />
-            </svg>
+          {error && <div className={styles.error}>{error}</div>}
+
+          <button type="submit" className={styles.submitBtn}>
+            Continuer →
+          </button>
+        </form>
+      )}
+
+      {/* ===== ÉTAPE 2 : Téléphone ===== */}
+      {step === 2 && (
+        <form onSubmit={goToStep3} className={styles.form}>
+          <div className={styles.header}>
+            <h1 className={styles.title}>Votre numéro de téléphone</h1>
+            <p className={styles.subtitle}>
+              Il servira d{"'"}identifiant de connexion.
+            </p>
+          </div>
+
+          <div className={styles.field}>
+            <label className={styles.label} htmlFor="phone">
+              Numéro de téléphone
+            </label>
+            <div className={styles.phoneWrap}>
+              <span className={styles.phonePrefix}>🇨🇮 +225</span>
+              <input
+                id="phone"
+                name="phone"
+                type="tel"
+                inputMode="numeric"
+                className={styles.phoneInput}
+                placeholder="07 00 00 00 00"
+                autoComplete="tel-national"
+                value={phone}
+                onChange={(e) => setPhone(formatPhone(e.target.value))}
+                required
+              />
+            </div>
+            <p className={styles.secureNote}>🔒 Votre numéro est sécurisé</p>
+          </div>
+
+          {error && <div className={styles.error}>{error}</div>}
+
+          <button type="submit" className={styles.submitBtn}>
+            Continuer →
+          </button>
+          <button
+            type="button"
+            className={styles.backBtn}
+            onClick={() => setStep(1)}
+          >
+            ← Retour
+          </button>
+        </form>
+      )}
+
+      {/* ===== ÉTAPE 3 : Mot de passe ===== */}
+      {step === 3 && (
+        <form onSubmit={handleSubmit} className={styles.form}>
+          <div className={styles.header}>
+            <h1 className={styles.title}>Créez votre mot de passe</h1>
+            <p className={styles.subtitle}>
+              Dernière étape avant de rejoindre EcoLoop.
+            </p>
+          </div>
+
+          <div className={styles.field}>
+            <label className={styles.label} htmlFor="password">
+              Mot de passe
+            </label>
+            <div className={styles.inputWrap}>
+              <input
+                id="password"
+                name="password"
+                type={showPassword ? "text" : "password"}
+                className={styles.inputPlain}
+                placeholder="••••••••"
+                autoComplete="new-password"
+                minLength={8}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
+              <button
+                type="button"
+                className={styles.togglePass}
+                onClick={() => setShowPassword((s) => !s)}
+                tabIndex={-1}
+                aria-label="Afficher/masquer le mot de passe"
+              >
+                {showPassword ? "🙈" : "👁️"}
+              </button>
+            </div>
+            <p className={styles.secureNote}>🛡️ Au moins 8 caractères</p>
+          </div>
+
+          <div className={styles.field}>
+            <label className={styles.label} htmlFor="confirmPassword">
+              Confirmez le mot de passe
+            </label>
             <input
-              id="password"
-              name="password"
+              id="confirmPassword"
+              name="confirmPassword"
               type={showPassword ? "text" : "password"}
-              className={styles.input}
-              placeholder="Minimum 6 caractères"
+              className={styles.inputPlain}
+              placeholder="••••••••"
               autoComplete="new-password"
-              minLength={6}
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              minLength={8}
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
               required
             />
-            <button
-              type="button"
-              className={styles.togglePass}
-              onClick={() => setShowPassword((s) => !s)}
-              tabIndex={-1}
-              aria-label="Afficher/masquer le mot de passe"
-            >
-              <Icon name={showPassword ? "eyeOff" : "eye"} size={18} />
-            </button>
-          </div>
-        </div>
-
-        <div className={styles.fieldRow}>
-          <div className={styles.field}>
-            <label className={styles.label} htmlFor="commune">
-              Commune
-            </label>
-            <select
-              id="commune"
-              name="commune"
-              className={styles.select}
-              value={commune}
-              onChange={(e) => setCommune(e.target.value)}
-            >
-              <option value="">— Sélectionner —</option>
-              {COMMUNES_ABIDJAN.map((c) => (
-                <option key={c} value={c}>
-                  {c}
-                </option>
-              ))}
-            </select>
           </div>
 
-          <div className={styles.field}>
-            <label className={styles.label} htmlFor="quartier">
-              Quartier
-            </label>
-            <input
-              id="quartier"
-              name="quartier"
-              type="text"
-              className={styles.input}
-              placeholder="Angré, 220 Logements..."
-              value={quartier}
-              onChange={(e) => setQuartier(e.target.value)}
-            />
-          </div>
-        </div>
+          {error && <div className={styles.error}>{error}</div>}
 
-        {error && <div className={styles.error}>{error}</div>}
-
-        <button type="submit" className={styles.submitBtn} disabled={loading}>
-          {loading ? (
-            <>
-              <span className={styles.spinner} />
-              Création en cours…
-            </>
-          ) : (
-            "Créer mon compte"
-          )}
-        </button>
-
-        <div className={styles.notice}>
-          {ROLE_ACCES_PAYANT[role]
-            ? "Ce profil nécessite un abonnement payant. Vous pourrez souscrire après validation de votre compte."
-            : "Ce profil est gratuit. Aucun abonnement requis."}
-        </div>
-      </form>
+          <button type="submit" className={styles.submitBtn} disabled={loading}>
+            {loading ? (
+              <>
+                <span className={styles.spinner} />
+                Création en cours…
+              </>
+            ) : (
+              "Créer mon compte →"
+            )}
+          </button>
+          <button
+            type="button"
+            className={styles.backBtn}
+            onClick={() => setStep(2)}
+          >
+            ← Retour
+          </button>
+        </form>
+      )}
 
       <div className={styles.divider}>
         <span>ou</span>

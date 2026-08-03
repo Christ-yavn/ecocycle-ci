@@ -1,4 +1,4 @@
-# DEPLOIEMENT.md — Checklist complète EcoCycle CI
+# DEPLOIEMENT.md — Checklist complète EcoLoop CI
 
 Suivre ces étapes **dans l'ordre**. Chaque étape est vérifiable.
 
@@ -12,6 +12,7 @@ Dashboard : https://supabase.com → projet EcoCycle → **SQL Editor**
 2. Coller + exécuter `supabase/migration_02_couche3.sql`.
 3. Coller + exécuter `supabase/migration_03_rls_demo.sql`.
 4. Coller + exécuter `supabase/migration_04_ecosysteme.sql` (Nouvelles tables 6 acteurs, admin, RLS).
+5. Coller + exécuter `supabase/migration_05_ecoloop.sql` (notifications, appels d'offres, niveaux, fusion citoyen→producteur).
 
 **Vérification** : Table Editor → la table `users` existe.
 
@@ -35,6 +36,7 @@ Ajouter (environnement : **Production** + Preview) :
 | `IA_API_URL` | URL Render de l'étape 4 (ex. `https://ecocycle-ia.onrender.com`) |
 | `IA_JWT_SECRET` | Chaîne secrète — **identique** au `JWT_SECRET` de Render |
 | `CRON_SECRET` | Chaîne secrète quelconque |
+| `GEMINI_API_KEY` | Google AI Studio → API Keys (analyse IA photo) |
 
 Puis : **Deployments → ⋯ → Redeploy** (obligatoire : les `NEXT_PUBLIC_*` sont injectées au build).
 
@@ -50,10 +52,11 @@ Le login affiche 6 comptes démo — ils doivent exister dans Supabase. En local
 # 1. Créer .env.local à la racine du projet (copier .env.example) et remplir :
 #    NEXT_PUBLIC_SUPABASE_URL + SUPABASE_SERVICE_ROLE_KEY
 # 2. Exécuter :
-node --env-file=.env.local scripts/seed_test_users.js
+node --env-file=.env.local scripts/seed_ecoloop.js
 ```
 
-**Vérification** : le script affiche « ✅ TOUS LES COMPTES SONT ACTIFS ».
+**Vérification** : le script affiche « ✅ TOUS LES COMPTES SONT CRÉÉS ».
+Comptes démo : `0100000000` (admin) à `0100000005` (recycleur) — mot de passe unique `EcoLoop2026!`.
 
 ---
 
@@ -76,7 +79,7 @@ Le fichier `ecocycle-ia/render.yaml` configure déjà le service.
 |------|------------------|
 | `https://<app>.vercel.app` | Landing page affichée (pas d'erreur 500) |
 | `https://<app>.vercel.app/debug` | 2 variables ✓ |
-| Login `producteur@ecocycle.ci` + `TestEcoCycle2026!` | Redirection vers `/producteur` |
+| Login `0100000002` + `EcoLoop2026!` | Accès Mairie Cocody (`/mairie`) |
 | F5 (refresh) sur le dashboard | Session conservée |
 | Logout | Retour `/login` |
 | Analyse photo (espace producteur) | Résultat IA (sinon message cold start, réessayer 30 s) |

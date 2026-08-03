@@ -1,7 +1,6 @@
 "use client";
 
 import { createSupabaseBrowserClient } from "@/lib/supabase/browser";
-import type { Role } from "@/types/role";
 import type { AnalyseIa } from "@/types/ia";
 
 // ============================================================
@@ -20,10 +19,8 @@ function getSupabase() {
 
 // --- AUTH ---
 
-export async function signIn(identifier: string, password: string) {
-  const email = identifier.includes("@")
-    ? identifier
-    : phoneToEmail(identifier);
+export async function signIn(phone: string, password: string) {
+  const email = phoneToEmail(phone);
   const { data, error } = await getSupabase().auth.signInWithPassword({
     email,
     password,
@@ -35,10 +32,9 @@ export async function signUp(
   name: string,
   phone: string,
   password: string,
-  role: Role,
+  role: "producteur" | "collecteur",
   commune?: string,
   quartier?: string,
-  sousActivite?: string,
 ) {
   const email = phoneToEmail(phone);
   const { data, error } = await getSupabase().auth.signUp({
@@ -51,7 +47,6 @@ export async function signUp(
         role,
         commune: commune ?? null,
         quartier: quartier ?? null,
-        sous_activite: sousActivite ?? null,
       },
     },
   });
@@ -109,9 +104,9 @@ export async function analyzePhoto(file: File): Promise<AnalyseIa> {
 // --- HELPERS ---
 
 function phoneToEmail(phone: string): string {
-  // Format CI : +225 07 00 00 00 00 → 0700000000@ecocycle.ci
+  // Format CI : +225 07 00 00 00 00 → 0700000000@ecoloop.ci
   const cleaned = phone.replace(/[\s+\-]/g, "");
-  return `${cleaned}@ecocycle.ci`;
+  return `${cleaned}@ecoloop.ci`;
 }
 
 function compressImage(

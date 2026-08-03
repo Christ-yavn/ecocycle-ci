@@ -82,7 +82,7 @@ export default async function AlertesPage() {
           title="Aucun signalement"
         >
           Aucun dépôt sauvage n&apos;a été signalé sur votre commune pour le
-          moment. Les citoyens peuvent signaler via l&apos;espace citoyen.
+          moment. Les citoyens peuvent signaler via l&apos;espace producteur.
         </EmptyState>
       ) : (
         <div className={styles.grid}>

@@ -1,20 +1,24 @@
+// NOTE : 'citoyen' existe encore dans l'enum PostgreSQL mais n'est PLUS
+// utilisé dans le code (fusionné dans producteur — migration 05).
 export type Role =
   | "producteur"
   | "collecteur"
   | "recycleur"
   | "acheteur"
   | "mairie"
-  | "citoyen"
   | "admin";
 
-// Rôles proposés à l'inscription (l'admin est créé manuellement).
-export const ROLES: Role[] = [
+// Rôles avec inscription publique (/register).
+export const ROLES: Role[] = ["producteur", "collecteur"];
+
+// Tous les rôles (pour l'admin — les autres sont créés depuis le back-office).
+export const ALL_ROLES: Role[] = [
   "producteur",
   "collecteur",
   "recycleur",
   "acheteur",
   "mairie",
-  "citoyen",
+  "admin",
 ];
 
 export const ROLE_LABELS: Record<Role, string> = {
@@ -23,13 +27,12 @@ export const ROLE_LABELS: Record<Role, string> = {
   recycleur: "Recycleur",
   acheteur: "Acheteur final",
   mairie: "Mairie / Commune",
-  citoyen: "Citoyen",
   admin: "Administrateur",
 };
 
 export const ROLE_DESCRIPTIONS: Record<Role, string> = {
   producteur:
-    "Triez vos déchets, publiez des lots et gagnez des points de récompense.",
+    "Triez vos déchets, publiez des lots, signalez les dépôts sauvages et gagnez des points de récompense.",
   collecteur:
     "Visualisez les gisements, optimisez vos tournées et livrez aux recycleurs.",
   recycleur:
@@ -38,7 +41,6 @@ export const ROLE_DESCRIPTIONS: Record<Role, string> = {
     "Consultez le catalogue de matières premières recyclées disponibles.",
   mairie:
     "Supervisez la filière sur votre commune et suivez les dépôts sauvages.",
-  citoyen: "Signalez les dépôts sauvages dans votre quartier.",
   admin: "Supervisez la plateforme et fixez les prix du marché.",
 };
 
@@ -48,7 +50,6 @@ export const ROLE_ACCES_PAYANT: Record<Role, boolean> = {
   recycleur: true,
   acheteur: true,
   mairie: true,
-  citoyen: false,
   admin: false,
 };
 
@@ -61,5 +62,5 @@ export const SOUS_ACTIVITE_LABELS: Record<SousActivite, string> = {
   mixte: "Les deux (collecte + recyclage)",
 };
 
-// Rôles concernés par le choix d'une sous-activité à l'inscription.
+// Rôles concernés par le choix d'une sous-activité (back-office admin).
 export const ROLES_AVEC_SOUS_ACTIVITE: Role[] = ["collecteur", "recycleur"];

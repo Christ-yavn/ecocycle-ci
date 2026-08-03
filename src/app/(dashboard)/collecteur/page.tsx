@@ -1,13 +1,25 @@
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
-import { CollecteurMap } from "@/components/map/CollecteurMap";
+import Link from "next/link";
 import { Card } from "@/components/ui/Card";
-import { Stat } from "@/components/ui/Stat";
-import { Badge } from "@/components/ui/Badge";
 import { Icon } from "@/components/ui/Icon";
-import type { MapLot } from "@/types/map";
+import { MissionCard } from "@/components/collecteur/MissionCard";
+import type { LotRow } from "@/types/database.types";
+import styles from "./page.module.css";
 
 export const dynamic = "force-dynamic";
+
+type MissionLot = Pick<
+  LotRow,
+  | "id"
+  | "type_dechet"
+  | "volume_ia"
+  | "weight_real"
+  | "commune"
+  | "quartier"
+  | "photo_url"
+  | "date_publication"
+>;
 
 export default async function CollecteurPage() {
   const supabase = await createSupabaseServerClient();
@@ -21,7 +33,7 @@ export default async function CollecteurPage() {
 
   const { data: profile } = await supabase
     .from("users")
-    .select("role, name, commune, quartier")
+    .select("role, name, commune")
     .eq("id", user.id)
     .single();
 
@@ -29,105 +41,98 @@ export default async function CollecteurPage() {
     redirect("/login");
   }
 
-  // Récupérer les lots publiés avec coordonnées (st_x=lng, st_y=lat)
-  const { data: lotsData } = await supabase
+  // Missions disponibles (toutes communes)
+  const { data: lotsRaw } = await supabase
     .from("lots")
     .select(
-      "id, type_dechet, status, score_tri, volume_ia, weight_real, latitude, longitude, commune, quartier, photo_url, disponibilite, date_publication, producteur_id",
+      "id, type_dechet, volume_ia, weight_real, commune, quartier, photo_url, date_publication",
     )
     .eq("status", "publie")
-    .not("latitude", "is", null)
-    .not("longitude", "is", null)
     .order("date_publication", { ascending: false });
 
-  // Récupérer les noms des producteurs (via une seconde requête pour éviter les jointes complexes RLS)
-  const producteurIds = [...new Set((lotsData ?? []).map((l) => l.producteur_id))];
-  const { data: producteurs } = await supabase
-    .from("users")
-    .select("id, name")
-    .in("id", producteurIds);
+  const missions = (lotsRaw ?? []) as unknown as MissionLot[];
+  const missionsCount = missions.length;
+  const recentes = missions.slice(0, 3);
 
-  const producteurMap = new Map((producteurs ?? []).map((p) => [p.id, p.name]));
+  // Stats : missions terminées ce mois + kg collectés
+  const debutMois = new Date();
+  debutMois.setDate(1);
+  debutMois.setHours(0, 0, 0, 0);
 
-  const mapLots: MapLot[] = (lotsData ?? []).map((l) => ({
-    id: l.id,
-    typeDechet: l.type_dechet,
-    status: l.status,
-    scoreTri: l.score_tri,
-    volumeIa: l.volume_ia,
-    weightReal: l.weight_real,
-    latitude: l.latitude!,
-    longitude: l.longitude!,
-    commune: l.commune,
-    quartier: l.quartier,
-    photoUrl: l.photo_url,
-    disponibilite: l.disponibilite,
-    datePublication: l.date_publication,
-    producteurName: producteurMap.get(l.producteur_id) ?? null,
-  }));
-
-  // Récupérer les lots déjà réservés par ce collecteur
-  const { data: reservedLots } = await supabase
+  const { data: collectesRaw } = await supabase
     .from("lots")
-    .select("id")
+    .select("id, weight_real, volume_ia, date_collecte")
     .eq("collecteur_id", user.id)
-    .eq("status", "reserve");
+    .in("status", ["collecte", "livre_recycleur", "traite"])
+    .gte("date_collecte", debutMois.toISOString());
 
-  const reservedIds = (reservedLots ?? []).map((l) => l.id);
-
-  // Stats
-  const availableCount = mapLots.length;
-  const reservedCount = reservedIds.length;
-  const totalVolumeKg = mapLots.reduce(
-    (sum, l) => sum + (l.weightReal ?? l.volumeIa ?? 0),
+  const collectes = collectesRaw ?? [];
+  const missionsTerminees = collectes.length;
+  const kgCollectes = collectes.reduce(
+    (sum, l) => sum + (l.weight_real ?? l.volume_ia ?? 0),
     0,
   );
 
   return (
     <>
       <div className="pageHead">
-        <div className="row">
-          <Badge tone="signal" dot>
-            {profile.commune ?? "Abidjan"}
-          </Badge>
-          <Badge tone="paper">Collecteur · {profile.name}</Badge>
-        </div>
-        <h1>Carte des gisements</h1>
-        <p className="muted">
-          Visualisez les lots de déchets disponibles dans votre zone. Cliquez
-          sur un marqueur pour réserver, puis calculez votre itinéraire
-          optimisé.
-        </p>
+        <h1>Bonjour, {profile.name} 👋</h1>
+        <p className="muted">Prêt à faire la différence ?</p>
       </div>
 
-      <div className="grid-stats">
-        <Stat label="Lots disponibles" value={availableCount} hint="Dans ma zone" />
-        <Stat label="Mes réservations" value={reservedCount} />
-        <Stat label="Volume estimé" value={Math.round(totalVolumeKg)} unit="kg" />
-        <Stat label="Commune" value={profile.commune ?? "—"} />
-      </div>
+      {/* Bannière alerte missions */}
+      {missionsCount > 0 && (
+        <Link href="/collecteur/missions" className={styles.banner}>
+          <span className={styles.bannerIcon}>
+            <Icon name="bell" size={20} />
+          </span>
+          <span className={styles.bannerText}>
+            <strong>
+              {missionsCount} nouvelle{missionsCount > 1 ? "s" : ""} mission
+              {missionsCount > 1 ? "s" : ""} disponible
+              {missionsCount > 1 ? "s" : ""}
+            </strong>
+            <span>des producteurs attendent un collecteur</span>
+          </span>
+          <span className={styles.bannerArrow}>→</span>
+        </Link>
+      )}
 
-      <Card elevated={false}>
-        <CollecteurMap lots={mapLots} reservedIds={reservedIds} />
-      </Card>
-
-      <Card>
-        <div className="row" style={{ justifyContent: "space-between" }}>
-          <div>
-            <h3 style={{ marginBottom: "0.25rem" }}>Comment ça marche ?</h3>
-            <p style={{ margin: 0, fontSize: "var(--fs-body)" }}>
-              1. Cliquez sur un marqueur pour voir le détail du lot.{" "}
-              <br />
-              2. Cliquez sur &quot;Réserver&quot; dans la popup.{" "}
-              <br />
-              3. Sélectionnez plusieurs lots puis cliquez sur
-              &quot;Calculer l&apos;itinéraire&quot; pour tracer le trajet
-              optimisé (OSRM).
-            </p>
+      {/* Dernières missions publiées */}
+      {recentes.length > 0 && (
+        <section className={styles.section}>
+          <div className={styles.sectionHead}>
+            <h2 className={styles.sectionTitle}>Dernières missions publiées</h2>
+            <Link href="/collecteur/missions" className={styles.sectionLink}>
+              Tout voir →
+            </Link>
           </div>
-          <Icon name="route" size={32} />
-        </div>
-      </Card>
+          <div className={styles.missionsList}>
+            {recentes.map((lot) => (
+              <MissionCard key={lot.id} lot={lot} />
+            ))}
+          </div>
+        </section>
+      )}
+
+      {/* Stats */}
+      <div className={styles.statsRow}>
+        <Card elevated={false}>
+          <div className={styles.stat}>
+            <span className={styles.statValue}>{missionsTerminees}</span>
+            <span className={styles.statLabel}>
+              mission{missionsTerminees > 1 ? "s" : ""} terminée
+              {missionsTerminees > 1 ? "s" : ""} ce mois
+            </span>
+          </div>
+        </Card>
+        <Card elevated={false}>
+          <div className={styles.stat}>
+            <span className={styles.statValue}>{Math.round(kgCollectes)}</span>
+            <span className={styles.statLabel}>kg collectés ce mois</span>
+          </div>
+        </Card>
+      </div>
     </>
   );
 }

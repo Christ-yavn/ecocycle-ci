@@ -8,7 +8,6 @@ const PROTECTED_PREFIXES = [
   "/recycleur",
   "/acheteur",
   "/mairie",
-  "/citoyen",
   "/admin",
 ];
 
@@ -18,7 +17,6 @@ const ROLE_PREFIXES: Record<string, Role> = {
   "/recycleur": "recycleur",
   "/acheteur": "acheteur",
   "/mairie": "mairie",
-  "/citoyen": "citoyen",
   "/admin": "admin",
 };
 

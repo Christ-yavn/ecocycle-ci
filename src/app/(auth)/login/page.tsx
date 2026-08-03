@@ -4,8 +4,13 @@ import { useState, Suspense, type FormEvent } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { signIn } from "@/lib/auth-actions";
-import { Icon } from "@/components/ui/Icon";
 import styles from "./page.module.css";
+
+function formatPhone(value: string): string {
+  // Tolère le collage au format international (+225 07...) → garde le national
+  const digits = value.replace(/\D/g, "").replace(/^225/, "").slice(0, 10);
+  return digits.replace(/(\d{2})(?=\d)/g, "$1 ").trim();
+}
 
 function LoginForm() {
   const params = useSearchParams();
@@ -13,15 +18,14 @@ function LoginForm() {
   const urlError = params.get("error");
   const mode = params.get("mode");
 
-  const [identifier, setIdentifier] = useState("");
+  const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const [remember, setRemember] = useState(true);
   const [error, setError] = useState<string | null>(
     urlError === "config"
       ? "Le service est momentanément mal configuré (variables Supabase absentes). Contactez l'administrateur — diagnostic sur /debug."
       : urlError === "no_profile"
-        ? "Votre compte est connecté mais aucun profil n'a été trouvé en base. Exécutez le schéma SQL ou recréez le compte."
+        ? "Votre compte est connecté mais aucun profil n'a été trouvé en base. Contactez l'administrateur."
         : mode === "complete"
           ? "Votre profil n'est pas encore créé en base de données. Contactez l'administrateur."
           : null,
@@ -31,17 +35,21 @@ function LoginForm() {
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
     setError(null);
+
+    const digits = phone.replace(/\D/g, "");
+    if (digits.length !== 10) {
+      setError("Veuillez saisir votre numéro à 10 chiffres.");
+      return;
+    }
+
     setLoading(true);
 
     try {
-      const { data, error: authError } = await signIn(
-        identifier.trim(),
-        password,
-      );
+      const { data, error: authError } = await signIn(digits, password);
 
       if (authError) {
         console.error("[login] authError:", authError);
-        setError(authError.message || "Erreur de connexion.");
+        setError("Numéro ou mot de passe incorrect.");
         setLoading(false);
         return;
       }
@@ -70,10 +78,8 @@ function LoginForm() {
           return;
         }
 
-        // Profil introuvable : ne PAS rediriger vers "/" (boucle silencieuse
-        // avec la landing qui renvoie ici). Afficher la cause réelle.
         setError(
-          "Connexion réussie mais aucun profil trouvé en base. Le schéma SQL (schema.sql) et le trigger handle_new_user doivent être exécutés sur Supabase.",
+          "Connexion réussie mais aucun profil trouvé en base. Contactez l'administrateur.",
         );
         setLoading(false);
         return;
@@ -94,32 +100,33 @@ function LoginForm() {
 
   return (
     <>
+      <div className={styles.logoWrap}>
+        <span className={styles.logoDot} />
+        <span className={styles.logoText}>EcoLoop</span>
+      </div>
+
       <div className={styles.header}>
-        <div className={styles.eyebrow}>Bon retour</div>
-        <h1 className={styles.title}>Connexion à votre espace</h1>
-        <p className={styles.subtitle}>
-          Entrez vos identifiants pour accéder à votre tableau de bord.
-        </p>
+        <h1 className={styles.title}>Bienvenue sur EcoLoop</h1>
+        <p className={styles.subtitle}>Connectez-vous à votre espace</p>
       </div>
 
       <form onSubmit={handleSubmit} className={styles.form}>
         <div className={styles.field}>
-          <label className={styles.label} htmlFor="identifier">
-            Email ou téléphone
+          <label className={styles.label} htmlFor="phone">
+            Numéro de téléphone
           </label>
-          <div className={styles.inputWrap}>
-            <svg className={styles.inputIcon} width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M4 4h16v16H4zM4 4l8 8 8-8" />
-            </svg>
+          <div className={styles.phoneWrap}>
+            <span className={styles.phonePrefix}>🇨🇮 +225</span>
             <input
-              id="identifier"
-              name="identifier"
-              type="text"
-              className={styles.input}
-              placeholder="producteur@ecocycle.ci"
-              autoComplete="username"
-              value={identifier}
-              onChange={(e) => setIdentifier(e.target.value)}
+              id="phone"
+              name="phone"
+              type="tel"
+              inputMode="numeric"
+              className={styles.phoneInput}
+              placeholder="07 00 00 00 00"
+              autoComplete="tel-national"
+              value={phone}
+              onChange={(e) => setPhone(formatPhone(e.target.value))}
               required
             />
           </div>
@@ -130,15 +137,11 @@ function LoginForm() {
             Mot de passe
           </label>
           <div className={styles.inputWrap}>
-            <svg className={styles.inputIcon} width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
-              <rect x="5" y="11" width="14" height="10" rx="2" />
-              <path d="M8 11V7a4 4 0 018 0v4" />
-            </svg>
             <input
               id="password"
               name="password"
               type={showPassword ? "text" : "password"}
-              className={styles.input}
+              className={styles.inputPlain}
               placeholder="••••••••"
               autoComplete="current-password"
               value={password}
@@ -152,22 +155,9 @@ function LoginForm() {
               tabIndex={-1}
               aria-label="Afficher/masquer le mot de passe"
             >
-              <Icon name={showPassword ? "eyeOff" : "eye"} size={18} />
+              {showPassword ? "🙈" : "👁️"}
             </button>
           </div>
-        </div>
-
-        <div className={styles.formRow}>
-          <label className={styles.checkRow}>
-            <input
-              type="checkbox"
-              checked={remember}
-              onChange={(e) => setRemember(e.target.checked)}
-              className={styles.checkbox}
-            />
-            <span>Se souvenir de moi</span>
-          </label>
-          <span className={styles.forgot}>Mot de passe oublié ?</span>
         </div>
 
         {error && <div className={styles.error}>{error}</div>}
@@ -179,16 +169,10 @@ function LoginForm() {
               Connexion en cours…
             </>
           ) : (
-            "Se connecter"
+            "🔒 Se connecter"
           )}
         </button>
       </form>
-
-      <div className={styles.demoNotice}>
-        <strong>Comptes de démonstration :</strong>
-        <span>producteur@ecocycle.ci · collecteur@ecocycle.ci · recycleur@ecocycle.ci · acheteur@ecocycle.ci · mairie@ecocycle.ci · citoyen@ecocycle.ci</span>
-        <span>Mot de passe : <code>TestEcoCycle2026!</code></span>
-      </div>
 
       <div className={styles.divider}>
         <span>ou</span>

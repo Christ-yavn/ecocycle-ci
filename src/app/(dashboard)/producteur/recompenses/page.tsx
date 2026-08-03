@@ -18,7 +18,7 @@ type Palier = {
 
 const PALIERS: Palier[] = [
   { seuil: 100, recompense: "Bon d'achat 1 000 FCFA", description: "Chez les commerçants partenaires", icon: "star" },
-  { seuil: 300, recompense: "T-shirt EcoCycle CI", description: "Coton bio, édition limitée", icon: "star" },
+  { seuil: 300, recompense: "T-shirt EcoLoop CI", description: "Coton bio, édition limitée", icon: "star" },
   { seuil: 500, recompense: "Kit de tri complet", description: "Sacs colorés + bac de compostage", icon: "box" },
   { seuil: 1000, recompense: "Bon d'achat 10 000 FCFA", description: "Chez les commerçants partenaires", icon: "star" },
   { seuil: 2000, recompense: "Bon d'achat 25 000 FCFA", description: "Chez les commerçants partenaires", icon: "star" },

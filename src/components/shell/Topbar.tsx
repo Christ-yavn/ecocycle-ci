@@ -1,18 +1,20 @@
 "use client";
 
+import type { Role } from "@/types/role";
 import { Icon } from "@/components/ui/Icon";
+import { NotificationBell } from "@/components/notification/NotificationBell";
 import styles from "./Topbar.module.css";
 
 export function Topbar({
   title,
   userName,
+  role,
   onMenu,
-  notif = 0,
 }: {
   title: string;
   userName?: string;
+  role: Role;
   onMenu: () => void;
-  notif?: number;
 }) {
   const initials = (userName ?? "EC")
     .split(" ")
@@ -34,10 +36,7 @@ export function Topbar({
         <h1 className={styles.title}>{title}</h1>
       </div>
       <div className={styles.right}>
-        <button className={styles.bellBtn} aria-label="Notifications">
-          <Icon name="bell" size={20} />
-          {notif > 0 && <span className={styles.dot} />}
-        </button>
+        <NotificationBell role={role} />
         <div className={styles.avatar}>{initials}</div>
         {userName && <span className={styles.userName}>{userName}</span>}
       </div>

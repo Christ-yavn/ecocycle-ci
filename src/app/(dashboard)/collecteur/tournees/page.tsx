@@ -4,6 +4,7 @@ import { Card } from "@/components/ui/Card";
 import { Badge } from "@/components/ui/Badge";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { Icon } from "@/components/ui/Icon";
+import { BluetoothScaleMock } from "@/components/collecteur/BluetoothScaleMock";
 
 export const dynamic = "force-dynamic";
 
@@ -45,7 +46,7 @@ export default async function TourneesPage() {
           icon="route"
           title="Aucune tournée planifiée"
           action={
-            <a href="/collecteur" className="btn-primary">
+            <a href="/collecteur/carte" className="btn-primary">
               <Icon name="map" size={16} />
               Voir la carte des gisements
             </a>
@@ -67,7 +68,7 @@ export default async function TourneesPage() {
                   optimisé.
                 </p>
               </div>
-              <a href="/collecteur" className="btn-accent">
+              <a href="/collecteur/carte" className="btn-accent">
                 <Icon name="map" size={16} />
                 Calculer l&apos;itinéraire
               </a>
@@ -107,7 +108,7 @@ export default async function TourneesPage() {
                     Réservé
                   </Badge>
                 </div>
-                <h3 style={{ fontFamily: "var(--font-fraunces)", marginBottom: "0.25rem" }}>
+                <h3 style={{ fontFamily: "var(--font-inter)", marginBottom: "0.25rem" }}>
                   {lot.commune ?? "Commune inconnue"}
                   {lot.quartier ? ` · ${lot.quartier}` : ""}
                 </h3>
@@ -141,6 +142,10 @@ export default async function TourneesPage() {
                   <Icon name="scan" size={16} />
                   Valider le retrait (QR / PIN)
                 </a>
+                <BluetoothScaleMock
+                  lotId={lot.id}
+                  volumeEstime={lot.volume_ia}
+                />
               </Card>
             ))}
           </div>

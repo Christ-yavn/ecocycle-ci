@@ -44,7 +44,7 @@ export default async function AdminPage() {
       <div className="pageHead">
         <div className="row">
           <Badge tone="signal" dot>
-            Administration EcoCycle
+            Administration EcoLoop
           </Badge>
         </div>
         <h1>Supervision de la plateforme</h1>

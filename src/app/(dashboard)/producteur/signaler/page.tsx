@@ -2,7 +2,7 @@ import { redirect } from "next/navigation";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { Card } from "@/components/ui/Card";
 import { Badge } from "@/components/ui/Badge";
-import { SignalementForm } from "@/components/citoyen/SignalementForm";
+import { SignalementForm } from "@/components/signalement/SignalementForm";
 
 export const dynamic = "force-dynamic";
 

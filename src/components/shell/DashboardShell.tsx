@@ -4,6 +4,7 @@ import { useState, type ReactNode } from "react";
 import type { Role } from "@/types/role";
 import { Sidebar } from "./Sidebar";
 import { Topbar } from "./Topbar";
+import { MobileShell } from "./MobileShell";
 import styles from "./DashboardShell.module.css";
 
 export function DashboardShell({
@@ -23,12 +24,21 @@ export function DashboardShell({
     <div className={styles.shell}>
       <Sidebar role={role} open={open} onClose={() => setOpen(false)} />
       <div className={styles.main}>
-        <Topbar
-          title={title}
+        <div className={styles.topbarDesktop}>
+          <Topbar
+            title={title}
+            userName={userName}
+            role={role}
+            onMenu={() => setOpen(true)}
+          />
+        </div>
+        <MobileShell
+          role={role}
           userName={userName}
           onMenu={() => setOpen(true)}
-        />
-        <main className={styles.content}>{children}</main>
+        >
+          {children}
+        </MobileShell>
       </div>
     </div>
   );

@@ -1,0 +1,83 @@
+.backLink {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--ec-ink-soft);
+  text-decoration: none;
+}
+
+.backLink:hover {
+  color: var(--ec-forest-3);
+}
+
+.detail {
+  display: flex;
+  gap: var(--space-4);
+  align-items: flex-start;
+}
+
+.photo {
+  width: 140px;
+  height: 140px;
+  object-fit: cover;
+  border-radius: var(--radius-sm);
+  flex-shrink: 0;
+}
+
+.photoPlaceholder {
+  width: 140px;
+  height: 140px;
+  border-radius: var(--radius-sm);
+  background: var(--ec-paper-2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.5rem;
+  flex-shrink: 0;
+}
+
+.info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  min-width: 0;
+}
+
+.infoRow {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding-bottom: var(--space-2);
+  border-bottom: 1px dashed var(--ec-line);
+}
+
+.infoRow:last-child {
+  border-bottom: none;
+}
+
+.infoLabel {
+  font-size: 0.75rem;
+  color: var(--ec-ink-soft);
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.infoValue {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--ec-ink);
+  text-align: right;
+}
+
+@media (max-width: 560px) {
+  .detail {
+    flex-direction: column;
+  }
+
+  .photo,
+  .photoPlaceholder {
+    width: 100%;
+    height: 180px;
+  }
+}

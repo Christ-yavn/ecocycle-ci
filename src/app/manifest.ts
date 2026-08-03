@@ -2,14 +2,14 @@ import type { MetadataRoute } from "next";
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: "EcoCycle CI — Gestion circulaire des déchets",
-    short_name: "EcoCycle CI",
+    name: "EcoLoop CI — Gestion circulaire des déchets",
+    short_name: "EcoLoop CI",
     description:
-      "Plateforme SaaS de gestion circulaire des déchets à Abidjan.",
+      "Plateforme de gestion circulaire des déchets à Abidjan.",
     start_url: "/",
     display: "standalone",
-    background_color: "#e9e0cb",
-    theme_color: "#0d1f16",
+    background_color: "#FFFFFF",
+    theme_color: "#0A3D1F",
     lang: "fr",
     categories: ["environment", "productivity", "business"],
     icons: [

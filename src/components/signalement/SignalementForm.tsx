@@ -24,7 +24,7 @@ const COMMUNES_ABIDJAN = [
 
 export function SignalementForm({
   userId,
-  redirectTo = "/citoyen/suivi",
+  redirectTo = "/producteur",
 }: {
   userId: string;
   redirectTo?: string;

@@ -1,18 +1,11 @@
 import type { Metadata, Viewport } from "next";
-import { Fraunces, Manrope, IBM_Plex_Mono } from "next/font/google";
+import { Inter, IBM_Plex_Mono } from "next/font/google";
 import "./globals.css";
 
-const fraunces = Fraunces({
-  subsets: ["latin"],
-  weight: ["500", "600", "700"],
-  variable: "--font-fraunces",
-  display: "swap",
-});
-
-const manrope = Manrope({
+const inter = Inter({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
-  variable: "--font-manrope",
+  variable: "--font-inter",
   display: "swap",
 });
 
@@ -25,12 +18,11 @@ const ibmPlexMono = IBM_Plex_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: "EcoCycle CI — Gestion circulaire des déchets à Abidjan",
-    template: "%s · EcoCycle CI",
+    default: "EcoLoop CI",
+    template: "%s · EcoLoop CI",
   },
-  description:
-    "Plateforme SaaS connectant producteurs, collecteurs, recycleurs, acheteurs et mairies pour une gestion circulaire des déchets à Abidjan.",
-  applicationName: "EcoCycle CI",
+  description: "EcoLoop CI",
+  applicationName: "EcoLoop CI",
   manifest: "/manifest.webmanifest",
   icons: {
     icon: "/favicon.ico",
@@ -38,7 +30,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#0d1f16",
+  themeColor: "#0A3D1F",
   width: "device-width",
   initialScale: 1,
   maximumScale: 5,
@@ -50,10 +42,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html
-      lang="fr"
-      className={`${fraunces.variable} ${manrope.variable} ${ibmPlexMono.variable}`}
-    >
+    <html lang="fr" className={`${inter.variable} ${ibmPlexMono.variable}`}>
       <body>{children}</body>
     </html>
   );

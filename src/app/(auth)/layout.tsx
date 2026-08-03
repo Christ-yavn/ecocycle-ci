@@ -16,7 +16,7 @@ export default function AuthLayout({
         <div className={styles.brandPanelInner}>
           <Link href="/" className={styles.brandLogo}>
             <span className={styles.brandDot} />
-            EcoCycle CI
+            EcoLoop CI
           </Link>
 
           <div className={styles.brandContent}>
@@ -36,14 +36,14 @@ export default function AuthLayout({
                 <span className={styles.featureIcon}>◐</span>
                 <div>
                   <strong>6 acteurs connectés</strong>
-                  <span>Producteurs, collecteurs, recycleurs, acheteurs, mairies, citoyens</span>
+                  <span>Producteurs, collecteurs, recycleurs, acheteurs, mairies, admin</span>
                 </div>
               </div>
               <div className={styles.featureItem}>
                 <span className={styles.featureIcon}>◓</span>
                 <div>
                   <strong>IA de reconnaissance</strong>
-                  <span>YOLOv8 analyse vos déchets en temps réel</span>
+                  <span>L{"'"}IA analyse vos déchets en temps réel</span>
                 </div>
               </div>
               <div className={styles.featureItem}>
@@ -57,7 +57,7 @@ export default function AuthLayout({
           </div>
 
           <div className={styles.brandFooter}>
-            EcoCycle CI · MVP Abidjan · v0.1
+            EcoLoop CI · MVP Abidjan · v0.1
           </div>
         </div>
       </div>

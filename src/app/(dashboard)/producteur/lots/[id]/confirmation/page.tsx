@@ -77,7 +77,7 @@ export default async function ConfirmationPage({
   if (conf?.status === "litige") {
     return (
       <EmptyState icon="alert" title="Litige en cours">
-        Un litige a été ouvert pour ce lot. L&apos;équipe EcoCycle CI arbitre.
+        Un litige a été ouvert pour ce lot. L&apos;équipe EcoLoop CI arbitre.
       </EmptyState>
     );
   }

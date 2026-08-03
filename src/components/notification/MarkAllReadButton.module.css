@@ -1,0 +1,22 @@
+.btn {
+  background: var(--ec-paper);
+  color: var(--ec-forest-3);
+  border: 1.5px solid var(--ec-forest-3);
+  padding: 0.5rem 1rem;
+  border-radius: var(--radius-full);
+  font-size: 0.75rem;
+  font-weight: 700;
+  font-family: var(--font-inter);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.btn:hover:not(:disabled) {
+  background: var(--ec-forest-3);
+  color: var(--ec-white);
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}

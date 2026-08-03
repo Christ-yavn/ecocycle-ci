@@ -43,7 +43,7 @@ export default async function Home() {
       <header className={styles.hero}>
         <div className={styles.brand}>
           <span className={styles.brandDot} />
-          EcoCycle CI
+          EcoLoop CI
         </div>
         <h1 className={styles.title}>
           La plateforme de gestion circulaire
@@ -51,7 +51,7 @@ export default async function Home() {
           des déchets à Abidjan
         </h1>
         <p className={styles.lead}>
-          EcoCycle CI orchestre toute la chaîne de valeur du déchet — du tri à
+          EcoLoop CI orchestre toute la chaîne de valeur du déchet — du tri à
           la source par les producteurs jusqu&apos;à la matière première
           recyclée — grâce à un système de double confirmation qui garantit
           la traçabilité sans aucun flux financier sur la plateforme.
@@ -91,7 +91,7 @@ export default async function Home() {
       </section>
 
       <footer className={styles.footer}>
-        <span className="font-mono">EcoCycle CI · MVP Abidjan · v0.1</span>
+        <span className="font-mono">EcoLoop CI · MVP Abidjan · v0.1</span>
       </footer>
     </div>
   );

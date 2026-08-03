@@ -15,7 +15,6 @@ const ROLE_TONE: Record<
   recycleur: "forest",
   acheteur: "paper",
   mairie: "rust",
-  citoyen: "signal",
   admin: "forest",
 };
 

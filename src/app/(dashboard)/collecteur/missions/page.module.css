@@ -1,0 +1,64 @@
+.filters {
+  display: flex;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+}
+
+.chip {
+  padding: 0.4rem 0.9rem;
+  border-radius: var(--radius-full);
+  border: 1.5px solid var(--ec-line-dark);
+  background: var(--ec-paper);
+  color: var(--ec-ink);
+  font-size: 0.78rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.15s ease;
+}
+
+.chip:hover {
+  border-color: var(--ec-forest-3);
+  color: var(--ec-forest-3);
+}
+
+.chipActive {
+  background: var(--ec-forest-3);
+  border-color: var(--ec-forest-3);
+  color: var(--ec-white);
+}
+
+.chipActive:hover {
+  color: var(--ec-white);
+}
+
+.zone {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.zoneHead {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+
+.zoneTitle {
+  font-size: 1.1rem;
+  margin: 0;
+}
+
+.zoneCount {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--ec-ink-soft);
+}
+
+.zoneGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: var(--space-3);
+}

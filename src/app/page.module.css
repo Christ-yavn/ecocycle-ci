@@ -21,7 +21,7 @@
   display: flex;
   align-items: center;
   gap: 0.6rem;
-  font-family: var(--font-fraunces);
+  font-family: var(--font-inter);
   font-weight: 700;
   font-size: 1.1rem;
   color: var(--ec-forest);
@@ -36,7 +36,7 @@
 }
 
 .title {
-  font-family: var(--font-fraunces);
+  font-family: var(--font-inter);
   font-weight: 700;
   font-size: clamp(1.6rem, 1.2rem + 2.4vw, 2.6rem);
   line-height: 1.12;
@@ -110,7 +110,7 @@
 }
 
 .roleName {
-  font-family: var(--font-fraunces);
+  font-family: var(--font-inter);
   font-weight: 700;
   font-size: 1.1rem;
 }

@@ -167,7 +167,7 @@ export function CatalogueB2B({ items }: { items: MatiereItem[] }) {
               ? toWhatsAppNumber(m.recycleurPhone)
               : null;
             const waMessage = encodeURIComponent(
-              `Bonjour ${m.recycleurName ?? ""}, je suis intéressé par votre offre « ${m.typeMatiere} » (${Math.round(m.volumeKg)} kg) publiée sur EcoCycle CI.`,
+              `Bonjour ${m.recycleurName ?? ""}, je suis intéressé par votre offre « ${m.typeMatiere} » (${Math.round(m.volumeKg)} kg) publiée sur EcoLoop CI.`,
             );
 
             return (

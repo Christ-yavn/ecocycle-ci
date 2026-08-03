@@ -11,6 +11,9 @@ import type {
   StockRow,
   PointTransactionRow,
   AbonnementRow,
+  NotificationRow,
+  AppelOffreRow,
+  PropositionOffreRow,
 } from "./database.types";
 
 export type Database = {
@@ -67,6 +70,33 @@ export type Database = {
         Row: AbonnementRow;
         Insert: Partial<AbonnementRow> & { utilisateur_id: string };
         Update: Partial<Omit<AbonnementRow, "id">>;
+      };
+      notifications: {
+        Row: NotificationRow;
+        Insert: Partial<NotificationRow> & {
+          user_id: string;
+          type: string;
+          title: string;
+        };
+        Update: Partial<Omit<NotificationRow, "id">>;
+      };
+      appels_offres: {
+        Row: AppelOffreRow;
+        Insert: Partial<AppelOffreRow> & {
+          acheteur_id: string;
+          type_matiere: string;
+          volume_demande_kg: number;
+        };
+        Update: Partial<Omit<AppelOffreRow, "id">>;
+      };
+      propositions_offres: {
+        Row: PropositionOffreRow;
+        Insert: Partial<PropositionOffreRow> & {
+          appel_id: string;
+          recycleur_id: string;
+          volume_propose_kg: number;
+        };
+        Update: Partial<Omit<PropositionOffreRow, "id">>;
       };
     };
     Views: Record<never, never>;

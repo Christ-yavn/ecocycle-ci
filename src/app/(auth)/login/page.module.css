@@ -1,25 +1,40 @@
-.header {
-  margin-bottom: 2rem;
+/* ===== LOGO ===== */
+.logoWrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
 }
 
-.eyebrow {
-  font-family: var(--font-mono);
-  font-size: 0.68rem;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  color: var(--ec-signal);
-  font-weight: 600;
-  margin-bottom: 0.5rem;
+.logoDot {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--ec-forest-3);
+}
+
+.logoText {
+  font-family: var(--font-inter);
+  font-weight: 700;
+  font-size: 1.4rem;
+  letter-spacing: -0.02em;
+  color: var(--ec-forest);
+}
+
+.header {
+  margin-bottom: 1.5rem;
+  text-align: center;
 }
 
 .title {
-  font-family: var(--font-fraunces);
+  font-family: var(--font-inter);
   font-weight: 700;
   font-size: 1.5rem;
   line-height: 1.2;
   letter-spacing: -0.02em;
   color: var(--ec-ink);
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.4rem;
 }
 
 .subtitle {
@@ -32,7 +47,7 @@
 .form {
   display: flex;
   flex-direction: column;
-  gap: 1.1rem;
+  gap: 1rem;
 }
 
 .field {
@@ -56,34 +71,26 @@
   align-items: center;
 }
 
-.inputIcon {
-  position: absolute;
-  left: 0.8rem;
-  color: var(--ec-ink-soft);
-  opacity: 0.4;
-  pointer-events: none;
-}
-
-.input {
+.inputPlain {
   width: 100%;
   border: 1.5px solid var(--ec-line-dark);
-  border-radius: 8px;
-  padding: 0.7rem 0.8rem 0.7rem 2.5rem;
-  font-size: 0.875rem;
-  font-family: var(--font-manrope);
+  border-radius: var(--radius-sm);
+  padding: 0.75rem 2.8rem 0.75rem 0.9rem;
+  font-size: 0.95rem;
+  font-family: var(--font-inter);
   background: var(--ec-white);
   color: var(--ec-ink);
   transition: border-color 0.15s, box-shadow 0.15s;
   outline: none;
 }
 
-.input::placeholder {
-  color: rgba(20, 37, 27, 0.3);
+.inputPlain::placeholder {
+  color: rgba(26, 26, 46, 0.3);
 }
 
-.input:focus {
-  border-color: var(--ec-signal);
-  box-shadow: 0 0 0 3px rgba(63, 163, 77, 0.12);
+.inputPlain:focus {
+  border-color: var(--ec-forest-3);
+  box-shadow: 0 0 0 3px rgba(27, 125, 58, 0.12);
 }
 
 .togglePass {
@@ -102,64 +109,73 @@
   opacity: 1;
 }
 
-.formRow {
+/* ===== TÉLÉPHONE (préfixe +225) ===== */
+.phoneWrap {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-  margin-top: 0.2rem;
+  align-items: stretch;
+  border: 1.5px solid var(--ec-line-dark);
+  border-radius: var(--radius-sm);
+  background: var(--ec-white);
+  overflow: hidden;
+  transition: border-color 0.15s, box-shadow 0.15s;
 }
 
-.checkRow {
+.phoneWrap:focus-within {
+  border-color: var(--ec-forest-3);
+  box-shadow: 0 0 0 3px rgba(27, 125, 58, 0.12);
+}
+
+.phonePrefix {
   display: flex;
   align-items: center;
-  gap: 0.45rem;
-  cursor: pointer;
-  font-size: 0.8rem;
-  color: var(--ec-ink-soft);
+  padding: 0 0.8rem;
+  background: var(--ec-paper-2);
+  border-right: 1.5px solid var(--ec-line-dark);
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--ec-ink);
+  white-space: nowrap;
   user-select: none;
 }
 
-.checkbox {
-  width: 16px;
-  height: 16px;
-  accent-color: var(--ec-signal);
-  cursor: pointer;
+.phoneInput {
+  flex: 1;
+  border: none;
+  padding: 0.75rem 0.9rem;
+  font-size: 1rem;
+  font-family: var(--font-inter);
+  letter-spacing: 0.05em;
+  background: transparent;
+  color: var(--ec-ink);
+  outline: none;
 }
 
-.forgot {
-  font-size: 0.8rem;
-  color: var(--ec-amber-dark);
-  font-weight: 500;
-  cursor: pointer;
-}
-
-.forgot:hover {
-  text-decoration: underline;
+.phoneInput::placeholder {
+  color: rgba(26, 26, 46, 0.3);
 }
 
 /* ===== ERROR ===== */
 .error {
-  background: rgba(180, 82, 47, 0.08);
+  background: rgba(239, 68, 68, 0.06);
   color: var(--ec-rust);
-  border-radius: 8px;
+  border-radius: var(--radius-sm);
   padding: 0.6rem 0.8rem;
   font-size: 0.8rem;
-  border: 1px solid rgba(180, 82, 47, 0.2);
+  border: 1px solid rgba(239, 68, 68, 0.2);
   line-height: 1.5;
 }
 
-/* ===== SUBMIT BUTTON ===== */
+/* ===== SUBMIT ===== */
 .submitBtn {
   width: 100%;
-  background: var(--ec-forest);
-  color: var(--ec-paper);
+  background: var(--ec-forest-3);
+  color: var(--ec-white);
   border: none;
-  padding: 0.85rem 1.5rem;
-  border-radius: 8px;
-  font-size: 0.875rem;
-  font-weight: 600;
-  font-family: var(--font-manrope);
+  padding: 0.9rem 1.5rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.9rem;
+  font-weight: 700;
+  font-family: var(--font-inter);
   cursor: pointer;
   transition: all 0.2s ease;
   display: flex;
@@ -170,13 +186,9 @@
 }
 
 .submitBtn:hover:not(:disabled) {
-  background: var(--ec-forest-3);
+  background: var(--ec-forest-2);
   transform: translateY(-1px);
-  box-shadow: 0 6px 16px rgba(13, 31, 22, 0.2);
-}
-
-.submitBtn:active:not(:disabled) {
-  transform: translateY(0);
+  box-shadow: 0 6px 16px rgba(10, 61, 31, 0.2);
 }
 
 .submitBtn:disabled {
@@ -187,8 +199,8 @@
 .spinner {
   width: 16px;
   height: 16px;
-  border: 2px solid rgba(243, 238, 225, 0.3);
-  border-top-color: var(--ec-paper);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top-color: var(--ec-white);
   border-radius: 50%;
   animation: spin 0.6s linear infinite;
 }
@@ -199,47 +211,12 @@
   }
 }
 
-/* ===== DEMO NOTICE ===== */
-.demoNotice {
-  margin-top: 1.5rem;
-  background: rgba(63, 163, 77, 0.06);
-  border: 1px solid rgba(63, 163, 77, 0.15);
-  border-radius: 8px;
-  padding: 0.7rem 0.8rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.2rem;
-  font-size: 0.72rem;
-  line-height: 1.5;
-  color: var(--ec-ink-soft);
-}
-
-.demoNotice strong {
-  font-size: 0.72rem;
-  font-weight: 600;
-  color: var(--ec-ink);
-}
-
-.demoNotice span {
-  font-size: 0.68rem;
-  color: var(--ec-ink-soft);
-}
-
-.demoNotice code {
-  font-family: var(--font-mono);
-  background: rgba(20, 37, 27, 0.06);
-  padding: 0.1rem 0.3rem;
-  border-radius: 3px;
-  font-size: 0.65rem;
-  color: var(--ec-ink);
-}
-
 /* ===== DIVIDER ===== */
 .divider {
   display: flex;
   align-items: center;
   gap: 0.8rem;
-  margin: 1.5rem 0 0.8rem 0;
+  margin: 1.3rem 0 0.8rem 0;
 }
 
 .divider::before,
@@ -265,7 +242,7 @@
 }
 
 .switchLink {
-  color: var(--ec-signal);
+  color: var(--ec-forest-3);
   font-weight: 600;
   text-decoration: none;
   transition: opacity 0.15s;

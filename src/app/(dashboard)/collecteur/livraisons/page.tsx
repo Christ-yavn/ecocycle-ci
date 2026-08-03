@@ -81,7 +81,7 @@ export default async function LivraisonsPage() {
                           : ""}
                       </span>
                     </div>
-                    <h3 style={{ fontFamily: "var(--font-fraunces)", marginBottom: "0.25rem" }}>
+                    <h3 style={{ fontFamily: "var(--font-inter)", marginBottom: "0.25rem" }}>
                       {lot.type_dechet}
                     </h3>
                     <p style={{ fontSize: "var(--fs-body)", margin: 0 }}>
@@ -113,7 +113,7 @@ export default async function LivraisonsPage() {
                           : ""}
                       </span>
                     </div>
-                    <h3 style={{ fontFamily: "var(--font-fraunces)", marginBottom: "0.25rem" }}>
+                    <h3 style={{ fontFamily: "var(--font-inter)", marginBottom: "0.25rem" }}>
                       {lot.type_dechet}
                     </h3>
                     <p style={{ fontSize: "var(--fs-body)", margin: 0 }}>

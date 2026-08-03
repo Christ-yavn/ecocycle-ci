@@ -1,5 +1,5 @@
 // Type du résultat d'analyse IA côté Next.js.
-// Mapping depuis le format FastAPI (AnalyzeResult) → EcoCycle.
+// Mapping depuis le format FastAPI (AnalyzeResult) → EcoLoop.
 
 export type AnalyseIa = {
   scoreTri: 1 | 2 | 3 | 4 | 5;

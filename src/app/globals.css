@@ -1,34 +1,33 @@
 /* ============================================================
-   DESIGN SYSTEM — EcoCycle CI (Inspiré par EcoLoop)
+   DESIGN SYSTEM — EcoLoop CI
    Fonts self-hostés via next/font (variables --font-*)
    ============================================================ */
 
 :root {
   /* Fonts (définies par next/font dans layout.tsx) */
-  --font-fraunces: "Fraunces", Georgia, serif;
-  --font-manrope: "Manrope", -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-inter: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
   --font-mono: "IBM Plex Mono", "SFMono-Regular", monospace;
 
-  /* Couleurs — palette "matière première" (kraft, forêt, ambre) */
-  --ec-forest: #0d1f16;
-  --ec-forest-2: #16281f;
-  --ec-forest-3: #1e332a;
-  --ec-paper: #f3eee1;
-  --ec-paper-2: #e9e0cb;
-  --ec-ink: #14251b;
-  --ec-ink-soft: #2c3b31;
-  --ec-amber: #d9a441;
-  --ec-amber-dark: #b6862f;
-  --ec-signal: #3fa34d;
-  --ec-rust: #b4522f;
-  --ec-line: rgba(243, 238, 225, 0.14);
-  --ec-line-dark: rgba(20, 37, 27, 0.12);
-  --ec-white: #ffffff;
+  /* Couleurs — palette EcoLoop (forêt, blanc, ambre) */
+  --ec-forest: #0A3D1F;
+  --ec-forest-2: #145A2E;
+  --ec-forest-3: #1B7D3A;
+  --ec-paper: #FFFFFF;
+  --ec-paper-2: #F5F7F5;
+  --ec-ink: #1A1A2E;
+  --ec-ink-soft: #6B7280;
+  --ec-amber: #F59E0B;
+  --ec-amber-dark: #D97706;
+  --ec-signal: #1B7D3A;
+  --ec-rust: #EF4444;
+  --ec-line: rgba(0, 0, 0, 0.06);
+  --ec-line-dark: rgba(0, 0, 0, 0.1);
+  --ec-white: #FFFFFF;
 
   /* Rayons */
-  --radius-sm: 4px;
-  --radius-card: 6px;
-  --radius-pill: 20px;
+  --radius-sm: 8px;
+  --radius-card: 12px;
+  --radius-pill: 24px;
   --radius-full: 9999px;
 
   /* Échelle d'espacement (base 4px) */
@@ -61,7 +60,7 @@ html {
   -webkit-text-size-adjust: 100%;
 }
 body {
-  font-family: var(--font-manrope);
+  font-family: var(--font-inter);
   background: var(--ec-paper-2);
   color: var(--ec-ink);
   -webkit-font-smoothing: antialiased;
@@ -81,7 +80,7 @@ h2,
 h3,
 h4,
 .font-fraunces {
-  font-family: var(--font-fraunces);
+  font-family: var(--font-inter);
   font-weight: 700;
 }
 
@@ -155,8 +154,8 @@ p {
 
 /* ---------- BUTTONS (global fallback) ---------- */
 .btn-primary {
-  background: var(--ec-ink);
-  color: var(--ec-paper);
+  background: var(--ec-forest-3);
+  color: var(--ec-white);
   border: none;
   padding: 0.6rem 1.2rem;
   border-radius: var(--radius-sm);
@@ -171,13 +170,13 @@ p {
   text-decoration: none;
 }
 .btn-primary:hover {
-  background: var(--ec-forest-3);
+  background: var(--ec-forest-2);
   transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(20, 37, 27, 0.15);
+  box-shadow: 0 4px 12px rgba(10, 61, 31, 0.18);
 }
 .btn-accent {
   background: var(--ec-signal);
-  color: var(--ec-forest);
+  color: var(--ec-white);
   border: none;
   padding: 0.6rem 1.2rem;
   border-radius: var(--radius-sm);
@@ -204,5 +203,5 @@ p {
 }
 .ec-card:hover {
   transform: translateY(-2px);
-  box-shadow: 0 12px 24px rgba(20, 37, 27, 0.08);
+  box-shadow: 0 12px 24px rgba(26, 26, 46, 0.08);
 }

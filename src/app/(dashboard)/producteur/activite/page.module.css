@@ -1,0 +1,48 @@
+.sectionTitle {
+  font-size: 1.05rem;
+  margin: 0 0 var(--space-3) 0;
+}
+
+.list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding: var(--space-3) 0;
+  border-bottom: 1px dashed var(--ec-line-dark);
+}
+
+.item:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.itemInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.itemTitle {
+  font-weight: 600;
+  font-size: 0.88rem;
+  color: var(--ec-ink);
+}
+
+.itemMeta {
+  font-size: 0.72rem;
+  color: var(--ec-ink-soft);
+}
+
+.points {
+  font-weight: 700;
+  font-size: 0.85rem;
+  color: var(--ec-forest-3);
+  white-space: nowrap;
+}

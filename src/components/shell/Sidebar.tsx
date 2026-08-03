@@ -30,7 +30,7 @@ export function Sidebar({
         <div>
           <Link href={`/${role}`} className={styles.brand} onClick={onClose}>
             <span className={styles.brandDot} />
-            EcoCycle CI
+            EcoLoop CI
           </Link>
           <div className={styles.roleTag}>{ROLE_LABELS[role]}</div>
         </div>

@@ -1,4 +1,4 @@
-# EcoCycle CI
+# EcoLoop CI
 
 Plateforme SaaS de gestion circulaire des déchets à Abidjan, connectant tous les acteurs de la filière — producteurs, collecteurs, recycleurs, acheteurs finaux et mairies — via un écosystème numérique structuré par quartier.
 
@@ -26,7 +26,7 @@ Plateforme SaaS de gestion circulaire des déchets à Abidjan, connectant tous l
 
 ## Vision
 
-Abidjan produit des milliers de tonnes de déchets par jour. La chaîne de gestion est fragmentée, inefficace et largement informelle. EcoCycle CI agit sur trois leviers :
+Abidjan produit des milliers de tonnes de déchets par jour. La chaîne de gestion est fragmentée, inefficace et largement informelle. EcoLoop CI agit sur trois leviers :
 
 1. **Stimuler le tri à la source** : les producteurs trient et rangent leurs déchets, incités par un système de points de récompense.
 2. **Optimiser la collecte** : les collecteurs ont une vision cartographique des gisements disponibles, avec volume, type et itinéraire optimisé (routage OSRM).
@@ -298,7 +298,7 @@ ALLOWED_ORIGINS=*
 ```bash
 cd webapp
 git add -A
-git commit -m "feat: EcoCycle CI — plateforme complète (couches 1-6)
+git commit -m "feat: EcoLoop CI — plateforme complète (couches 1-6)
 
 - Design system EcoLoop (Fraunces/Manrope/IBM Plex Mono)
 - Dashboard Shell responsive (6 rôles) avec sidebar + topbar
@@ -401,4 +401,4 @@ Railway détecte automatiquement le `Dockerfile`.
 
 ## Licence
 
-Projet EcoCycle CI — MVP Abidjan, Côte d'Ivoire.
+Projet EcoLoop CI — MVP Abidjan, Côte d'Ivoire.

@@ -17,7 +17,7 @@
 }
 
 .value {
-  font-family: var(--font-fraunces), serif;
+  font-family: var(--font-inter), serif;
   font-weight: 700;
   font-size: 1.6rem;
   line-height: 1.1;
