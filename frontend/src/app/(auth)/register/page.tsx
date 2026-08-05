@@ -158,7 +158,7 @@ export default function RegisterPage() {
                         : 'border-gray-200 bg-white hover:border-gray-300'
                     }`}
                   >
-                    <div className="text-2xl mb-1">&#127968;</div>
+                    <div className="w-8 h-8 mx-auto mb-1 rounded-full bg-green-100 flex items-center justify-center"><User size={18} className="text-green-700" /></div>
                     <div className={`text-sm font-bold ${role === 'producteur' ? 'text-green-700' : 'text-gray-700'}`}>Ménage / Producteur</div>
                     <div className="text-xs text-gray-500 mt-1">Je publie mes déchets triés</div>
                   </button>
@@ -171,7 +171,7 @@ export default function RegisterPage() {
                         : 'border-gray-200 bg-white hover:border-gray-300'
                     }`}
                   >
-                    <div className="text-2xl mb-1">&#128666;</div>
+                    <div className="w-8 h-8 mx-auto mb-1 rounded-full bg-green-100 flex items-center justify-center"><MapPin size={18} className="text-green-700" /></div>
                     <div className={`text-sm font-bold ${role === 'collecteur' ? 'text-green-700' : 'text-gray-700'}`}>Collecteur informel</div>
                     <div className="text-xs text-gray-500 mt-1">Je collecte les lots</div>
                   </button>
