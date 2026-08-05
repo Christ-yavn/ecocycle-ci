@@ -206,17 +206,11 @@ function LoginForm() {
           <div className="demo-section-mini mt-6 p-4 bg-gray-50 rounded-xl border border-gray-100">
             <p className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-2 text-center">Connexion rapide (Démo)</p>
             <div className="grid grid-cols-2 gap-2 text-sm">
-              <button className="py-2 px-3 bg-white border border-gray-200 rounded-lg hover:border-green-500 hover:text-green-700 transition font-medium" type="button" onClick={() => { setPhone('01 00 00 00 00'); setPassword('EcoLoop2026!'); }}>
-                Admin
+              <button className="py-2 px-3 bg-white border border-gray-200 rounded-lg hover:border-green-500 hover:text-green-700 transition font-medium" type="button" onClick={() => { setPhone('07 00 00 00 01'); setPassword('EcoLoop2026!'); }}>
+                Producteur
               </button>
-              <button className="py-2 px-3 bg-white border border-gray-200 rounded-lg hover:border-green-500 hover:text-green-700 transition font-medium" type="button" onClick={() => { setPhone('01 00 00 00 01'); setPassword('EcoLoop2026!'); }}>
-                Acheteur
-              </button>
-              <button className="py-2 px-3 bg-white border border-gray-200 rounded-lg hover:border-green-500 hover:text-green-700 transition font-medium" type="button" onClick={() => { setPhone('01 00 00 00 02'); setPassword('EcoLoop2026!'); }}>
-                Mairie Cocody
-              </button>
-              <button className="py-2 px-3 bg-white border border-gray-200 rounded-lg hover:border-green-500 hover:text-green-700 transition font-medium" type="button" onClick={() => { setPhone('01 00 00 00 04'); setPassword('EcoLoop2026!'); }}>
-                Recycleur 1
+              <button className="py-2 px-3 bg-white border border-gray-200 rounded-lg hover:border-green-500 hover:text-green-700 transition font-medium" type="button" onClick={() => { setPhone('07 00 00 00 02'); setPassword('EcoLoop2026!'); }}>
+                Collecteur
               </button>
             </div>
           </div>
