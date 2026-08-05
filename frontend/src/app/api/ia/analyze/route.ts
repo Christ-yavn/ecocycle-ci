@@ -84,20 +84,32 @@ export async function POST(request: NextRequest) {
     },
   });
 
-  const prompt = `Tu es une IA experte en gestion et recyclage des déchets urbains à Abidjan (Côte d'Ivoire).
+  const prompt = `Tu es une IA experte en gestion et recyclage des déchets urbains à Abidjan. Ton rôle est d'analyser l'image avec une rigueur PHYSIQUE et MATHÉMATIQUE absolue.
 Analyse l'image fournie et renvoie UNIQUEMENT un objet JSON strictement conforme à ce format :
 {
   "typeDechet": "Plastique" | "Métal" | "Verre" | "Papier / Carton" | "Organique" | "Textile" | "Électronique" | "Dangereux" | "Résiduel",
-  "volumeIa": <nombre float estimant le poids total en kg, ex: 15.5 pour un gros sac, 0.5 pour quelques bouteilles>,
+  "volumeIa": <nombre float estimant le POIDS RÉEL en kg basé sur la densité physique>,
   "etat": "propre" | "sale" | "melange" | "trie" | "inconnu",
-  "collectable": <boolean, true si le volume est intéressant pour un collecteur (ex: > 5kg pour plastique/carton, > 2kg pour métal), false sinon>,
+  "collectable": <boolean, true si le volume justifie un déplacement (ex: > 1kg plastique, > 5kg verre/métal)>,
   "recommandations": ["<recommandation 1>", "<recommandation 2>"],
   "rawScoreQualite": <nombre entier entre 0 et 100 estimant la pureté et la propreté du lot>
 }
 
-Règles importantes :
-- Si c'est un gros sac poubelle ou un amoncellement, estime le poids de manière réaliste (un sac plein de bouteilles PET fait facilement entre 10kg et 35kg, pas 0.5kg !).
-- Sois indulgent sur le score de propreté si les matières sont bien triées, même si l'environnement autour est sale.`;
+⚠️ RÈGLES DE DENSITÉ PHYSIQUE (STRICT) ⚠️
+Tu DOIS utiliser ce référentiel pour estimer le poids. Un sac poubelle standard fait environ 100 Litres de volume total.
+- PLASTIQUE (Bouteilles PET non compactées) : C'est très léger. 1 sac de 100L = SEULEMENT 2 à 3 kg maximum.
+- PLASTIQUE (Compacté / Écrasé) : 1 sac de 100L = 5 à 8 kg.
+- VERRE (Bouteilles) : Très lourd. 1 sac de 100L = 25 à 30 kg.
+- MÉTAL (Canettes non compactées) : 1 sac de 100L = ~5 kg.
+- PAPIER / CARTON (Plié) : 1 sac de 100L = ~5 à 8 kg.
+- ORGANIQUE (Restes) : Lourd et dense. 1 sac de 100L = 20 à 40 kg.
+
+EXEMPLES (FEW-SHOT) :
+- Image: 3 bouteilles plastiques sur le sol. Poids réel estimé: 0.1 kg (30g la bouteille).
+- Image: Un gros sac poubelle noir (100L) rempli de bouteilles plastiques non écrasées. Poids estimé: 2.5 kg. (NE DIS JAMAIS 15kg OU 30kg, C'EST PHYSIQUEMENT IMPOSSIBLE POUR DU PLASTIQUE NON COMPACTÉ).
+- Image: 5 bouteilles en verre. Poids estimé: 2.5 kg (500g la bouteille).
+
+Sois ultra-logique. Ne surestime jamais le plastique. Sois indulgent sur le score de propreté si les matières sont bien triées.`;
 
   try {
     const result = await model.generateContent([prompt, imagePart]);
