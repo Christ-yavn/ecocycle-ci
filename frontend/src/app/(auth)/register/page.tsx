@@ -25,6 +25,7 @@ import './RegisterPage.css';
 export default function RegisterPage() {
   const [step, setStep] = useState(1);
   const [name, setName] = useState('');
+  const [role, setRole] = useState<'producteur' | 'collecteur'>('producteur');
   const [phone, setPhone] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -62,7 +63,7 @@ export default function RegisterPage() {
         name,
         cleanPhone,
         password,
-        'producteur'
+        role
       );
       
       const { signIn } = await import('@/lib/auth-actions');
@@ -131,7 +132,7 @@ export default function RegisterPage() {
             {step === 1 && (
               <motion.div key="step1" variants={slideVariants} initial="hidden" animate="visible" exit="exit">
                 <p className="register-subtitle">
-                  Votre prénom nous permettra de personnaliser votre expérience.
+                  Dites-nous qui vous êtes et ce que vous souhaitez faire.
                 </p>
                 <div className="register-input-group">
                   <User className="register-input-icon" size={20} />
@@ -139,11 +140,43 @@ export default function RegisterPage() {
                     type="text"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
-                    placeholder="Prénom"
+                    placeholder="Nom / Prénom"
                     className="register-input"
                     autoFocus
                   />
                 </div>
+
+                {/* Sélecteur de rôle */}
+                <p className="text-sm font-semibold text-gray-600 mt-4 mb-2">Vous êtes :</p>
+                <div className="grid grid-cols-2 gap-3 mb-4">
+                  <button
+                    type="button"
+                    onClick={() => setRole('producteur')}
+                    className={`p-4 rounded-2xl border-2 text-center transition-all ${
+                      role === 'producteur'
+                        ? 'border-green-600 bg-green-50 shadow-md'
+                        : 'border-gray-200 bg-white hover:border-gray-300'
+                    }`}
+                  >
+                    <div className="text-2xl mb-1">&#127968;</div>
+                    <div className={`text-sm font-bold ${role === 'producteur' ? 'text-green-700' : 'text-gray-700'}`}>Ménage / Producteur</div>
+                    <div className="text-xs text-gray-500 mt-1">Je publie mes déchets triés</div>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setRole('collecteur')}
+                    className={`p-4 rounded-2xl border-2 text-center transition-all ${
+                      role === 'collecteur'
+                        ? 'border-green-600 bg-green-50 shadow-md'
+                        : 'border-gray-200 bg-white hover:border-gray-300'
+                    }`}
+                  >
+                    <div className="text-2xl mb-1">&#128666;</div>
+                    <div className={`text-sm font-bold ${role === 'collecteur' ? 'text-green-700' : 'text-gray-700'}`}>Collecteur informel</div>
+                    <div className="text-xs text-gray-500 mt-1">Je collecte les lots</div>
+                  </button>
+                </div>
+
                 <button 
                   onClick={handleNext}
                   disabled={!name.trim()}
