@@ -1,0 +1,330 @@
+@import "tailwindcss";
+
+.landing-page {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  overflow-x: hidden;
+  background-color: #fafaf9; /* Tailwind stone-50 or similar light bg */
+}
+
+/* Glassmorphism Header */
+.landing-header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background-color: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+/* Hero Section */
+.hero-section {
+  position: relative;
+  padding-top: 6rem;
+  padding-bottom: 4rem;
+  background: linear-gradient(to bottom, #dcfce7 0%, #fafaf9 100%);
+  overflow: hidden;
+}
+
+.hero-skyline {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 200px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'%3E%3Cpath fill='%23bbf7d0' fill-opacity='0.3' d='M0,288L48,272C96,256,192,224,288,197.3C384,171,480,149,576,165.3C672,181,768,235,864,250.7C960,267,1056,245,1152,213.3C1248,181,1344,139,1392,117.3L1440,96L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z'%3E%3C/path%3E%3C/svg%3E");
+  background-size: cover;
+  background-position: bottom;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* Phone Mockup */
+.phone-wrapper {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  justify-content: center;
+}
+
+.phone-mockup {
+  width: 300px;
+  height: 600px;
+  background-color: #ffffff;
+  border-radius: 40px;
+  border: 12px solid #1f2937;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  position: relative;
+  overflow: hidden;
+}
+
+.phone-notch {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 120px;
+  height: 25px;
+  background-color: #1f2937;
+  border-bottom-left-radius: 16px;
+  border-bottom-right-radius: 16px;
+  z-index: 20;
+}
+
+.phone-screen {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background-color: #f8fafc;
+}
+
+.phone-topbar {
+  padding: 40px 20px 20px;
+  background: white;
+  border-bottom: 1px solid #f1f5f9;
+  text-align: center;
+}
+
+.phone-content {
+  flex: 1;
+  padding: 20px;
+  overflow-y: auto;
+}
+
+.phone-timeline {
+  position: relative;
+  padding-left: 20px;
+}
+
+.phone-timeline::before {
+  content: '';
+  position: absolute;
+  left: 7px;
+  top: 10px;
+  bottom: 30px;
+  width: 2px;
+  background-color: #22c55e; /* Green line */
+}
+
+.phone-step {
+  position: relative;
+  margin-bottom: 24px;
+}
+
+.phone-step-dot {
+  position: absolute;
+  left: -20px;
+  top: 2px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background-color: white;
+  border: 4px solid #22c55e;
+}
+
+.phone-step-card {
+  background: white;
+  border-radius: 12px;
+  padding: 12px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  border: 1px solid #f1f5f9;
+}
+
+.phone-img-placeholder {
+  width: 100%;
+  height: 80px;
+  background: #e2e8f0;
+  border-radius: 8px;
+  margin-top: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #94a3b8;
+}
+
+/* Steps Section */
+.steps-section {
+  padding: 5rem 1.5rem;
+  background-color: #ffffff;
+}
+
+.step-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  position: relative;
+}
+
+.step-icon-wrapper {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background-color: #f0fdf4;
+  color: #15803d;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 4px 6px rgba(21, 128, 61, 0.1);
+}
+
+.step-arrow {
+  display: none;
+}
+
+/* Impact Section */
+.impact-section {
+  padding: 5rem 1.5rem;
+  background-color: #fafaf9;
+}
+
+.impact-card {
+  background-color: #064E3B; /* Deep forest */
+  border-radius: 24px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+}
+
+.impact-image {
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+}
+
+.impact-content {
+  padding: 3rem 2rem;
+  color: white;
+}
+
+/* FAQ Section */
+.faq-section {
+  padding: 5rem 1.5rem;
+  background-color: #ffffff;
+}
+
+.faq-item {
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  margin-bottom: 1rem;
+  overflow: hidden;
+  transition: all 0.2s;
+}
+
+.faq-item:hover {
+  border-color: #cbd5e1;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+}
+
+.faq-question {
+  width: 100%;
+  padding: 1.25rem 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 600;
+  color: #064E3B;
+  background: white;
+  cursor: pointer;
+  border: none;
+  text-align: left;
+}
+
+.faq-answer {
+  padding: 0 1.5rem 1.25rem;
+  color: #475569;
+  background: white;
+}
+
+/* CTA Section */
+.cta-section {
+  padding: 5rem 1.5rem;
+  background-color: #fafaf9;
+}
+
+.cta-card {
+  background-color: #ffffff;
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #f1f5f9;
+}
+
+.cta-image {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.cta-content {
+  padding: 3rem 2rem;
+}
+
+/* Footer */
+.footer-section {
+  background-color: #111827; /* gray-900 */
+  color: #9ca3af;
+  padding: 4rem 1.5rem 2rem;
+}
+
+/* Responsive Styles */
+@media (min-width: 768px) {
+  .hero-section {
+    padding-top: 8rem;
+    padding-bottom: 6rem;
+  }
+  
+  .impact-card {
+    flex-direction: row;
+  }
+  
+  .impact-image {
+    width: 40%;
+    height: auto;
+  }
+  
+  .impact-content {
+    width: 60%;
+    padding: 4rem;
+  }
+
+  .cta-card {
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .cta-image {
+    width: 40%;
+    height: 100%;
+    min-height: 350px;
+  }
+
+  .cta-content {
+    width: 60%;
+    padding: 4rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .steps-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+
+  .step-card {
+    flex: 1;
+    padding: 0 1rem;
+  }
+
+  .step-arrow {
+    display: block;
+    color: #cbd5e1;
+    margin-top: 2.5rem;
+    flex-shrink: 0;
+  }
+}
