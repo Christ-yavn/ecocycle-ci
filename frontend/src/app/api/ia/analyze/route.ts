@@ -78,7 +78,7 @@ export async function POST(request: NextRequest) {
   // 5. Initialiser Google Gemini
   const genAI = new GoogleGenerativeAI(GEMINI_API_KEY);
   const model = genAI.getGenerativeModel({
-    model: "gemini-3.6-flash",
+    model: "gemini-2.0-flash",
     generationConfig: {
       responseMimeType: "application/json",
     },
@@ -116,17 +116,42 @@ Sois ultra-logique. Ne surestime jamais le plastique. Sois indulgent sur le scor
     const responseText = result.response.text();
     
     // 6. Parser et formater la réponse pour EcoCycle
-    const parsed = JSON.parse(responseText);
+    let parsed;
+    try {
+      parsed = JSON.parse(responseText);
+    } catch {
+      console.error("Réponse Gemini non-JSON :", responseText);
+      return NextResponse.json(
+        { error: "L'IA a renvoyé une réponse invalide. Réessayez." },
+        { status: 502 }
+      );
+    }
+
+    // 6b. Garde-fous physiques sur le poids estimé
+    const MAX_WEIGHT: Record<string, number> = {
+      "Plastique": 15,
+      "Métal": 30,
+      "Verre": 50,
+      "Papier / Carton": 20,
+      "Organique": 60,
+      "Textile": 20,
+      "Électronique": 30,
+      "Dangereux": 25,
+      "Résiduel": 30,
+    };
+    const typeDechet = parsed.typeDechet || "Résiduel";
+    const maxAllowed = MAX_WEIGHT[typeDechet] || 30;
+    const clampedWeight = Math.min(Math.max(parsed.volumeIa || 0, 0.05), maxAllowed);
 
     const mapped: AnalyseIa = {
       scoreTri: scoreQualiteToTri(parsed.rawScoreQualite || 50),
-      typeDechet: parsed.typeDechet || "Résiduel",
-      volumeIa: parsed.volumeIa || 0,
+      typeDechet: typeDechet,
+      volumeIa: clampedWeight,
       etat: parsed.etat || "inconnu",
       collectable: parsed.collectable || false,
       recommandations: parsed.recommandations || [],
       fallbackUsed: false,
-      items: [], // Plus de bounding boxes avec l'API texte
+      items: [],
       rawScoreQualite: parsed.rawScoreQualite || 50,
     };
 

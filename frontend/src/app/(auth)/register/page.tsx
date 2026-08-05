@@ -36,7 +36,6 @@ export default function RegisterPage() {
   const [error, setError] = useState<string | null>(null);
 
   const navigate = useRouter();
-  const { login } = useAuth();
 
   const cleanPhone = phone.replace(/\s+/g, '');
   const isValidPhone = cleanPhone.length >= 8 && cleanPhone.match(/^[0-9+]+$/);
@@ -59,16 +58,16 @@ export default function RegisterPage() {
     setIsSubmitting(true);
     setError(null);
     try {
-      const email = `${cleanPhone}@ecoloop.com`; // Pseudo email mapping as per original implementation
-      await signUp({
-        name: name,
-        email: email,
-        password: password,
-        role: 'producteur' // Default role as specified
-      });
+      await signUp(
+        name,
+        cleanPhone,
+        password,
+        'producteur'
+      );
       
-      await login(email, password);
-      navigate('/dashboard');
+      const { signIn } = await import('@/lib/auth-actions');
+      await signIn(cleanPhone, password);
+      navigate.push('/dashboard');
     } catch (err: any) {
       setError(err?.response?.data?.message || "Erreur technique, veuillez réessayer.");
     } finally {
@@ -90,7 +89,7 @@ export default function RegisterPage() {
         
         {/* Logo Section */}
         <div className="register-logo-container">
-          <Link to="/" className="register-logo-row hover:opacity-80 transition-opacity">
+          <Link href="/" className="register-logo-row hover:opacity-80 transition-opacity">
             <img src="/logo.png" alt="EcoLoop Logo" className="h-20 w-auto mb-2" />
           </Link>
           <p className="register-tagline">Valorisons. Trions. Agissons.</p>

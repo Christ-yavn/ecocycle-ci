@@ -2,8 +2,8 @@
 
 import { useEffect, useState } from 'react';
 import { PackageOpen, FileText, Clock, TrendingUp, MapPin, CheckCircle2, Factory } from 'lucide-react';
-const LoadingState = () => <div>Loading...</div>;
-const wasteService = { getRecentLots: async () => [] };
+const LoadingState = ({ fullPage, message }: { fullPage?: boolean; message?: string }) => <div>{message || 'Loading...'}</div>;
+const wasteService = { getRecentLots: async () => [], getAvailableWastes: async () => [] };
 
 export default function RecyclerDashboard() {
   const [isLoading, setIsLoading] = useState(true);

@@ -1,4 +1,5 @@
 "use client";
+import Link from 'next/link';
 
 import { useRouter, usePathname } from 'next/navigation';
 import { Home, Clock, UserCircle, Bell, Check, Trash2, X, Lock, Map, Camera, Briefcase, ShoppingBag } from 'lucide-react';
@@ -105,7 +106,7 @@ export function MainLayout({ children, user }: { children: React.ReactNode, user
       {/* Desktop Sidebar */}
       <aside className="hidden md:flex flex-col w-[260px] bg-white border-r border-gray-100 fixed inset-y-0 left-0 z-40">
         <div className="p-6">
-          <Link to="/">
+          <Link href="/">
             <img src="/logo.png" alt="EcoLoop" className="h-16 mb-3" />
           </Link>
           <p className="text-xs text-gray-500 font-medium leading-relaxed">Le bon déchet, au bon endroit, au bon moment</p>
@@ -117,7 +118,7 @@ export function MainLayout({ children, user }: { children: React.ReactNode, user
             return (
               <Link 
                 key={idx} 
-                to={item.path} 
+                href={item.path} 
                 className={`flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all ${
                   active 
                     ? 'bg-green-50 text-green-700 border-l-4 border-green-600' 
@@ -231,7 +232,7 @@ export function MainLayout({ children, user }: { children: React.ReactNode, user
             </div>
 
             {/* Profile Dropdown Trigger */}
-            <Link to="/profile" className="flex items-center gap-2 cursor-pointer pl-2 border-l border-gray-200">
+            <Link href="/profile" className="flex items-center gap-2 cursor-pointer pl-2 border-l border-gray-200">
               <div className="w-8 h-8 rounded-full bg-green-100 text-green-700 flex items-center justify-center font-bold text-sm uppercase">
                 {user?.full_name?.charAt(0) || 'U'}
               </div>
@@ -258,7 +259,7 @@ export function MainLayout({ children, user }: { children: React.ReactNode, user
           return (
             <Link 
               key={idx} 
-              to={item.path} 
+              href={item.path} 
               className={`flex flex-col items-center gap-1 p-2 flex-1 transition-colors ${
                 active ? 'text-green-600' : 'text-gray-400 hover:text-gray-600'
               }`}

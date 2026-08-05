@@ -2,15 +2,20 @@
 
 import { useEffect, useState } from 'react';
 import { Activity, AlertTriangle, BrainCircuit, Target, CheckCircle2, Navigation } from 'lucide-react';
-const LoadingState = () => <div>Loading...</div>;
+const LoadingState = ({ fullPage, message }: { fullPage?: boolean; message?: string }) => <div>{message || 'Loading...'}</div>;
 import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
 import { MapContainer, TileLayer, CircleMarker, Popup } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 
-const aiService = { getMunicipalityRiskZones: async () => [] }; type ZoneRiskAdapter = any;
+const aiService = { 
+  getMunicipalityRiskZones: async () => [],
+  getZonesRisk: async (zone: string) => ({}) 
+}; 
+type ZoneRiskAdapter = any;
 
 export default function MunicipalityDashboard() {
+  const demoStep = 5;
   
   const [isLoading, setIsLoading] = useState(true);
   const [decisionTaken, setDecisionTaken] = useState(false);
@@ -87,7 +92,7 @@ export default function MunicipalityDashboard() {
       <div className="max-w-6xl mx-auto px-6 -mt-10">
         
         {/* CARTE INTERACTIVE */}
-        <Card padding="none" className="mb-8 overflow-hidden border-orange-100 relative">
+        <Card  className="mb-8 overflow-hidden border-orange-100 relative">
           <div className="absolute top-4 right-4 z-[400] bg-white p-3 rounded-xl shadow-lg border border-gray-100">
             <h3 className="font-bold text-sm mb-2">Légende</h3>
             <div className="space-y-2 text-xs">
@@ -152,7 +157,7 @@ export default function MunicipalityDashboard() {
               </div>
               <Button 
                 variant="outline" 
-                size="sm" 
+                 
                 onClick={handleSimulation}
                 disabled={simulationTriggered || isAiLoading}
               >

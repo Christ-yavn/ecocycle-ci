@@ -73,7 +73,7 @@ export default function HouseholdDashboard() {
 
         {/* Publish Button */}
         <button 
-          onClick={() => navigate('/producer/new-lot')}
+          onClick={() => navigate.push('/producer/new-lot')}
           className="w-full bg-green-700 hover:bg-green-800 text-white font-bold py-4 px-6 rounded-2xl flex items-center justify-center gap-2 text-[17px] transition-all transform hover:-translate-y-1 shadow-[0_8px_20px_rgba(22,163,74,0.25)] mb-8"
         >
           <Plus className="w-5 h-5" strokeWidth={3} />
@@ -109,7 +109,7 @@ export default function HouseholdDashboard() {
         {/* Recent Activity a été supprimé pour simplifier ou sera géré par l'historique complet */}
         <div className="bg-white rounded-[32px] p-6 shadow-sm border border-gray-100">
           <button 
-            onClick={() => navigate('/profile/history')}
+            onClick={() => navigate.push('/profile/history')}
             className="w-full pt-4 flex items-center justify-between text-green-700 font-bold text-sm hover:text-green-800 transition-colors"
           >
             Voir toute l'activité

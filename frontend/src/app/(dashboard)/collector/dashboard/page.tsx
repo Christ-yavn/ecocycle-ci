@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { ChevronRight, Package, MapPin, ArrowRight } from 'lucide-react';
-const wasteService = { getRecentLots: async () => [] };
+const wasteService = { getRecentLots: async () => [], getAvailableWastes: async () => [] };
 
 const BottleIcon = ({ className, size = 24 }: { className?: string, size?: number }) => (
   <svg 
@@ -112,7 +112,7 @@ export default function CollectorDashboard() {
                   </div>
 
                   <button 
-                    onClick={() => navigate(`/collector/mission/${mission.id}`)}
+                    onClick={() => navigate.push(`/collector/mission/${mission.id}`)}
                     className="w-full bg-green-600 hover:bg-green-700 active:bg-green-800 text-white font-bold py-4 rounded-2xl flex items-center justify-center gap-2 transition-colors text-lg"
                   >
                     Voir la mission <ArrowRight size={20} />

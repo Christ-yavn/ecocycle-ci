@@ -33,15 +33,15 @@ export default function LandingPage() {
       {/* 1. HEADER */}
       <header className="landing-header">
         <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-          <Link to="/" className="flex items-center gap-2">
+          <Link href="/" className="flex items-center gap-2">
             <img src="/logo.png" alt="EcoLoop Logo" className="h-14 w-auto" />
           </Link>
           
           <div className="hidden md:flex items-center gap-6">
-            <Link to="/login" className="font-medium text-gray-600 hover:text-green-700 transition-colors">
+            <Link href="/login" className="font-medium text-gray-600 hover:text-green-700 transition-colors">
               Connexion
             </Link>
-            <Link to="/register" className="bg-green-700 hover:bg-green-800 text-white font-medium py-2.5 px-6 rounded-full transition-colors shadow-md shadow-green-700/20">
+            <Link href="/register" className="bg-green-700 hover:bg-green-800 text-white font-medium py-2.5 px-6 rounded-full transition-colors shadow-md shadow-green-700/20">
               S'inscrire
             </Link>
           </div>
@@ -57,10 +57,10 @@ export default function LandingPage() {
         {/* Mobile Menu Overlay */}
         {mobileMenuOpen && (
           <div className="md:hidden absolute top-20 left-0 w-full bg-white shadow-xl border-t border-gray-100 p-6 flex flex-col gap-4">
-            <Link to="/login" className="font-medium text-center text-gray-700 py-3 border border-gray-200 rounded-xl" onClick={() => setMobileMenuOpen(false)}>
+            <Link href="/login" className="font-medium text-center text-gray-700 py-3 border border-gray-200 rounded-xl" onClick={() => setMobileMenuOpen(false)}>
               Connexion
             </Link>
-            <Link to="/register" className="bg-green-700 text-white text-center font-medium py-3 rounded-xl shadow-md shadow-green-700/20" onClick={() => setMobileMenuOpen(false)}>
+            <Link href="/register" className="bg-green-700 text-white text-center font-medium py-3 rounded-xl shadow-md shadow-green-700/20" onClick={() => setMobileMenuOpen(false)}>
               S'inscrire
             </Link>
           </div>
@@ -83,11 +83,11 @@ export default function LandingPage() {
             </p>
             
             <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 mb-10">
-              <Link to="/register" className="w-full sm:w-auto bg-green-700 hover:bg-green-800 text-white font-medium py-4 px-8 rounded-full flex items-center justify-center gap-2 transition-colors shadow-lg shadow-green-700/30">
+              <Link href="/register" className="w-full sm:w-auto bg-green-700 hover:bg-green-800 text-white font-medium py-4 px-8 rounded-full flex items-center justify-center gap-2 transition-colors shadow-lg shadow-green-700/30">
                 <Camera size={20} />
                 Publier un déchet
               </Link>
-              <Link to="/register" className="w-full sm:w-auto border-2 border-green-700 text-green-700 hover:bg-green-50 font-medium py-4 px-8 rounded-full flex items-center justify-center gap-2 transition-colors">
+              <Link href="/register" className="w-full sm:w-auto border-2 border-green-700 text-green-700 hover:bg-green-50 font-medium py-4 px-8 rounded-full flex items-center justify-center gap-2 transition-colors">
                 <AlertTriangle size={20} />
                 Signaler un dépôt
               </Link>
@@ -310,7 +310,7 @@ export default function LandingPage() {
               <p className="text-gray-600 mb-8 text-lg">
                 Rejoignez EcoLoop et participez à une ville plus propre et plus durable.
               </p>
-              <Link to="/register" className="inline-flex items-center gap-2 bg-green-700 hover:bg-green-800 text-white font-medium py-4 px-8 rounded-full transition-colors shadow-lg shadow-green-700/20">
+              <Link href="/register" className="inline-flex items-center gap-2 bg-green-700 hover:bg-green-800 text-white font-medium py-4 px-8 rounded-full transition-colors shadow-lg shadow-green-700/20">
                 <Leaf size={20} />
                 Commencer avec EcoLoop <ArrowRight size={20} />
               </Link>
