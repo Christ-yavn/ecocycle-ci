@@ -5,7 +5,7 @@ import { PackageOpen, FileText, Clock, TrendingUp, MapPin, CheckCircle2, Factory
 const LoadingState = () => <div>Loading...</div>;
 const wasteService = { getRecentLots: async () => [] };
 
-export function RecyclerDashboard() {
+export default function RecyclerDashboard() {
   const [isLoading, setIsLoading] = useState(true);
   const [purchaseLotId, setPurchaseLotId] = useState<string | null>(null);
   const [collectionDay, setCollectionDay] = useState('');
@@ -206,5 +206,6 @@ export function RecyclerDashboard() {
     </div>
   );
 }
+
 
 

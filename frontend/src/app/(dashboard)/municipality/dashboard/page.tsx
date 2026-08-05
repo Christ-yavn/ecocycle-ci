@@ -10,7 +10,7 @@ import 'leaflet/dist/leaflet.css';
 
 const aiService = { getMunicipalityRiskZones: async () => [] }; type ZoneRiskAdapter = any;
 
-export function MunicipalityDashboard() {
+export default function MunicipalityDashboard() {
   
   const [isLoading, setIsLoading] = useState(true);
   const [decisionTaken, setDecisionTaken] = useState(false);
@@ -276,5 +276,6 @@ export function MunicipalityDashboard() {
     </div>
   );
 }
+
 
 

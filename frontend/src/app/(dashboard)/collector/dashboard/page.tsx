@@ -24,7 +24,7 @@ const BottleIcon = ({ className, size = 24 }: { className?: string, size?: numbe
   </svg>
 );
 
-export function CollectorDashboard() {
+export default function CollectorDashboard() {
   const navigate = useRouter();
   const [missions, setMissions] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
@@ -126,6 +126,7 @@ export function CollectorDashboard() {
     </div>
   );
 }
+
 
 
 
